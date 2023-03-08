@@ -10,8 +10,6 @@ export const Test = (props) => {
   return (
     <View style={container}>
       <Text>Test1</Text>
-
-      <Text>Praveen</Text>
     </View>
   );
 };
