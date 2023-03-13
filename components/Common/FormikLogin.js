@@ -57,7 +57,7 @@ const FormikLogin = () => {
             //     navigation.navigate("AppointmentListScreen");
             //   }
 
-            navigation.navigate("Test1");
+            navigation.navigate("AddService");
             setLoading(false);
           };
           getUsers();
