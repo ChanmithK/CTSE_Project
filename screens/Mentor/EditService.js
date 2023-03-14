@@ -1,19 +1,18 @@
 import React from "react";
 import { View, Text, StyleSheet, SafeAreaView } from "react-native";
-import { ViewServiceSubPage } from "./SubScreens/ViewServiceSubPage.js";
+import { EditServiceSubPage } from "./SubScreens/EditServiceSubPage.js";
 
 /**
  * @author
- * @function ViewService
+ * @function EditService
  **/
-export const ViewService = ({ navigation, route }) => {
+export const EditService = ({ navigation, route }) => {
   const service = route.params.service;
 
-  console.log("service details", service);
   return (
     <SafeAreaView style={styles.container}>
       {/* <MakeAppointmentSubPage id={id} name={name} role={role} image={image} /> */}
-      <ViewServiceSubPage service={service} />
+      <EditServiceSubPage service={service} />
     </SafeAreaView>
   );
 };

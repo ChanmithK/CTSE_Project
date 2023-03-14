@@ -1,19 +1,16 @@
 import React from "react";
 import { View, Text, StyleSheet, SafeAreaView } from "react-native";
-import { ViewServiceSubPage } from "./SubScreens/ViewServiceSubPage.js";
+import { ViewMentorsServicesSubPage } from "./SubScreens/ViewMentorsServicesSubPage";
 
 /**
  * @author
- * @function ViewService
+ * @function ViewMentorsServices
  **/
-export const ViewService = ({ navigation, route }) => {
-  const service = route.params.service;
-
-  console.log("service details", service);
+export const ViewMentorsServices = () => {
   return (
     <SafeAreaView style={styles.container}>
       {/* <MakeAppointmentSubPage id={id} name={name} role={role} image={image} /> */}
-      <ViewServiceSubPage service={service} />
+      <ViewMentorsServicesSubPage />
     </SafeAreaView>
   );
 };
