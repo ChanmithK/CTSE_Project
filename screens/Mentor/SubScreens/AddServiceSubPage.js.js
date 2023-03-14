@@ -34,6 +34,7 @@ export const AddServiceSubPage = (props) => {
       serviceDescription: values._ServiceDescription,
       servicePrice: values._ServicePrice,
       serviceDuration: values._ServiceDuration,
+      publishedDate: "2022/01/23",
     }).then(navigation.navigate("ViewServices"));
   };
 

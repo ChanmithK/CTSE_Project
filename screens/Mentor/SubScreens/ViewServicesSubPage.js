@@ -11,10 +11,11 @@ import {
 } from "react-native";
 import { doc, getDoc, addDoc, collection, getDocs } from "firebase/firestore";
 import { db } from "../../../firebase";
-import { useNavigation } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 
 export const ViewServicesSubPage = (props) => {
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
 
   const [servicesList, setServicesList] = useState([]);
   const [searchResult, setSearchResult] = useState([]);
@@ -34,7 +35,9 @@ export const ViewServicesSubPage = (props) => {
       );
     };
     getServices();
-  }, []);
+  }, [isFocused]);
+
+  // getServices();
 
   const searchServices = (text) => {
     setSearchKey(text);
@@ -47,6 +50,8 @@ export const ViewServicesSubPage = (props) => {
       )
     );
   };
+
+  console.log("searchResult", searchResult);
 
   return (
     <View style={styles.container}>
@@ -79,7 +84,9 @@ export const ViewServicesSubPage = (props) => {
               return (
                 <TouchableOpacity
                   onPress={() => {
-                    alert(service.serviceTitle);
+                    navigation.navigate("ViewServiceScreen", {
+                      service: service,
+                    });
                   }}
                 >
                   <View style={styles.serviceContainer}>

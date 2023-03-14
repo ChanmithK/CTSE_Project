@@ -7,6 +7,8 @@ import LoginForm from "./components/Common/Login";
 import { AddService } from "./screens/Mentor/AddService";
 import { ViewServices } from "./screens/Mentor/ViewServices";
 import { ViewService } from "./screens/Mentor/ViewService";
+import { EditService } from "./screens/Mentor/EditService";
+import { ViewMentorsServices } from "./screens/Client/ViewMentorsServices";
 
 const Stack = createStackNavigator();
 const screenOptions = { headerShown: false };
@@ -15,7 +17,7 @@ const SignedInStack = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="ViewService"
+        initialRouteName="ViewMentorsServicesScreen"
         screenOptions={screenOptions}
       >
         <Stack.Screen name="Test1" component={Test} />
@@ -25,7 +27,14 @@ const SignedInStack = () => {
         {/* Mentor */}
         <Stack.Screen name="AddService" component={AddService} />
         <Stack.Screen name="ViewServices" component={ViewServices} />
-        <Stack.Screen name="ViewService" component={ViewService} />
+        <Stack.Screen name="ViewServiceScreen" component={ViewService} />
+        <Stack.Screen name="EditServiceScreen" component={EditService} />
+
+        {/* Client */}
+        <Stack.Screen
+          name="ViewMentorsServicesScreen"
+          component={ViewMentorsServices}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
