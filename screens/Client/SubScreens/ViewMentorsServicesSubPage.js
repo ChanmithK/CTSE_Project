@@ -62,7 +62,6 @@ export const ViewMentorsServicesSubPage = (props) => {
           style={styles.searchIcon}
         />
       </View>
-
       <View>
         <ScrollView
           horizontal={true}
@@ -99,78 +98,81 @@ export const ViewMentorsServicesSubPage = (props) => {
 
       <View>
         <ScrollView showsVerticalScrollIndicator={false}>
-          {searchResult.map((service) => (
-            <TouchableOpacity
-              key={service.id}
-              // onPress={() =>
-              //   navigation.navigate("ServiceDetails", {
-              //     serviceId: service.id,
-              //   })
-              // }
-            >
-              <View style={styles.serviceCard}>
-                <View style={styles.cardImage}>
-                  <Image
-                    source={{
-                      uri: "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg",
-                    }}
-                    style={styles.image}
-                  />
-                </View>
-
-                <View style={styles.cardContent}>
-                  <View style={styles.cardTop}>
-                    <View style={styles.ratingBar}>
-                      <Icon
-                        name="star"
-                        type="font-awesome"
-                        color="orange"
-                        size={16}
-                        style={{ marginRight: 2 }}
-                      />
-                      <Text style={styles.ratings}>
-                        5.0{" "}
-                        <span
-                          style={{
-                            color: "grey",
-                            fontSize: 13,
-                            fontWeight: "normal",
-                          }}
-                        >
-                          (903)
-                        </span>
-                      </Text>
-                    </View>
-                    <TouchableOpacity>
-                      <Icon
-                        name="heart"
-                        type="font-awesome"
-                        color="#f50"
-                        size={18}
-                      />
-                    </TouchableOpacity>
-                  </View>
-                  <Text style={styles.serviceTitle}>
-                    {service.serviceTitle}
-                  </Text>
-                  <Text style={styles.servicePrice}>
-                    <span
-                      style={{
-                        color: "grey",
-                        fontSize: 13,
-                        fontWeight: "normal",
+          {searchResult ? (
+            searchResult.map((service) => (
+              <TouchableOpacity key={service.id}>
+                <View style={styles.serviceCard} key={service.key}>
+                  <View style={styles.cardImage}>
+                    <Image
+                      source={{
+                        uri: service.serviceImage,
                       }}
-                    >
-                      From
-                    </span>{" "}
-                    ${service.servicePrice}
-                  </Text>
+                      style={styles.image}
+                    />
+                  </View>
+
+                  <View style={styles.cardContent}>
+                    <View style={styles.cardTop}>
+                      <View style={styles.ratingBar}>
+                        <Icon
+                          name="star"
+                          type="font-awesome"
+                          color="orange"
+                          size={16}
+                          style={{ marginRight: 2 }}
+                        />
+                        <Text style={styles.ratings}>
+                          5.0{" "}
+                          <Text
+                            style={{
+                              color: "grey",
+                              fontSize: 13,
+                              fontWeight: "normal",
+                            }}
+                          >
+                            (903)
+                          </Text>
+                        </Text>
+                      </View>
+                      <TouchableOpacity>
+                        <Icon
+                          name="heart"
+                          type="font-awesome"
+                          color="#f50"
+                          size={18}
+                        />
+                      </TouchableOpacity>
+                    </View>
+                    <Text style={styles.serviceTitle}>
+                      {service.serviceTitle}
+                    </Text>
+                    <Text style={styles.servicePrice}>
+                      <Text
+                        style={{
+                          color: "grey",
+                          fontSize: 13,
+                          fontWeight: "normal",
+                        }}
+                      >
+                        From
+                      </Text>{" "}
+                      {service.servicePrice}
+                    </Text>
+                  </View>
                 </View>
-              </View>
-            </TouchableOpacity>
-          ))}
+              </TouchableOpacity>
+
+              // <Text>{service.serviceTitle}</Text>
+            ))
+          ) : (
+            <Text>No Services Found</Text>
+          )}
         </ScrollView>
       </View>
+
+      {/* <View style={{ marginTop: 10 }}>
+        <Text>Hello</Text>
+      </View> */}
     </View>
   );
 };
@@ -184,7 +186,7 @@ const styles = StyleSheet.create({
 
   serviceCard: {
     height: 130,
-    width: "100% ",
+    width: "100%",
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
@@ -272,7 +274,6 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
     resizeMode: "contain",
-    color: "#8E8E93",
   },
   buttonContainer: {
     display: "flex",
@@ -304,3 +305,5 @@ const styles = StyleSheet.create({
     color: "#111",
   },
 });
+
+//Test
