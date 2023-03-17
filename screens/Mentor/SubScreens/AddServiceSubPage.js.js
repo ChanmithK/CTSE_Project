@@ -43,14 +43,18 @@ export const AddServiceSubPage = (props) => {
   const storage = getStorage();
 
   const addService = async (values) => {
-    const docRef = await addDoc(collection(db, "services"), {
-      serviceTitle: values._ServiceTitle,
-      serviceDescription: values._ServiceDescription,
-      servicePrice: values._ServicePrice,
-      serviceDuration: values._ServiceDuration,
-      publishedDate: "2022/01/23",
-      serviceImage: imageURL,
-    }).then(navigation.navigate("ViewServices"));
+    if (imageURL != null) {
+      const docRef = await addDoc(collection(db, "services"), {
+        serviceTitle: values._ServiceTitle,
+        serviceDescription: values._ServiceDescription,
+        servicePrice: values._ServicePrice,
+        serviceDuration: values._ServiceDuration,
+        publishedDate: "2022/01/23",
+        serviceImage: imageURL,
+      }).then(navigation.navigate("ViewServices"));
+    } else {
+      alert("Wait a minute, image is still uploading!");
+    }
   };
 
   const pickImage = async () => {
@@ -65,7 +69,7 @@ export const AddServiceSubPage = (props) => {
     console.log(result);
 
     if (!result.canceled) {
-      setImage(result.uri);
+      setImage(result.assets[0].uri);
     }
   };
 
