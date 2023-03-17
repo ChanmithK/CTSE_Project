@@ -9,6 +9,8 @@ import { ViewServices } from "./screens/Mentor/ViewServices";
 import { ViewService } from "./screens/Mentor/ViewService";
 import { EditService } from "./screens/Mentor/EditService";
 import { ViewMentorsServices } from "./screens/Client/ViewMentorsServices";
+import AddContent from "./screens/Content/AddContent";
+import ViewContentList from "./screens/Content/ViewContentList";
 
 const Stack = createStackNavigator();
 const screenOptions = { headerShown: false };
@@ -17,7 +19,7 @@ const SignedInStack = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="ViewMentorsServicesScreen"
+        initialRouteName="ViewContentList"
         screenOptions={screenOptions}
       >
         <Stack.Screen name="Test1" component={Test} />
@@ -35,6 +37,10 @@ const SignedInStack = () => {
           name="ViewMentorsServicesScreen"
           component={ViewMentorsServices}
         />
+
+        {/* Content */}
+        <Stack.Screen name="AddContent" component={AddContent} />
+        <Stack.Screen name="ViewContentList" component={ViewContentList} />
       </Stack.Navigator>
     </NavigationContainer>
   );
