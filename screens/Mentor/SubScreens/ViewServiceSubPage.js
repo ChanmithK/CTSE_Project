@@ -42,7 +42,7 @@ export const ViewServiceSubPage = ({ service }) => {
               <Text style={styles.serviceTitle}>{service.serviceTitle}</Text>
               <Image
                 source={{
-                  uri: "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg",
+                  uri: service.serviceImage,
                 }}
                 style={styles.image}
               />
