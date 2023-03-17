@@ -21,15 +21,6 @@ export const EditServiceSubPage = ({ service }) => {
   const navigation = useNavigation();
   const windowHeight = Dimensions.get("window").height;
 
-  //   const addService = async (values) => {
-  //     const docRef = await addDoc(collection(db, "services"), {
-  //       serviceTitle: values._ServiceTitle,
-  //       serviceDescription: values._ServiceDescription,
-  //       servicePrice: values._ServicePrice,
-  //       serviceDuration: values._ServiceDuration,
-  //     }).then(navigation.navigate("ViewServices"));
-  //   };
-
   useEffect(() => {
     setServiceTitle(service.serviceTitle);
     setServiceDescription(service.serviceDescription);
@@ -87,17 +78,17 @@ export const EditServiceSubPage = ({ service }) => {
 
           <View
             style={{
-              position: "absolute",
-              top: windowHeight - 210,
-              flexDirection: "row",
-              justifyContent: "space-between",
-              // marginTop: 20,
+              // position: "absolute",
+              // top: windowHeight - 210,
+              // flexDirection: "row",
+              // justifyContent: "space-between",
+              marginTop: "35%",
             }}
           >
             <TouchableOpacity
               // onPress={handleSubmit}
               style={{
-                backgroundColor: "#ED6A8C",
+                backgroundColor: "#3D3EEF",
                 width: "100%",
                 padding: 10,
                 height: 50,

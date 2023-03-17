@@ -58,9 +58,6 @@ export const ViewServicesSubPage = (props) => {
         keyboardVerticalOffset={10}
         enabled
       >
-        {/* Top bar */}
-        {/* <TopBar title={"Appointment details"} /> */}
-
         {/* Search bar */}
         <View
           style={{
@@ -86,6 +83,7 @@ export const ViewServicesSubPage = (props) => {
                       service: service,
                     });
                   }}
+                  key={service.id}
                 >
                   <View style={styles.serviceContainer}>
                     <View
