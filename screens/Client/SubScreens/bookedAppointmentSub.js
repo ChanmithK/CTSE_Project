@@ -11,31 +11,60 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { doc, getDoc, addDoc, collection, updateDoc } from "firebase/firestore";
+import {
+  doc,
+  getDoc,
+  addDoc,
+  collection,
+  updateDoc,
+  deleteDoc,
+} from "firebase/firestore";
 import { db } from "../../../firebase";
 
-const BookedAppointmentSub = () => {
+const BookedAppointmentSub = (data) => {
+  console.log("data", data);
   const InitalState = {
-    description: "",
-    date: "",
-    time: "",
-    userID: "",
-    counserllerID: "",
-    counsellerName: "",
-    appointmentID: "",
-    name: "",
-    email: "",
-    title: "",
-    appointmentStatus: "",
-    mentorNote: "",
-    sessionLink: "",
+    description: data.data.description,
+    date: data.data.date,
+    time: data.data.time,
+    userID: data.data.userID,
+    mentorID: data.data.mentorID,
+    mentorName: data.data.mentorName,
+    appointmentID: data.data.appointmentID,
+    name: data.data.name,
+    email: data.data.email,
+    title: data.data.title,
+    appointmentStatus: data.data.appointmentStatus,
+    mentorNote: data.data.mentorNote,
+    sessionLink: data.data.sessionLink,
   };
 
   const navigation = useNavigation();
 
   const [value, setValue] = useState(InitalState);
 
-  // console.log("value", value);
+  const _deleteAppointment = async () => {
+    try {
+      const appointmentRef = doc(
+        db,
+        "appointments",
+        value.appointmentID.trim()
+      );
+      const appointmentSnap = await getDoc(appointmentRef);
+
+      if (appointmentSnap.exists()) {
+        await deleteDoc(appointmentRef);
+      } else {
+        console.log("No such document!");
+      }
+      setTimeout(() => {
+        navigation.navigate("booked-appointment-list");
+      }, 1000);
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+  };
+
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -124,11 +153,18 @@ const BookedAppointmentSub = () => {
                   <TouchableOpacity
                     style={[styles.customButton, { height: 40 }]}
                   >
-                    <Text style={styles.buttonText}>Cancel</Text>
+                    <Text
+                      style={styles.buttonText}
+                      onPress={_deleteAppointment}
+                    >
+                      Cancel
+                    </Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={[styles.customButton, { height: 40 }]}
-                    onPress={() => navigation.navigate("update-appointment")}
+                    onPress={() =>
+                      navigation.navigate("update-appointment", { data: value })
+                    }
                   >
                     <Text style={styles.buttonText}>Edit</Text>
                   </TouchableOpacity>
