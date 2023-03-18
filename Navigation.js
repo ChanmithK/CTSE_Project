@@ -11,6 +11,9 @@ import { EditService } from "./screens/Mentor/EditService";
 import { ViewMentorsServices } from "./screens/Client/ViewMentorsServices";
 import AddContent from "./screens/Content/AddContent";
 import ViewContentList from "./screens/Content/ViewContentList";
+import CreateAppointment from "./screens/Client/createAppointment";
+import BookedAppointment from "./screens/Client/bookedAppointment";
+import UpdateAppointment from "./screens/Client/updateAppointment";
 
 const Stack = createStackNavigator();
 const screenOptions = { headerShown: false };
@@ -36,6 +39,9 @@ const SignedInStack = () => {
         <Stack.Screen
           name="ViewMentorsServicesScreen"
           component={ViewMentorsServices}
+        <Stack.Screen name="create-appointment" component={CreateAppointment} />
+        <Stack.Screen name="booked-appointment" component={BookedAppointment} />
+        <Stack.Screen name="update-appointment" component={UpdateAppointment} />
         />
 
         {/* Content */}
