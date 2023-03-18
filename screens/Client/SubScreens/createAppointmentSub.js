@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { doc, getDoc, addDoc, collection, updateDoc } from "firebase/firestore";
+import { doc, addDoc, collection, updateDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
@@ -21,8 +21,8 @@ const CreateAppointmentsub = () => {
     date: "",
     time: "",
     userID: "",
-    counserllerID: "",
-    counsellerName: "",
+    mentorID: "",
+    mentorName: "",
     appointmentID: "",
     name: "",
     email: "",
@@ -87,17 +87,14 @@ const CreateAppointmentsub = () => {
           date: value.date,
           time: value.time,
           userID: "123",
-          counserllerID: "123",
-          // appointmentID: Math.random().toString(36).substring(7),
-          counsellerName: "123",
+          mentorID: "123",
+          appointmentID: Math.random().toString(36).substring(7),
+          mentorName: "123",
           name: "john",
           email: "test@gmail.com",
-        }).then((docRef) => {
-          updateDoc(doc(db, "appointments", docRef.id), {
-            appointmentID: docRef.id,
-          });
+          appointmentStatus: "Pending",
+          serviceTitle: "test",
         });
-        // console.log("Document written with ID: ", docRef.id);
         // navigation.navigate("home");
       } catch (e) {
         console.error("Error adding document: ", e);
@@ -105,7 +102,6 @@ const CreateAppointmentsub = () => {
     }
   };
 
-  // console.log("value", value);
   return (
     <ScrollView>
       <View style={styles.container}>

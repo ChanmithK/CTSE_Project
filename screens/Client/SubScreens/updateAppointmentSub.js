@@ -11,22 +11,25 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { doc, getDoc, addDoc, collection, updateDoc } from "firebase/firestore";
+import {
+  doc,
+  getDoc,
+  addDoc,
+  collection,
+  updateDoc,
+  where,
+  query,
+} from "firebase/firestore";
 import { db } from "../../../firebase";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
-const UpdateAppointmentsub = () => {
+const UpdateAppointmentsub = (data) => {
   const InitalState = {
-    description: "",
-    date: "",
-    time: "",
-    userID: "",
-    counserllerID: "",
-    counsellerName: "",
-    appointmentID: "",
-    name: "",
-    email: "",
-    title: "hi",
+    description: data.data.description,
+    date: data.data.date,
+    time: data.data.time,
+    appointmentID: data.data.appointmentID,
+    title: data.data.title,
   };
 
   const navigation = useNavigation();
@@ -86,7 +89,26 @@ const UpdateAppointmentsub = () => {
   const _updateAppointment = async () => {
     if (ValiDate()) {
       try {
-        navigation.navigate("booked-appointment");
+        const appointmentRef = doc(
+          db,
+          "appointments",
+          value.appointmentID.trim()
+        );
+        const appointmentSnap = await getDoc(appointmentRef);
+
+        if (appointmentSnap.exists()) {
+          await updateDoc(appointmentRef, {
+            description: value.description,
+            date: value.date,
+            time: value.time,
+            title: value.title,
+          });
+        } else {
+          console.log("No such document!");
+        }
+        setTimeout(() => {
+          navigation.navigate("booked-appointment-list");
+        }, 1000);
       } catch (e) {
         console.error("Error adding document: ", e);
       }

@@ -14,6 +14,7 @@ import BookedAppointment from "./screens/Client/bookedAppointment";
 import UpdateAppointment from "./screens/Client/updateAppointment";
 import ViewAppointment from "./screens/Mentor/viewAppointment";
 import ViewAppointmentList from "./screens/Mentor/viewAppointmentList";
+import BookedAppointmentList from "./screens/Client/bookedAppointmentList";
 
 const Stack = createStackNavigator();
 const screenOptions = { headerShown: false };
@@ -22,7 +23,7 @@ const SignedInStack = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="ViewAppointmentList"
+        initialRouteName="booked-appointment-list"
         screenOptions={screenOptions}
       >
         <Stack.Screen name="Login" component={ViewAppointment} />
@@ -46,6 +47,10 @@ const SignedInStack = () => {
         <Stack.Screen name="create-appointment" component={CreateAppointment} />
         <Stack.Screen name="booked-appointment" component={BookedAppointment} />
         <Stack.Screen name="update-appointment" component={UpdateAppointment} />
+        <Stack.Screen
+          name="booked-appointment-list"
+          component={BookedAppointmentList}
+        />
 
         {/* Content */}
         <Stack.Screen name="AddContent" component={AddContent} />

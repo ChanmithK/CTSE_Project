@@ -1,14 +1,13 @@
 import { SafeAreaView } from "react-native-safe-area-context";
 import { View, Text, StyleSheet } from "react-native";
 import React from "react";
-import BookedAppointmentSub from "./SubScreens/bookedAppointmentSub";
+import BookedAppointmentListSub from "./SubScreens/bookedAppointmentListSub";
 
-const BookedAppointment = ({ route }) => {
-  const appointmentdata = route.params.data;
+const BookedAppointmentList = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View>
-        <BookedAppointmentSub data={appointmentdata} />
+        <BookedAppointmentListSub />
       </View>
     </SafeAreaView>
   );
@@ -20,4 +19,4 @@ const styles = StyleSheet.create({
     height: "100%",
   },
 });
-export default BookedAppointment;
+export default BookedAppointmentList;
