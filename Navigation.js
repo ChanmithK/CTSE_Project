@@ -15,6 +15,9 @@ import UpdateAppointment from "./screens/Client/updateAppointment";
 import ViewAppointment from "./screens/Mentor/viewAppointment";
 import ViewAppointmentList from "./screens/Mentor/viewAppointmentList";
 import BookedAppointmentList from "./screens/Client/bookedAppointmentList";
+import ViewContent from "./screens/Content/ViewContent";
+import MyContentList from "./screens/Content/MyContentList";
+import UpdateContent from "./screens/Content/UpdateContent";
 
 const Stack = createStackNavigator();
 const screenOptions = { headerShown: false };
@@ -55,6 +58,9 @@ const SignedInStack = () => {
         {/* Content */}
         <Stack.Screen name="AddContent" component={AddContent} />
         <Stack.Screen name="ViewContentList" component={ViewContentList} />
+        <Stack.Screen name="ViewContent" component={ViewContent} />
+        <Stack.Screen name="MyContentList" component={MyContentList} />
+        <Stack.Screen name="UpdateContent" component={UpdateContent} />
       </Stack.Navigator>
     </NavigationContainer>
   );
