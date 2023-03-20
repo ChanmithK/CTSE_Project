@@ -2,17 +2,15 @@ import {
   View,
   Text,
   StyleSheet,
-  Image,
   TouchableOpacity,
   ScrollView,
   Dimensions,
-  ActivityIndicator,
   Alert,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { db } from "../../../firebase";
-import { deleteDoc, doc, getDoc } from "firebase/firestore";
+import { deleteDoc, doc } from "firebase/firestore";
 
 const ViewContentSubPage = ({ content, isAuthor }) => {
   const navigation = useNavigation();

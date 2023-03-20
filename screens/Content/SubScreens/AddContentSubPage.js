@@ -3,14 +3,12 @@ import {
   View,
   Text,
   StyleSheet,
-  Image,
   TouchableOpacity,
   ScrollView,
   Dimensions,
   TextInput,
-  Alert,
   KeyboardAvoidingView,
-  Button,
+ 
 } from "react-native";
 import * as Yup from "yup";
 import { Formik } from "formik";

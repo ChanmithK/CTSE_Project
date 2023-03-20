@@ -3,19 +3,14 @@ import {
   View,
   Text,
   StyleSheet,
-  Image,
   TouchableOpacity,
   ScrollView,
   Dimensions,
   TextInput,
-  Alert,
   KeyboardAvoidingView,
-  Button,
 } from "react-native";
-import * as Yup from "yup";
-import { Formik } from "formik";
 import { useNavigation } from "@react-navigation/native";
-import { addDoc, collection, updateDoc, doc } from "firebase/firestore";
+import { updateDoc, doc } from "firebase/firestore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { db } from "../../../firebase";
 import { Picker } from "@react-native-picker/picker";
@@ -151,7 +146,6 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: "#ffffff",
     borderRadius: 5,
-    border: "2px solid red",
     padding: 10,
     fontSize: 15,
     color: "black",
