@@ -12,7 +12,7 @@ import { useState } from "react";
 // import { doc, getDoc, addDoc, collection, updateDoc } from "firebase/firestore";
 // import { db } from "../../../firebase";
 
-const DeclineModel = ({ closeDeclineModal, visibleDeclineModal }) => {
+const DeclineModel = ({ closeDeclineModal, visibleDeclineModal, decline }) => {
   const [note, setNote] = useState("");
   const [errors, setErrors] = useState("");
 
@@ -21,10 +21,8 @@ const DeclineModel = ({ closeDeclineModal, visibleDeclineModal }) => {
 
     if (note === "") {
       setErrors("Note is required");
-    }
-    if (note !== "") {
-      toggleAcceptModal();
     } else {
+      decline(note);
     }
   };
 

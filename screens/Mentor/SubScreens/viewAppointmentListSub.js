@@ -20,6 +20,36 @@ const ViewAppointmentSubList = () => {
   const [search, setSearch] = useState("");
   const navigation = useNavigation();
 
+  useEffect(() => {
+    const getAppointments = async () => {
+      const appointmentList = [];
+      const appointmentRef = query(
+        collection(db, "appointments"),
+        where("appointmentStatus", "==", "Pending")
+      );
+      const appointmentSnapshot = await getDocs(appointmentRef);
+      appointmentSnapshot.forEach((doc) => {
+        appointmentList.push(doc.data());
+      });
+      setAppointments(appointmentList);
+    };
+    getAppointments();
+  }, [appointments]);
+
+  const searchAppointments = (text) => {
+    setSearch(text);
+
+    setAppointments(
+      appointments.filter(
+        (appointment) =>
+          appointment.time.toLowerCase().includes(text.toLowerCase()) ||
+          appointment.date.toLowerCase().includes(text.toLowerCase()) ||
+          appointment.description.toLowerCase().includes(text.toLowerCase()) ||
+          appointment.name.toLowerCase().includes(text.toLowerCase())
+      )
+    );
+  };
+
   return (
     <View style={styles.MainContainer}>
       <View>
@@ -28,7 +58,7 @@ const ViewAppointmentSubList = () => {
           placeholderTextColor="gray"
           multiline={false}
           style={styles.input}
-          onChangeText={(text) => setSearch(text)}
+          onChangeText={(text) => searchAppointments(text)}
         />
         <Image
           source={{
@@ -39,23 +69,32 @@ const ViewAppointmentSubList = () => {
       </View>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={{ marginBottom: 250 }}>
-          {/* {appointments.map((appointment, index) => ( */}
-          <TouchableOpacity
-          //   key={index}
-          //   onPress={ }
-          >
-            <View style={styles.appointmentContainer}>
-              <Image source={""} style={styles.image} />
-              <View style={styles.appointmentDetails}>
-                <Text style={styles.appointmentName}></Text>
-                <View style={{ flexDirection: "row", marginTop: 5 }}>
-                  <Text style={styles.appointmentDate}> </Text>
-                  <Text style={styles.appointmentTime}> </Text>
+          {appointments.map((appointment, index) => (
+            <TouchableOpacity
+              key={index}
+              onPress={() =>
+                navigation.navigate("ViewAppointment", { data: appointment })
+              }
+            >
+              <View style={styles.appointmentContainer}>
+                <Image source={""} style={styles.image} />
+                <View style={styles.appointmentDetails}>
+                  <Text style={styles.appointmentName}>
+                    {" "}
+                    {appointment.title}{" "}
+                  </Text>
+                  <View style={{ flexDirection: "row", marginTop: 5 }}>
+                    <Text style={styles.appointmentDate}>
+                      {appointment.date}{" "}
+                    </Text>
+                    <Text style={styles.appointmentTime}>
+                      {appointment.time}{" "}
+                    </Text>
+                  </View>
                 </View>
               </View>
-            </View>
-          </TouchableOpacity>
-          {/* ))} */}
+            </TouchableOpacity>
+          ))}
         </View>
       </ScrollView>
     </View>

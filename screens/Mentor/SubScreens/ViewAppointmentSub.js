@@ -17,9 +17,10 @@ import { useNavigation } from "@react-navigation/native";
 import AcceptModel from "../../../components/Mentor/acceptModel";
 import DeclineModel from "../../../components/Mentor/declineModel";
 
-const ViewAppointmentSub = () => {
+const ViewAppointmentSub = (data) => {
+  const appointmentdata = data.data;
   const [loading, setLoading] = useState(false);
-  const [data, setData] = useState("");
+  const [values, setValues] = useState("");
   const [isAcceptModalVisible, setAcceptModalVisible] = useState(false);
   const [isDeclineModalVisible, setDeclineModalVisible] = useState(false);
   const navigation = useNavigation();
@@ -30,6 +31,59 @@ const ViewAppointmentSub = () => {
 
   const toggleDeclineModal = () => {
     setDeclineModalVisible(!isDeclineModalVisible);
+  };
+
+  useEffect(() => {
+    setLoading(true);
+    setValues(appointmentdata);
+    setLoading(false);
+  }, []);
+
+  const _acceptAppointment = async (sessionUrl, note) => {
+    try {
+      const appointmentRef = doc(
+        db,
+        "appointments",
+        appointmentdata.appointmentID.trim()
+      );
+      const appointmentSnap = await getDoc(appointmentRef);
+
+      if (appointmentSnap.exists()) {
+        await updateDoc(appointmentRef, {
+          appointmentStatus: "Accepted",
+          sessionUrl: sessionUrl,
+          note: note,
+        });
+        navigation.navigate("ViewAppointmentList");
+      } else {
+        console.log("No such document!");
+      }
+    } catch (e) {
+      console.error("Error updating document: ", e);
+    }
+  };
+
+  const _declineAppointment = async (note) => {
+    try {
+      const appointmentRef = doc(
+        db,
+        "appointments",
+        appointmentdata.appointmentID.trim()
+      );
+      const appointmentSnap = await getDoc(appointmentRef);
+
+      if (appointmentSnap.exists()) {
+        await updateDoc(appointmentRef, {
+          appointmentStatus: "Rejected",
+          note: note,
+        });
+        navigation.navigate("ViewAppointmentList");
+      } else {
+        console.log("No such document!");
+      }
+    } catch (e) {
+      console.error("Error updating document: ", e);
+    }
   };
 
   return (
@@ -53,7 +107,7 @@ const ViewAppointmentSub = () => {
             <View style={{ flexDirection: "row" }}>
               <Image
                 source={{
-                  uri: data.image,
+                  uri: values.image,
                 }}
                 style={styles.userImage}
               />
@@ -68,7 +122,7 @@ const ViewAppointmentSub = () => {
                       fontSize: 24,
                     }}
                   >
-                    {data.name}
+                    {values.name}
                   </Text>
                 </View>
                 <View style={{ marginLeft: 8 }}>
@@ -79,7 +133,7 @@ const ViewAppointmentSub = () => {
                       fontWeight: "400",
                     }}
                   >
-                    Age of {data.age}
+                    Age of {values.age}
                   </Text>
                 </View>
               </View>
@@ -90,13 +144,13 @@ const ViewAppointmentSub = () => {
               <ScrollView>
                 <View>
                   <Text style={styles.mainFieldName}>Title</Text>
-                  <Text style={styles.fieldData}>{data.title}</Text>
+                  <Text style={styles.fieldData}>{values.title}</Text>
                   <Text style={styles.mainFieldName}>Description</Text>
-                  <Text style={styles.fieldData}>{data.description}</Text>
+                  <Text style={styles.fieldData}>{values.description}</Text>
                   <Text style={styles.mainFieldName}>Date</Text>
-                  <Text style={styles.fieldData}>{data.date}</Text>
+                  <Text style={styles.fieldData}>{values.date}</Text>
                   <Text style={styles.mainFieldName}>Time</Text>
-                  <Text style={styles.fieldData}>{data.time}</Text>
+                  <Text style={styles.fieldData}>{values.time}</Text>
                 </View>
               </ScrollView>
             </View>
@@ -114,6 +168,7 @@ const ViewAppointmentSub = () => {
               <AcceptModel
                 close={toggleAcceptModal}
                 visible={isAcceptModalVisible}
+                accept={_acceptAppointment}
               />
               <View style={{ marginRight: 12 }}>
                 <TouchableOpacity
@@ -126,6 +181,7 @@ const ViewAppointmentSub = () => {
               <DeclineModel
                 closeDeclineModal={toggleDeclineModal}
                 visibleDeclineModal={isDeclineModalVisible}
+                decline={_declineAppointment}
               />
               <TouchableOpacity
                 style={styles.button}

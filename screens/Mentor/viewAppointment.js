@@ -3,11 +3,12 @@ import { StyleSheet, View } from "react-native";
 import React from "react";
 import ViewAppointmentSub from "./SubScreens/ViewAppointmentSub";
 
-const ViewAppointment = ({ navigation, route }) => {
+const ViewAppointment = ({ route }) => {
+  const appointmentdata = route.params.data;
   return (
     <SafeAreaView style={styles.container}>
       <View>
-        <ViewAppointmentSub />
+        <ViewAppointmentSub data={appointmentdata} />
       </View>
     </SafeAreaView>
   );
