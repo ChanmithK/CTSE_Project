@@ -2,23 +2,39 @@ import {
   View,
   Text,
   StyleSheet,
-  Image,
   TouchableOpacity,
   ScrollView,
   Dimensions,
-  ActivityIndicator,
+  Alert,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { db } from "../../../firebase";
-import { deleteDoc, doc, getDoc } from "firebase/firestore";
+import { deleteDoc, doc } from "firebase/firestore";
 
 const ViewContentSubPage = ({ content, isAuthor }) => {
   const navigation = useNavigation();
 
   const deleteContent = () => {
-    deleteDoc(doc(db, "Content", content.id));
-    navigation.navigate("MyContentList");
+    Alert.alert(
+      "Delete Content",
+      "Are you sure you want to delete this content?",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
+        },
+        {
+          text: "OK",
+          onPress: () => {
+            deleteDoc(doc(db, "Content", content.id));
+            navigation.navigate("MyContentList");
+          },
+        },
+      ],
+      { cancelable: false }
+    );
   };
 
   return (

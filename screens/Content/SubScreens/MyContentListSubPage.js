@@ -14,7 +14,6 @@ import {
   query,
   onSnapshot,
   where,
-  orderBy,
 } from "firebase/firestore";
 import { db } from "../../../firebase";
 import { useNavigation } from "@react-navigation/native";
@@ -134,7 +133,6 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
     resizeMode: "contain",
-    color: "#8E8E93",
   },
   contentCard: {
     position: "relative",

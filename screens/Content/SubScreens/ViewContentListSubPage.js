@@ -198,7 +198,6 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
     resizeMode: "contain",
-    color: "#8E8E93",
   },
   contentCard: {
     position: "relative",
