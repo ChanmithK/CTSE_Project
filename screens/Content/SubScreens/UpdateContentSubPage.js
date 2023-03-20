@@ -15,7 +15,7 @@ import {
 import * as Yup from "yup";
 import { Formik } from "formik";
 import { useNavigation } from "@react-navigation/native";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, updateDoc } from "firebase/firestore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { db } from "../../../firebase";
 import { Picker } from "@react-native-picker/picker";
@@ -28,46 +28,32 @@ const AddContentSchema = Yup.object().shape({
   _category: Yup.string().required("Category is required"),
 });
 
-const AddContentSubPage = () => {
+const UpdateContentSubPage = ({ content }) => {
   const navigation = useNavigation();
   const windowHeight = Dimensions.get("window").height;
 
-  const [user, setUser] = React.useState(null);
-  const contentRef = collection(db, "Content");
-
-  useEffect(() => {
-    const getUser = async () => {
-      const user = await AsyncStorage.getItem("User");
-      setUser(JSON.parse(user));
-    };
-    // getUser();
-  }, []);
-
-  const addContent = async (values) => {
+  const updateContent = async (values) => {
     try {
-      await addDoc(contentRef, {
+      const doc = await updateDoc(doc(db, "Content", content.id), {
         title: values._title,
         description: values._description,
         category: values._category,
-        authorID: "cXKMDi7syjf9EDpoF9aY",
-        authorName: "Nilaksha Perera",
-        date: new Date().toISOString().slice(0, 10),
-      }).then(navigation.navigate("ViewContentList"));
-    } catch (e) {
-      console.error("Error adding document: ", e);
+      });
+      navigation.navigate("ViewContentList");
+    } catch (error) {
+      console.log(error);
     }
   };
 
   return (
     <Formik
       initialValues={{
-        _description: "",
-        _category: "",
-        _title: "",
-        _hashTags: "",
+        _description: content.description,
+        _category: content.category,
+        _title: content.title,
       }}
       onSubmit={(values) => {
-        addContent(values);
+        updateContent(values);
       }}
       validationSchema={AddContentSchema}
       validateOnMount={false}
@@ -84,7 +70,6 @@ const AddContentSubPage = () => {
                 marginHorizontal: 10,
               }}
             >
-              {/* Field data */}
               <View>
                 <ScrollView>
                   <View>
@@ -93,6 +78,7 @@ const AddContentSubPage = () => {
                       style={[styles.input, { height: 40 }]}
                       onChangeText={handleChange("_title")}
                       onBlur={handleBlur("_title")}
+                      defaultValue={values._title}
                     />
                     {errors._title && (
                       <Text style={{ color: "red" }}>{errors._title}</Text>
@@ -104,8 +90,12 @@ const AddContentSubPage = () => {
                       style={styles.input}
                       selectedValue={values._category}
                       onValueChange={handleChange("_category")}
+                      defaultValue={values._category}
                     >
-                      <Picker.Item label="Select Category" value="" />
+                      <Picker.Item
+                        label={values._category}
+                        value={values._category}
+                      />
                       <Picker.Item label="Business" value="Business" />
                       <Picker.Item label="IT" value="IT" />
                       <Picker.Item
@@ -135,6 +125,7 @@ const AddContentSubPage = () => {
                       style={[styles.input, { height: 450 }]}
                       onChangeText={handleChange("_description")}
                       onBlur={handleBlur("_description")}
+                      defaultValue={values._description}
                     />
                     {errors._description && (
                       <Text style={{ color: "red" }}>
@@ -145,7 +136,6 @@ const AddContentSubPage = () => {
                 </ScrollView>
               </View>
 
-              {/* Buttons */}
               <View
                 style={{
                   bottom: 0,
@@ -154,7 +144,7 @@ const AddContentSubPage = () => {
                 }}
               >
                 <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-                  <Text style={styles.buttonText}>Publish</Text>
+                  <Text style={styles.buttonText}>Save Changes</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -211,4 +201,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddContentSubPage;
+export default UpdateContentSubPage;
