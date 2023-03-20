@@ -7,9 +7,10 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import React from 'react';
+import FormikLogin from './FormikLogin';
 import { useNavigation } from '@react-navigation/native';
-//
-const InitialPage = () => {
+
+const LoginForm = () => {
   const navigation = useNavigation();
   return (
     <View>
@@ -23,28 +24,18 @@ const InitialPage = () => {
           <View style={styles.FormikForm}>
             <Text style={styles.MainTitle}>BoostBiz</Text>
             <Text style={styles.SubTitle}>
-              To get the best user experience please select your role inside
-              BoostBiz
+              Unleash your entrepreneurial potential.
             </Text>
             <View style={{ marginTop: 9 }}>
-              <TouchableOpacity
-                //onPress={() => navigation.navigate('RegisterScreenUser')}
-                style={styles.buttonContainer}
-              >
-                <Text style={styles.buttonText}>User</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                //onPress={() => navigation.navigate('RegisterScreenMentor')}
-                style={styles.buttonContainer}
-              >
-                <Text style={styles.buttonText}>Mentor</Text>
-              </TouchableOpacity>
+              <FormikLogin />
             </View>
-            <View style={{ marginTop: '10%' }}>
+            <View>
               <TouchableOpacity
-              //onPress={() => navigation.navigate('LoginScreen')}
+                onPress={() => {
+                  navigation.navigate('InitialPageScreen');
+                }}
               >
-                <Text style={styles.CreateAccount}>Login</Text>
+                <Text style={styles.CreateAccount}>Create an account</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -53,7 +44,7 @@ const InitialPage = () => {
     </View>
   );
 };
-//
+
 const LoginImage = () => (
   <View>
     <Image
@@ -62,23 +53,23 @@ const LoginImage = () => (
     />
   </View>
 );
-//
+
 const styles = StyleSheet.create({
-  container: {
-    // padding: 20,
-    flex: 1,
-  },
   image: {
     width: 200,
     height: 200,
     alignSelf: 'center',
   },
   LoginContaier: {
+    paddingLeft: 15,
+    paddingRight: 15,
+    paddingTop: 5,
     elevation: 30,
     backgroundColor: 'white',
     borderRadius: 40,
     height: 500,
-    marginTop: 100,
+    marginTop: 10,
+    marginTop: 70,
   },
   FormikForm: {
     padding: 20,
@@ -94,33 +85,22 @@ const styles = StyleSheet.create({
     marginHorizontal: 8,
     color: '#1A2042',
     fontFamily: 'Roboto',
-    fontWeight: '600',
-    marginTop: 10,
-    marginBottom: 20,
+    fontWeight: '700',
+    marginTop: 2,
+    marginBottom: 2,
   },
   Image: {
     width: 200,
     height: 150,
     alignSelf: 'center',
-    marginTop: 200,
+    marginTop: 150,
   },
   CreateAccount: {
+    marginTop: 30,
     fontSize: 15,
     alignSelf: 'center',
     color: '#3D3EEF',
-    marginTop: 20,
-  },
-  buttonContainer: {
-    backgroundColor: '#3D3EEF',
-    paddingVertical: 20,
-    borderRadius: 10,
-    marginTop: 20,
-  },
-  buttonText: {
-    textAlign: 'center',
-    color: '#FFFFFF',
-    fontWeight: '700',
   },
 });
 
-export default InitialPage;
+export default LoginForm;
