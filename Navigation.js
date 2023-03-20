@@ -23,7 +23,7 @@ const SignedInStack = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="booked-appointment-list"
+        initialRouteName="ViewAppointmentList"
         screenOptions={screenOptions}
       >
         <Stack.Screen name="Login" component={ViewAppointment} />

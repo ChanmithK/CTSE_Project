@@ -12,7 +12,7 @@ import { useState } from "react";
 // import { doc, getDoc, addDoc, collection, updateDoc } from "firebase/firestore";
 // import { db } from "../../../firebase";
 
-const AcceptModel = ({ close, visible }) => {
+const AcceptModel = ({ close, visible, accept }) => {
   const [note, setNote] = useState("");
   const [sessionUrl, setSessionUrl] = useState("");
   const [errors, setErrors] = useState({
@@ -37,10 +37,8 @@ const AcceptModel = ({ close, visible }) => {
         ...prev,
         note: "Note is required",
       }));
-    }
-    if (sessionUrl !== "" && note !== "") {
-      toggleAcceptModal();
     } else {
+      accept(sessionUrl, note);
     }
   };
 

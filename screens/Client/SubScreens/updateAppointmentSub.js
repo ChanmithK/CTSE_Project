@@ -24,12 +24,13 @@ import { db } from "../../../firebase";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
 const UpdateAppointmentsub = (data) => {
+  const appointmentdata = data.data;
   const InitalState = {
-    description: data.data.description,
-    date: data.data.date,
-    time: data.data.time,
-    appointmentID: data.data.appointmentID,
-    title: data.data.title,
+    description: appointmentdata.description,
+    date: appointmentdata.date,
+    time: appointmentdata.time,
+    appointmentID: appointmentdata.appointmentID,
+    title: appointmentdata.title,
   };
 
   const navigation = useNavigation();

@@ -22,21 +22,21 @@ import {
 import { db } from "../../../firebase";
 
 const BookedAppointmentSub = (data) => {
-  console.log("data", data);
+  const appointmentdata = data.data;
   const InitalState = {
-    description: data.data.description,
-    date: data.data.date,
-    time: data.data.time,
-    userID: data.data.userID,
-    mentorID: data.data.mentorID,
-    mentorName: data.data.mentorName,
-    appointmentID: data.data.appointmentID,
-    name: data.data.name,
-    email: data.data.email,
-    title: data.data.title,
-    appointmentStatus: data.data.appointmentStatus,
-    mentorNote: data.data.mentorNote,
-    sessionLink: data.data.sessionLink,
+    description: appointmentdata.description,
+    date: appointmentdata.date,
+    time: appointmentdata.time,
+    userID: appointmentdata.userID,
+    mentorID: appointmentdata.mentorID,
+    mentorName: appointmentdata.mentorName,
+    appointmentID: appointmentdata.appointmentID,
+    name: appointmentdata.name,
+    email: appointmentdata.email,
+    title: appointmentdata.title,
+    appointmentStatus: appointmentdata.appointmentStatus,
+    mentorNote: appointmentdata.mentorNote,
+    sessionLink: appointmentdata.sessionLink,
   };
 
   const navigation = useNavigation();
