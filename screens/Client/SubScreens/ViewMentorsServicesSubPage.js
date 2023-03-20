@@ -29,8 +29,6 @@ export const ViewMentorsServicesSubPage = (props) => {
     getServices();
   }, []);
 
-  console.log("searchResult", searchResult);
-
   const searchService = (text) => {
     setSearchKey(text);
 

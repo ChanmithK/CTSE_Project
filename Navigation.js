@@ -1,8 +1,6 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { Test } from "./screens/Test";
-import { Test2 } from "./screens/Test2";
 import LoginForm from "./components/Common/Login";
 import { AddService } from "./screens/Mentor/AddService";
 import { ViewServices } from "./screens/Mentor/ViewServices";
@@ -11,6 +9,12 @@ import { EditService } from "./screens/Mentor/EditService";
 import { ViewMentorsServices } from "./screens/Client/ViewMentorsServices";
 import AddContent from "./screens/Content/AddContent";
 import ViewContentList from "./screens/Content/ViewContentList";
+import CreateAppointment from "./screens/Client/createAppointment";
+import BookedAppointment from "./screens/Client/bookedAppointment";
+import UpdateAppointment from "./screens/Client/updateAppointment";
+import ViewAppointment from "./screens/Mentor/viewAppointment";
+import ViewAppointmentList from "./screens/Mentor/viewAppointmentList";
+import BookedAppointmentList from "./screens/Client/bookedAppointmentList";
 import ViewContent from "./screens/Content/ViewContent";
 import MyContentList from "./screens/Content/MyContentList";
 import UpdateContent from "./screens/Content/UpdateContent";
@@ -22,23 +26,33 @@ const SignedInStack = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="MyContentList"
+        initialRouteName="ViewAppointmentList"
         screenOptions={screenOptions}
       >
-        <Stack.Screen name="Test1" component={Test} />
-        <Stack.Screen name="Test2" component={Test2} />
-        <Stack.Screen name="Login" component={LoginForm} />
+        <Stack.Screen name="Login" component={ViewAppointment} />
 
         {/* Mentor */}
         <Stack.Screen name="AddService" component={AddService} />
         <Stack.Screen name="ViewServices" component={ViewServices} />
         <Stack.Screen name="ViewServiceScreen" component={ViewService} />
         <Stack.Screen name="EditServiceScreen" component={EditService} />
+        <Stack.Screen name="ViewAppointment" component={ViewAppointment} />
+        <Stack.Screen
+          name="ViewAppointmentList"
+          component={ViewAppointmentList}
+        />
 
         {/* Client */}
         <Stack.Screen
           name="ViewMentorsServicesScreen"
           component={ViewMentorsServices}
+        />
+        <Stack.Screen name="create-appointment" component={CreateAppointment} />
+        <Stack.Screen name="booked-appointment" component={BookedAppointment} />
+        <Stack.Screen name="update-appointment" component={UpdateAppointment} />
+        <Stack.Screen
+          name="booked-appointment-list"
+          component={BookedAppointmentList}
         />
 
         {/* Content */}

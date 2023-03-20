@@ -51,8 +51,6 @@ export const ViewServicesSubPage = (props) => {
     );
   };
 
-  console.log("searchResult", searchResult);
-
   return (
     <View style={styles.container}>
       <KeyboardAvoidingView
