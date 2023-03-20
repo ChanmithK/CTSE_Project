@@ -12,6 +12,7 @@ import { ViewMentorsServices } from './screens/Client/ViewMentorsServices';
 import AddContent from './screens/Content/AddContent';
 import ViewContentList from './screens/Content/ViewContentList';
 import InitialPage from './screens/Common/InitialPage';
+import LoginScreen from './screens/LoginScreen';
 
 const Stack = createStackNavigator();
 const screenOptions = { headerShown: false };
@@ -23,7 +24,7 @@ const SignedInStack = () => {
         initialRouteName='InitialPage'
         screenOptions={screenOptions}
       >
-        <Stack.Screen name='initialPage' component={InitialPage} />
+        <Stack.Screen name='login' component={LoginScreen} />
 
         <Stack.Screen name='Test1' component={Test} />
         <Stack.Screen name='Test2' component={Test2} />
