@@ -20,9 +20,9 @@ const RegisterFormUser = () => {
       >
         <View style={styles.registerContaier}>
           <View style={styles.FormikForm}>
-            <Text style={styles.MainTitle}>Bloom</Text>
+            <Text style={styles.MainTitle}>BoostBiz</Text>
             <Text style={styles.SubTitle}>
-              You’re one step away from getting started with Bloom.
+              You’re one step away from getting started with BoostBiz.
             </Text>
             <View style={{ marginTop: 15, maxHeight: 570 }}>
               <ScrollView>
