@@ -27,7 +27,7 @@ const RegisterSchema = Yup.object().shape({
   email: Yup.string().email().required('Email is required'),
   fullName: Yup.string().required('FullName is required'),
   age: Yup.string()
-    .required('Age is required')
+    .required('Date of birth is required')
     .matches(
       /^\d{4}-\d{2}-\d{2}$/,
       'Age must be a valid date in YYYY-MM-DD format'
@@ -78,7 +78,6 @@ const FormikRegister = () => {
         password: '',
         fullName: '',
         age: '',
-        // Repassword: "",
       }}
       onSubmit={(values) => {
         createUser(values);
@@ -117,7 +116,7 @@ const FormikRegister = () => {
                 style={styles.input}
               >
                 <Text style={styles.placeholderText}>
-                  {values.age ? values.age : 'Age (YYYY-MM-DD)'}
+                  {values.age ? values.age : 'DOB (YYYY-MM-DD)'}
                 </Text>
               </TouchableOpacity>
               {showDatePicker && (
