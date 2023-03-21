@@ -28,7 +28,7 @@ const InitialPage = () => {
             </Text>
             <View style={{ marginTop: 9 }}>
               <TouchableOpacity
-                //onPress={() => navigation.navigate('RegisterScreenUser')}
+                onPress={() => navigation.navigate('registerUser')}
                 style={styles.buttonContainer}
               >
                 <Text style={styles.buttonText}>User</Text>
@@ -41,9 +41,7 @@ const InitialPage = () => {
               </TouchableOpacity>
             </View>
             <View style={{ marginTop: '10%' }}>
-              <TouchableOpacity
-              //onPress={() => navigation.navigate('LoginScreen')}
-              >
+              <TouchableOpacity onPress={() => navigation.navigate('login')}>
                 <Text style={styles.CreateAccount}>Login</Text>
               </TouchableOpacity>
             </View>
