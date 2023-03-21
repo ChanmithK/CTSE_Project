@@ -13,6 +13,7 @@ import AddContent from './screens/Content/AddContent';
 import ViewContentList from './screens/Content/ViewContentList';
 import InitialPage from './screens/Common/InitialPage';
 import LoginScreen from './screens/LoginScreen';
+import RegisterScreenUser from './screens/RegisterScreenUser';
 
 const Stack = createStackNavigator();
 const screenOptions = { headerShown: false };
@@ -25,6 +26,8 @@ const SignedInStack = () => {
         screenOptions={screenOptions}
       >
         <Stack.Screen name='login' component={LoginScreen} />
+        <Stack.Screen name='registerUser' component={RegisterScreenUser} />
+        <Stack.Screen name='initialPage' component={InitialPage} />
 
         <Stack.Screen name='Test1' component={Test} />
         <Stack.Screen name='Test2' component={Test2} />

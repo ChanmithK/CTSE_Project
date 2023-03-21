@@ -4,14 +4,12 @@ import {
   StyleSheet,
   Image,
   KeyboardAvoidingView,
-  TouchableOpacity,
 } from 'react-native';
 import React from 'react';
-import FormikLogin from './FormikLogin';
-import { useNavigation } from '@react-navigation/native';
+import FormikRegister from './FormikRegister';
+import { ScrollView } from 'react-native-gesture-handler';
 
-const LoginForm = () => {
-  const navigation = useNavigation();
+const RegisterFormUser = () => {
   return (
     <View>
       <LoginImage />
@@ -20,23 +18,16 @@ const LoginForm = () => {
         keyboardVerticalOffset={-110}
         enabled
       >
-        <View style={styles.LoginContaier}>
+        <View style={styles.registerContaier}>
           <View style={styles.FormikForm}>
-            <Text style={styles.MainTitle}>BoostBiz</Text>
+            <Text style={styles.MainTitle}>Bloom</Text>
             <Text style={styles.SubTitle}>
-              Unleash your entrepreneurial potential.
+              You’re one step away from getting started with Bloom.
             </Text>
-            <View style={{ marginTop: 9 }}>
-              <FormikLogin />
-            </View>
-            <View>
-              <TouchableOpacity
-                onPress={() => {
-                  navigation.navigate('initialPage');
-                }}
-              >
-                <Text style={styles.CreateAccount}>Create an account</Text>
-              </TouchableOpacity>
+            <View style={{ marginTop: 15, maxHeight: 570 }}>
+              <ScrollView>
+                <FormikRegister />
+              </ScrollView>
             </View>
           </View>
         </View>
@@ -55,21 +46,18 @@ const LoginImage = () => (
 );
 
 const styles = StyleSheet.create({
-  image: {
-    width: 200,
-    height: 200,
-    alignSelf: 'center',
+  container: {
+    // padding: 20,
+    flex: 1,
   },
-  LoginContaier: {
+  registerContaier: {
     paddingLeft: 15,
     paddingRight: 15,
-    paddingTop: 5,
-    elevation: 30,
+    elevation: 10,
     backgroundColor: 'white',
-    borderRadius: 40,
-    height: 500,
-    marginTop: 10,
-    marginTop: 70,
+    borderRadius: 50,
+    height: 700,
+    marginTop: 60,
   },
   FormikForm: {
     padding: 20,
@@ -86,21 +74,19 @@ const styles = StyleSheet.create({
     color: '#1A2042',
     fontFamily: 'Roboto',
     fontWeight: '700',
-    marginTop: 2,
-    marginBottom: 2,
+    marginTop: 5,
   },
   Image: {
-    width: 200,
-    height: 150,
+    width: 100,
+    height: 100,
     alignSelf: 'center',
-    marginTop: 150,
+    marginTop: 100,
   },
   CreateAccount: {
-    marginTop: 30,
     fontSize: 15,
     alignSelf: 'center',
-    color: '#3D3EEF',
+    color: '#ED6A8C',
   },
 });
 
-export default LoginForm;
+export default RegisterFormUser;

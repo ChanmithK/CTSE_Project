@@ -14,7 +14,6 @@ import * as Yup from 'yup';
 import { Formik } from 'formik';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
-
 // validation schema for login form
 const LoginSchema = Yup.object().shape({
   password: Yup.string()
@@ -25,7 +24,6 @@ const LoginSchema = Yup.object().shape({
 // login form
 const FormikLogin = () => {
   const [loading, setLoading] = useState(false);
-
   const navigation = useNavigation();
   const onLogin = async (email, password) => {
     setLoading(true);
@@ -51,9 +49,9 @@ const FormikLogin = () => {
             AsyncStorage.setItem('UserRole', JSON.stringify(userData[0].role));
 
             if (userData[0].role === 'User') {
-              navigation.navigate('ClientHomeScreen');
+              console.log('this is a regular user');
             } else {
-              navigation.navigate('AppointmentListScreen');
+              console.log('this is a mentor');
             }
             setLoading(false);
           };
