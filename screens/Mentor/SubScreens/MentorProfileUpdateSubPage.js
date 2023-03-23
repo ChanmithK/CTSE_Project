@@ -29,6 +29,7 @@ const MentorProfileUpdateSubPage = () => {
   const [data, setData] = useState('');
   const [name, setName] = useState('');
   const [bio, setBio] = useState('');
+  const [position, setPosition] = useState('');
   const [showDatePicker, setShowDatePicker] = useState(false);
   const windowHeight = Dimensions.get('window').height;
 
@@ -52,10 +53,8 @@ const MentorProfileUpdateSubPage = () => {
       const blob = await response.blob();
       const imageRef = ref(storage, `images/${id}/profilePicture.jpg`);
 
-      // Upload the image to Firebase Storage
       await uploadBytes(imageRef, blob);
 
-      // Get the download URL and update the Firestore document
       const imageUrl = await getDownloadURL(imageRef);
       const userDoc = doc(db, 'Users', id);
       await updateDoc(userDoc, { image: imageUrl });
@@ -138,6 +137,7 @@ const MentorProfileUpdateSubPage = () => {
     fetchData();
     setName(data.name);
     setBio(data.bio);
+    setPosition(data.position);
     if (data.age) {
       setDate(stringToDate(data.age));
     }
@@ -148,11 +148,18 @@ const MentorProfileUpdateSubPage = () => {
       setWorkingTimeTo(getTimeFromString(data.workingTimeTo));
     }
     requestPermissions();
-  }, [data.name, data.bio, data.age, data.workingTimeFrom, data.workingTimeTo]);
+  }, [
+    data.name,
+    data.bio,
+    data.age,
+    data.workingTimeFrom,
+    data.workingTimeTo,
+    data.position,
+  ]);
 
   const updateProfile = () => {
     const userDoc = doc(db, 'Users', id);
-    const formattedDate = date.toISOString().split('T')[0]; // Convert the date object to a string in the format 'yyyy-mm-dd'
+    const formattedDate = date.toISOString().split('T')[0];
     const formatttedTime = formatTime(workingTimeFrom.toLocaleTimeString());
     const timeTo = formatTime(workingTimeTo.toLocaleTimeString());
     updateDoc(userDoc, {
@@ -161,6 +168,7 @@ const MentorProfileUpdateSubPage = () => {
       age: formattedDate,
       workingTimeFrom: formatttedTime,
       workingTimeTo: timeTo,
+      position: position,
     }).then(() => console.log('CounsellorProfileScreen'));
   };
 
@@ -196,7 +204,7 @@ const MentorProfileUpdateSubPage = () => {
               </View>
 
               {/* Field data */}
-              <View style={{ maxHeight: 600 }}>
+              <View style={{ maxHeight: 600, paddingBottom: 40 }}>
                 <ScrollView>
                   <View>
                     <Text style={styles.mainFieldName}>Name</Text>
@@ -205,6 +213,13 @@ const MentorProfileUpdateSubPage = () => {
                       defaultValue={data.name}
                       style={[styles.input, { height: 40 }]}
                       onChangeText={(text) => setName(text)}
+                    />
+                    <Text style={styles.mainFieldName}>Position</Text>
+                    <TextInput
+                      multiline={false}
+                      defaultValue={data.position}
+                      style={[styles.input, { height: 40 }]}
+                      onChangeText={(text) => setPosition(text)}
                     />
                     <Text style={styles.mainFieldName}>Bio</Text>
                     <TextInput
