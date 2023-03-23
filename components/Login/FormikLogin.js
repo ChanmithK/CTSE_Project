@@ -76,6 +76,7 @@ const FormikLogin = () => {
               console.log('this is a regular user');
             } else {
               console.log('this is a mentor');
+              navigation.navigate('mentorProfile');
             }
             // setting this to false will hide the loading indicator
             setLoading(false);
