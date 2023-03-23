@@ -33,10 +33,11 @@ export const ViewMentorsServicesSubPage = (props) => {
     setSearchKey(text);
 
     setSearchResult(
-      servicesList.filter(
-        (service) =>
-          service.serviceTitle.toLowerCase().includes(text.toLowerCase()) ||
-          service.serviceCategory.toLowerCase().includes(text.toLowerCase())
+      servicesList.filter((service) =>
+        service.serviceTitle.toLowerCase().includes(text.toLowerCase()) ||
+        service.serviceCategory
+          ? service.serviceCategory.toLowerCase().includes(text.toLowerCase())
+          : null
       )
     );
   };

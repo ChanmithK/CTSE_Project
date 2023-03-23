@@ -19,7 +19,7 @@ const SignedInStack = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="ViewMentorsServicesScreen"
+        initialRouteName="ViewServices"
         screenOptions={screenOptions}
       >
         <Stack.Screen name="Test1" component={Test} />

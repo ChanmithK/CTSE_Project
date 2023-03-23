@@ -25,6 +25,7 @@ import {
 } from "firebase/storage";
 import { Picker } from "@react-native-picker/picker";
 import { KeyboardAvoidingView } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const AddServiceSchema = Yup.object().shape({
   _ServiceTitle: Yup.string()
@@ -39,6 +40,8 @@ const AddServiceSchema = Yup.object().shape({
   _ServiceDuration: Yup.string().required("Duration is required!"),
 });
 export const AddServiceSubPage = (props) => {
+  const mentorID = "1";
+
   const navigation = useNavigation();
   const windowHeight = Dimensions.get("window").height;
   const [image, setImage] = useState(null);
@@ -49,10 +52,20 @@ export const AddServiceSubPage = (props) => {
   const storage = getStorage();
 
   const addService = async (values) => {
+    // const value = AsyncStorage.getItem("UserID");
+    // const mentorID = JSON.parse(value);
+
+    console.log("********************MentorId*********************", mentorID);
+    // const mentorID = JSON.parse(value);
     const date = new Date();
     const dateString = date.toISOString().substring(0, 10);
     if (imageURL != null) {
+      console.log(
+        "********************MentorId*********************",
+        mentorID
+      );
       const docRef = await addDoc(collection(db, "services"), {
+        mentorId: mentorID,
         serviceTitle: values._ServiceTitle,
         serviceCategory: selectedCategory,
         serviceDescription: values._ServiceDescription,
@@ -180,135 +193,142 @@ export const AddServiceSubPage = (props) => {
               behavior={Platform.OS === "ios" ? "padding" : "height"}
               style={styles.container}
             >
-              <ScrollView
-                style={{
-                  height: windowHeight - 50,
-                }}
-              >
-                <View style={styles.formContainer}>
-                  <Text style={[styles.mainFieldName, { marginTop: -7 }]}>
-                    Service Title
-                  </Text>
-                  <TextInput
-                    style={[styles.input, { height: 40 }]}
-                    onChangeText={handleChange("_ServiceTitle")}
-                    onBlur={handleBlur("_ServiceTitle")}
-                    value={values._ServiceTitle}
-                  />
-                  {errors._ServiceTitle && touched._ServiceTitle ? (
-                    <Text style={styles.formikErrorMessage}>
-                      {errors._ServiceTitle}
+              <View style={{ flex: 1 }}>
+                <ScrollView
+                  style={{
+                    height: windowHeight - 50,
+                  }}
+                >
+                  <View style={styles.formContainer}>
+                    <Text style={[styles.mainFieldName, { marginTop: -7 }]}>
+                      Service Title
                     </Text>
-                  ) : null}
-
-                  <Text style={styles.mainFieldName}>Service Category</Text>
-                  <Picker
-                    selectedValue={selectedCategory}
-                    onValueChange={(itemValue) =>
-                      setSelectedCategory(itemValue)
-                    }
-                    style={styles.picker}
-                  >
-                    <Picker.Item label="Select a category..." value="" />
-                    <Picker.Item label="Business" value="business" />
-                    <Picker.Item label="Career" value="career" />
-                    <Picker.Item label="Health" value="health" />
-                    <Picker.Item label="Education" value="education" />
-                    <Picker.Item
-                      label="personal development"
-                      value="personalDevelopment"
+                    <TextInput
+                      style={[styles.input, { height: 40 }]}
+                      onChangeText={handleChange("_ServiceTitle")}
+                      onBlur={handleBlur("_ServiceTitle")}
+                      value={values._ServiceTitle}
                     />
-                  </Picker>
+                    {errors._ServiceTitle && touched._ServiceTitle ? (
+                      <Text style={styles.formikErrorMessage}>
+                        {errors._ServiceTitle}
+                      </Text>
+                    ) : null}
 
-                  <Text style={styles.mainFieldName}>Service Description</Text>
-                  <TextInput
-                    style={[styles.input, { textAlignVertical: "top" }]}
-                    onChangeText={handleChange("_ServiceDescription")}
-                    onBlur={handleBlur("_ServiceDescription")}
-                    value={values._ServiceDescription}
-                    multiline={true}
-                    numberOfLines={5}
-                  />
+                    <Text style={styles.mainFieldName}>Service Category</Text>
+                    <Picker
+                      selectedValue={selectedCategory}
+                      onValueChange={(itemValue) =>
+                        setSelectedCategory(itemValue)
+                      }
+                      style={styles.picker}
+                    >
+                      <Picker.Item label="Select a category..." value="" />
+                      <Picker.Item label="Business" value="business" />
+                      <Picker.Item label="Career" value="career" />
+                      <Picker.Item label="Health" value="health" />
+                      <Picker.Item label="Education" value="education" />
+                      <Picker.Item
+                        label="personal development"
+                        value="personalDevelopment"
+                      />
+                    </Picker>
 
-                  {errors._ServiceDescription && touched._ServiceDescription ? (
-                    <Text style={styles.formikErrorMessage}>
-                      {errors._ServiceDescription}
+                    <Text style={styles.mainFieldName}>
+                      Service Description
                     </Text>
-                  ) : null}
+                    <TextInput
+                      style={[styles.input, { textAlignVertical: "top" }]}
+                      onChangeText={handleChange("_ServiceDescription")}
+                      onBlur={handleBlur("_ServiceDescription")}
+                      value={values._ServiceDescription}
+                      multiline={true}
+                      numberOfLines={5}
+                    />
 
-                  <Text style={styles.mainFieldName}>Service Price</Text>
-                  <TextInput
-                    style={[styles.input, { height: 40 }]}
-                    onChangeText={handleChange("_ServicePrice")}
-                    onBlur={handleBlur("_ServicePrice")}
-                    value={values._ServicePrice}
-                    keyboardType="numeric"
-                  />
+                    {errors._ServiceDescription &&
+                    touched._ServiceDescription ? (
+                      <Text style={styles.formikErrorMessage}>
+                        {errors._ServiceDescription}
+                      </Text>
+                    ) : null}
 
-                  {errors._ServicePrice && touched._ServicePrice ? (
-                    <Text style={styles.formikErrorMessage}>
-                      {errors._ServicePrice}
+                    <Text style={styles.mainFieldName}>Service Price</Text>
+                    <TextInput
+                      style={[styles.input, { height: 40 }]}
+                      onChangeText={handleChange("_ServicePrice")}
+                      onBlur={handleBlur("_ServicePrice")}
+                      value={values._ServicePrice}
+                      keyboardType="numeric"
+                    />
+
+                    {errors._ServicePrice && touched._ServicePrice ? (
+                      <Text style={styles.formikErrorMessage}>
+                        {errors._ServicePrice}
+                      </Text>
+                    ) : null}
+
+                    <Text style={styles.mainFieldName}>
+                      Service Duration (days)
                     </Text>
-                  ) : null}
+                    <TextInput
+                      style={[styles.input, { height: 40 }]}
+                      onChangeText={handleChange("_ServiceDuration")}
+                      onBlur={handleBlur("_ServiceDuration")}
+                      value={values._ServiceDuration}
+                    />
 
-                  <Text style={styles.mainFieldName}>Service Duration</Text>
-                  <TextInput
-                    style={[styles.input, { height: 40 }]}
-                    onChangeText={handleChange("_ServiceDuration")}
-                    onBlur={handleBlur("_ServiceDuration")}
-                    value={values._ServiceDuration}
-                  />
+                    {errors._ServiceDuration && touched._ServiceDuration ? (
+                      <Text style={styles.formikErrorMessage}>
+                        {errors._ServiceDuration}
+                      </Text>
+                    ) : null}
 
-                  {errors._ServiceDuration && touched._ServiceDuration ? (
-                    <Text style={styles.formikErrorMessage}>
-                      {errors._ServiceDuration}
-                    </Text>
-                  ) : null}
+                    <View style={{ margin: 30 }}>
+                      <View
+                        style={{
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <Button
+                          title="Upload Service Image"
+                          onPress={pickImage}
+                        />
+                        {image && (
+                          <Image
+                            source={{ uri: image }}
+                            style={{ width: 200, height: 200 }}
+                          />
+                        )}
+                      </View>
+                    </View>
 
-                  <View style={{ margin: 30 }}>
                     <View
                       style={{
-                        alignItems: "center",
-                        justifyContent: "center",
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        // marginTop: 20,
                       }}
                     >
-                      <Button
-                        title="Upload Service Image"
-                        onPress={pickImage}
-                      />
-                      {image && (
-                        <Image
-                          source={{ uri: image }}
-                          style={{ width: 200, height: 200 }}
-                        />
-                      )}
+                      <TouchableOpacity
+                        // onPress={handleSubmit}
+                        style={{
+                          backgroundColor: "#3D3EEF",
+                          width: "100%",
+                          height: 50,
+                          borderRadius: 5,
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                        onPress={handleSubmit}
+                      >
+                        <Text style={styles.buttonText}>Add Service</Text>
+                      </TouchableOpacity>
                     </View>
                   </View>
-
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      justifyContent: "space-between",
-                      // marginTop: 20,
-                    }}
-                  >
-                    <TouchableOpacity
-                      // onPress={handleSubmit}
-                      style={{
-                        backgroundColor: "#3D3EEF",
-                        width: "100%",
-                        height: 50,
-                        borderRadius: 5,
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                      onPress={handleSubmit}
-                    >
-                      <Text style={styles.buttonText}>Add Service</Text>
-                    </TouchableOpacity>
-                  </View>
-                </View>
-              </ScrollView>
+                </ScrollView>
+              </View>
             </KeyboardAvoidingView>
           </View>
         )}
