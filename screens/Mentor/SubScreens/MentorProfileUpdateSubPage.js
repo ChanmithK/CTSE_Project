@@ -29,6 +29,15 @@ const MentorProfileUpdateSubPage = () => {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const windowHeight = Dimensions.get('window').height;
 
+  const [workingTimeFrom, setWorkingTimeFrom] = useState(new Date());
+  const [showTimePicker, setShowTimePicker] = useState(false);
+
+  const onTimeChange = (event, selectedTime) => {
+    const currentTime = selectedTime || workingTimeFrom;
+    setShowTimePicker(Platform.OS === 'ios');
+    setWorkingTimeFrom(currentTime);
+  };
+
   const [date, setDate] = useState(new Date());
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -42,6 +51,26 @@ const MentorProfileUpdateSubPage = () => {
     const [year, month, day] = dateString.split('-').map(Number);
     return new Date(year, month - 1, day);
   }
+
+  function getTimeFromString(timeString) {
+    const hours = parseInt(timeString.split(':')[0], 10);
+    const minutes = parseInt(timeString.split(':')[1], 10);
+
+    const currentDate = new Date();
+    currentDate.setHours(hours, minutes, 0, 0);
+    return currentDate;
+  }
+
+  const formatTime = (time) => {
+    const afternoon = time.split('00')[1].trimStart();
+    if (afternoon === 'AM') {
+      return time.split(':00')[0];
+    } else {
+      var hour = parseInt(time.split(':')[0]);
+      hour = hour + 12;
+      return hour + ':' + time.split(':')[1];
+    }
+  };
 
   useEffect(() => {
     async function fetchData() {
@@ -59,16 +88,20 @@ const MentorProfileUpdateSubPage = () => {
     if (data.age) {
       setDate(stringToDate(data.age));
     }
-  }, [data.name, data.bio, data.age]);
+    if (data.workingTimeFrom) {
+      setWorkingTimeFrom(getTimeFromString(data.workingTimeFrom));
+    }
+  }, [data.name, data.bio, data.age, data.workingTimeFrom]);
 
   const updateProfile = () => {
     const userDoc = doc(db, 'Users', id);
     const formattedDate = date.toISOString().split('T')[0]; // Convert the date object to a string in the format 'yyyy-mm-dd'
-
+    const formatttedTime = formatTime(workingTimeFrom.toLocaleTimeString());
     updateDoc(userDoc, {
       name: name,
       bio: bio,
       age: formattedDate,
+      workingTimeFrom: formatttedTime,
     }).then(() => console.log('CounsellorProfileScreen'));
   };
 
@@ -102,7 +135,7 @@ const MentorProfileUpdateSubPage = () => {
               </View>
 
               {/* Field data */}
-              <View style={{ maxHeight: 400 }}>
+              <View style={{ maxHeight: 600 }}>
                 <ScrollView>
                   <View>
                     <Text style={styles.mainFieldName}>Name</Text>
@@ -144,6 +177,27 @@ const MentorProfileUpdateSubPage = () => {
                         is24Hour={true}
                         display='default'
                         onChange={onChange}
+                      />
+                    )}
+                    <Text style={styles.mainFieldName}>Working from</Text>
+                    <TouchableOpacity
+                      onPress={() => setShowTimePicker(true)}
+                      style={[
+                        styles.input,
+                        { height: 40, justifyContent: 'center' },
+                      ]}
+                    >
+                      <Text>{workingTimeFrom.toLocaleTimeString()}</Text>
+                    </TouchableOpacity>
+
+                    {showTimePicker && (
+                      <DateTimePicker
+                        testID='timePicker'
+                        value={workingTimeFrom}
+                        mode='time'
+                        is24Hour={true}
+                        display='default'
+                        onChange={onTimeChange}
                       />
                     )}
                   </View>

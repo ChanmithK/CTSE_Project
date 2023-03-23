@@ -15,13 +15,26 @@ import { db } from '../../../firebase';
 import { useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
-import { YellowBox } from 'react-native-web';
 
 const MentorProfileSubPage = () => {
   const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
   const [data, setData] = useState('');
   const windowHeight = Dimensions.get('window').height;
+
+  const formatTime = (time) => {
+    const hours = time.split(':')[0];
+    const minutes = time.split(':')[1];
+    if (hours > 12) {
+      return hours - 12 + ':' + minutes + ' PM';
+    } else if (hours == 12) {
+      return hours + ':' + minutes + ' PM';
+    } else if (hours == 0) {
+      return 12 + ':' + minutes + ' AM';
+    } else {
+      return hours + ':' + minutes + ' AM';
+    }
+  };
 
   useEffect(() => {
     async function fetchData() {
@@ -132,7 +145,8 @@ const MentorProfileSubPage = () => {
                   <Text style={styles.fieldData}>{data.age}</Text>
                   <Text style={styles.mainFieldName}>Working time</Text>
                   <Text style={styles.fieldData}>
-                    {data.workingTimeFrom} - {data.workingTimeTo}
+                    {formatTime(data.workingTimeFrom)} -{' '}
+                    {formatTime(data.workingTimeTo)}
                   </Text>
                 </View>
               </ScrollView>
