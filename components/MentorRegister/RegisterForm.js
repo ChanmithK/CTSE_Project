@@ -1,3 +1,7 @@
+/**
+ * @summary: This registration form component uses FormikRegister.js component
+ **/
+// react-native imports
 import {
   View,
   Text,
@@ -5,8 +9,11 @@ import {
   Image,
   KeyboardAvoidingView,
 } from 'react-native';
+// react imports
 import React from 'react';
+// FormikRegister component
 import FormikRegister from './FormikRegister';
+// react-native scroll view
 import { ScrollView } from 'react-native-gesture-handler';
 
 const RegisterFormUser = () => {
@@ -22,7 +29,7 @@ const RegisterFormUser = () => {
           <View style={styles.FormikForm}>
             <Text style={styles.MainTitle}>Bloom</Text>
             <Text style={styles.SubTitle}>
-              You’re one step away from getting started with Bloom.
+              You're one step away from getting started with Bloom.
             </Text>
             <View style={{ marginTop: 9, maxHeight: 520 }}>
               <ScrollView>

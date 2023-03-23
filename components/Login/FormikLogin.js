@@ -1,3 +1,16 @@
+/**
+ * @summary: This is the login form component
+ * @description:
+ *  uses Formik for form validation
+ *  uses Yup for validation schema
+ *  uses AsyncStorage for storing user data
+ *  uses react-navigation for navigation
+ *  uses react-native-gesture-handler for scrollview
+ *  uses react-native-safe-area-context for safe area view
+ *  uses firebase/firestore for querying user data
+ *  uses firebase/auth for authentication
+ **/
+// imports from react-native
 import {
   View,
   Text,
@@ -6,14 +19,22 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
+// imports from react-native-async-storage
 import AsyncStorage from '@react-native-async-storage/async-storage';
+// firebase authentication
 import { signInWithEmailAndPassword } from '@firebase/auth';
-import { auth, db, storage } from '../../firebase';
+// firebase services
+import { auth, db } from '../../firebase';
+// react imports
 import React, { useState } from 'react';
+// formik & yup imports
 import * as Yup from 'yup';
 import { Formik } from 'formik';
+// firebase/firestore imports
 import { collection, getDocs, query, where } from 'firebase/firestore';
+// react-navigation imports
 import { useNavigation } from '@react-navigation/native';
+
 // validation schema for login form
 const LoginSchema = Yup.object().shape({
   password: Yup.string()
@@ -26,37 +47,41 @@ const FormikLogin = () => {
   const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
   const onLogin = async (email, password) => {
+    // setting this to true will show the loading indicator
     setLoading(true);
     try {
       await signInWithEmailAndPassword(auth, email, password).then(
+        // This paert of the code is for querying the user data from the firestore after success login
         (userCredential) => {
-          // Signed in
           const user = userCredential.user;
           const usersCollectionRef = collection(db, 'Users');
+          // This is the query for filtering the user data
           const getUsers = async () => {
             const filterdData = query(
               usersCollectionRef,
               where('userId', '==', user.uid)
             );
             const querySnapshot = await getDocs(filterdData);
-
+            // This is the user data
             const userData = querySnapshot.docs.map((doc) => ({
               ...doc.data(),
               id: doc.id,
             }));
+            // This is the storing of the user data in the AsyncStorage
             AsyncStorage.setItem('UserData', JSON.stringify(userData[0]));
             AsyncStorage.setItem('UserID', JSON.stringify(userData[0].id));
             AsyncStorage.setItem('UserRole', JSON.stringify(userData[0].role));
-
+            // based on the role of the user the user will be redirected to the appropriate screen
             if (userData[0].role === 'User') {
               console.log('this is a regular user');
             } else {
               console.log('this is a mentor');
             }
+            // setting this to false will hide the loading indicator
             setLoading(false);
           };
+          // calling the getUsers function
           getUsers();
-          // ...
         }
       );
       console.log('Logged in successfully', email, password);

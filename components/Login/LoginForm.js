@@ -1,3 +1,7 @@
+/**
+ * @summary: This login form component uses FormikLogin.js component
+ **/
+// react-native imports
 import {
   View,
   Text,
@@ -6,8 +10,11 @@ import {
   KeyboardAvoidingView,
   TouchableOpacity,
 } from 'react-native';
+// react imports
 import React from 'react';
+// FormikLogin component
 import FormikLogin from './FormikLogin';
+// react-navigation import
 import { useNavigation } from '@react-navigation/native';
 
 const LoginForm = () => {
