@@ -19,6 +19,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 // date & time picker imports
 import DateTimePicker from '@react-native-community/datetimepicker';
+//
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import * as ImagePicker from 'expo-image-picker';
 
 const MentorProfileUpdateSubPage = () => {
   const navigation = useNavigation();
@@ -32,6 +35,48 @@ const MentorProfileUpdateSubPage = () => {
   const [workingTimeFrom, setWorkingTimeFrom] = useState(new Date());
   const [workingTimeTo, setWorkingTimeTo] = useState(new Date());
   const [showTimePicker, setShowTimePicker] = useState(false);
+
+  const [localImageUri, setLocalImageUri] = useState(null);
+
+  const requestPermissions = async () => {
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (status !== 'granted') {
+      alert('Permission to access camera roll is required');
+    }
+  };
+
+  const uploadImage = async (uri) => {
+    try {
+      const storage = getStorage();
+      const response = await fetch(uri);
+      const blob = await response.blob();
+      const imageRef = ref(storage, `images/${id}/profilePicture.jpg`);
+
+      // Upload the image to Firebase Storage
+      await uploadBytes(imageRef, blob);
+
+      // Get the download URL and update the Firestore document
+      const imageUrl = await getDownloadURL(imageRef);
+      const userDoc = doc(db, 'Users', id);
+      await updateDoc(userDoc, { image: imageUrl });
+    } catch (error) {
+      console.error('Error uploading image:', error);
+    }
+  };
+
+  const pickImage = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 0.5,
+    });
+
+    if (!result.cancelled) {
+      setLocalImageUri(result.uri);
+      await uploadImage(result.uri);
+    }
+  };
 
   const onTimeChange = (event, selectedTime) => {
     const currentTime = selectedTime || workingTimeFrom;
@@ -102,6 +147,7 @@ const MentorProfileUpdateSubPage = () => {
     if (data.workingTimeTo) {
       setWorkingTimeTo(getTimeFromString(data.workingTimeTo));
     }
+    requestPermissions();
   }, [data.name, data.bio, data.age, data.workingTimeFrom, data.workingTimeTo]);
 
   const updateProfile = () => {
@@ -139,16 +185,18 @@ const MentorProfileUpdateSubPage = () => {
             >
               {/* Header Part */}
               <View>
-                <Image
-                  source={{
-                    uri: data.image,
-                  }}
-                  style={styles.userImage}
-                />
+                <TouchableOpacity onPress={pickImage}>
+                  <Image
+                    source={{
+                      uri: localImageUri || data.image,
+                    }}
+                    style={styles.userImage}
+                  />
+                </TouchableOpacity>
               </View>
 
               {/* Field data */}
-              <View style={{ maxHeight: 500 }}>
+              <View style={{ maxHeight: 600 }}>
                 <ScrollView>
                   <View>
                     <Text style={styles.mainFieldName}>Name</Text>
@@ -289,8 +337,8 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   userImage: {
-    width: 149,
-    height: 149,
+    width: 100,
+    height: 100,
     borderRadius: 100,
     alignSelf: 'center',
   },
