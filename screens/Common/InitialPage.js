@@ -34,7 +34,7 @@ const InitialPage = () => {
                 <Text style={styles.buttonText}>User</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                //onPress={() => navigation.navigate('RegisterScreenMentor')}
+                onPress={() => navigation.navigate('registerMentor')}
                 style={styles.buttonContainer}
               >
                 <Text style={styles.buttonText}>Mentor</Text>
