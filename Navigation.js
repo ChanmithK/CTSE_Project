@@ -14,6 +14,7 @@ import LoginScreen from './screens/LoginScreen';
 import RegisterScreenUser from './screens/RegisterScreenUser';
 import RegisterMentor from './screens/RegisterMentor';
 import MentorProfile from './screens/Mentor/MentorProfile';
+import MentorProfileUpdate from './screens/Mentor/MentorProfileUpdate';
 
 const Stack = createStackNavigator();
 const screenOptions = { headerShown: false };
@@ -34,6 +35,10 @@ const SignedInStack = () => {
 
         {/* Mentor */}
         <Stack.Screen name='mentorProfile' component={MentorProfile} />
+        <Stack.Screen
+          name='mentorProfileUpdate'
+          component={MentorProfileUpdate}
+        />
         <Stack.Screen name='AddService' component={AddService} />
         <Stack.Screen name='ViewServices' component={ViewServices} />
         <Stack.Screen name='ViewServiceScreen' component={ViewService} />

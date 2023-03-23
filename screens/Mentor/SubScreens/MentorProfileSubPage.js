@@ -160,9 +160,7 @@ const MentorProfileSubPage = () => {
                   marginTop: 30,
                   //   marginHorizontal: 0,
                 }}
-                onPress={() =>
-                  navigation.navigate('CounsellorProfileUpdateScreen')
-                }
+                onPress={() => navigation.navigate('mentorProfileUpdate')}
               >
                 <Text style={styles.buttonText}>Edit</Text>
               </TouchableOpacity>
