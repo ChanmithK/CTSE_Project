@@ -30,6 +30,7 @@ const MentorProfileUpdateSubPage = () => {
   const windowHeight = Dimensions.get('window').height;
 
   const [workingTimeFrom, setWorkingTimeFrom] = useState(new Date());
+  const [workingTimeTo, setWorkingTimeTo] = useState(new Date());
   const [showTimePicker, setShowTimePicker] = useState(false);
 
   const onTimeChange = (event, selectedTime) => {
@@ -38,7 +39,14 @@ const MentorProfileUpdateSubPage = () => {
     setWorkingTimeFrom(currentTime);
   };
 
+  const onWorkingToChange = (event, selectedTime) => {
+    const currentTime = selectedTime || workingTimeTo;
+    setShowTimePicker(Platform.OS === 'ios');
+    setWorkingTimeTo(currentTime);
+  };
+
   const [date, setDate] = useState(new Date());
+
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     const timezoneOffset = currentDate.getTimezoneOffset() * 60 * 1000;
@@ -91,17 +99,22 @@ const MentorProfileUpdateSubPage = () => {
     if (data.workingTimeFrom) {
       setWorkingTimeFrom(getTimeFromString(data.workingTimeFrom));
     }
-  }, [data.name, data.bio, data.age, data.workingTimeFrom]);
+    if (data.workingTimeTo) {
+      setWorkingTimeTo(getTimeFromString(data.workingTimeTo));
+    }
+  }, [data.name, data.bio, data.age, data.workingTimeFrom, data.workingTimeTo]);
 
   const updateProfile = () => {
     const userDoc = doc(db, 'Users', id);
     const formattedDate = date.toISOString().split('T')[0]; // Convert the date object to a string in the format 'yyyy-mm-dd'
     const formatttedTime = formatTime(workingTimeFrom.toLocaleTimeString());
+    const timeTo = formatTime(workingTimeTo.toLocaleTimeString());
     updateDoc(userDoc, {
       name: name,
       bio: bio,
       age: formattedDate,
       workingTimeFrom: formatttedTime,
+      workingTimeTo: timeTo,
     }).then(() => console.log('CounsellorProfileScreen'));
   };
 
@@ -135,7 +148,7 @@ const MentorProfileUpdateSubPage = () => {
               </View>
 
               {/* Field data */}
-              <View style={{ maxHeight: 600 }}>
+              <View style={{ maxHeight: 500 }}>
                 <ScrollView>
                   <View>
                     <Text style={styles.mainFieldName}>Name</Text>
@@ -198,6 +211,27 @@ const MentorProfileUpdateSubPage = () => {
                         is24Hour={true}
                         display='default'
                         onChange={onTimeChange}
+                      />
+                    )}
+                    <Text style={styles.mainFieldName}>Working to</Text>
+                    <TouchableOpacity
+                      onPress={() => setShowTimePicker(true)}
+                      style={[
+                        styles.input,
+                        { height: 40, justifyContent: 'center' },
+                      ]}
+                    >
+                      <Text>{workingTimeTo.toLocaleTimeString()}</Text>
+                    </TouchableOpacity>
+
+                    {showTimePicker && (
+                      <DateTimePicker
+                        testID='timePicker'
+                        value={workingTimeTo}
+                        mode='time'
+                        is24Hour={true}
+                        display='default'
+                        onChange={onWorkingToChange}
                       />
                     )}
                   </View>
