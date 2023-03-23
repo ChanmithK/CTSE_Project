@@ -1,3 +1,16 @@
+/**
+ * @summary: This is the normal user registration form component
+ * @description:
+ *  uses Formik for form validation
+ *  uses Yup for validation schema
+ *  uses AsyncStorage for storing user data
+ *  uses react-navigation for navigation
+ *  uses react-native-gesture-handler for scrollview
+ *  uses react-native-safe-area-context for safe area view
+ *  uses firebase/firestore for querying user data
+ *  uses firebase/auth for authentication
+ **/
+// imports from react-native
 import {
   View,
   Text,
@@ -6,17 +19,24 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
-import React from 'react';
+// imports from react
+import React, { useState } from 'react';
+// imports from Formik and Yup
 import * as Yup from 'yup';
 import { Formik } from 'formik';
+// firebase/firestore imports
 import { addDoc, collection } from 'firebase/firestore';
+// firebase services
 import { db } from '../../firebase';
+// firebase/authentication imports
 import { createUserWithEmailAndPassword } from '@firebase/auth';
 import { getAuth } from '@firebase/auth';
+// react-navigation imports
 import { useNavigation } from '@react-navigation/native';
+// date & time picker imports
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { useState } from 'react';
 
+// validation schema for register form
 const RegisterSchema = Yup.object().shape({
   password: Yup.string()
     .required('Password is required')
@@ -42,13 +62,15 @@ const FormikRegister = () => {
   const [showDatePicker, setShowDatePicker] = useState(false);
 
   const createUser = async (values) => {
+    // setting this to true will show the loading indicator
     setLoading(true);
+    // firebase authentication for registering the normal user
     try {
       await createUserWithEmailAndPassword(auth, values.email, values.password);
     } catch (error) {
       console.log('Error logging in: ', error);
     }
-
+    // firebase firestore for adding the mentor data to the database
     try {
       const user = auth.currentUser;
       const docRef = await addDoc(usersCollectionRef, {
@@ -65,6 +87,7 @@ const FormikRegister = () => {
         .then(() => {
           console.log('Document written with ID: ', docRef);
         });
+      // setting this to false will hide the loading indicator
       setLoading(false);
     } catch (e) {
       console.error('Error adding document: ', e);

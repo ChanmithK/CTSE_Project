@@ -1,3 +1,16 @@
+/**
+ * @summary: This is the mentor registration form component
+ * @description:
+ *  uses Formik for form validation
+ *  uses Yup for validation schema
+ *  uses AsyncStorage for storing user data
+ *  uses react-navigation for navigation
+ *  uses react-native-gesture-handler for scrollview
+ *  uses react-native-safe-area-context for safe area view
+ *  uses firebase/firestore for querying user data
+ *  uses firebase/auth for authentication
+ **/
+// imports from react-native
 import {
   View,
   Text,
@@ -7,16 +20,24 @@ import {
   Alert,
   ActivityIndicator,
 } from 'react-native';
+// react imports
 import React, { useState } from 'react';
+// formik & yup imports
 import * as Yup from 'yup';
 import { Formik } from 'formik';
+// firebase/firestore imports
 import { addDoc, collection } from 'firebase/firestore';
+// firebase services
 import { db } from '../../firebase';
+// firebase/authentication imports
 import { createUserWithEmailAndPassword } from '@firebase/auth';
 import { getAuth } from '@firebase/auth';
+// react-navigation imports
 import { useNavigation } from '@react-navigation/native';
+// date & time picker imports
 import DateTimePicker from '@react-native-community/datetimepicker';
 
+// validation schema for registration form
 const RegisterSchema = Yup.object().shape({
   password: Yup.string()
     .required('Password is required')
@@ -45,16 +66,18 @@ const FormikRegister = () => {
   const [showToTimePicker, setShowToTimePicker] = useState(false);
 
   const createUser = async (values) => {
+    // setting this to true will show the loading indicator
     setLoading(true);
+    // firebase authentication for registering the mentor
     try {
       await createUserWithEmailAndPassword(auth, values.email, values.password);
     } catch (error) {
       Alert('Error logging in: ', error);
     }
-
+    // firebase firestore for adding the mentor data to the database
     try {
       const user = auth.currentUser;
-      const docRef = await addDoc(usersCollectionRef, {
+      await addDoc(usersCollectionRef, {
         email: values.email,
         name: values.fullName,
         age: values.age,
@@ -69,12 +92,13 @@ const FormikRegister = () => {
       }).then(() => {
         navigation.navigate('login');
       });
+      // setting this to false will hide the loading indicator
       setLoading(false);
     } catch (e) {
       console.error('Error adding document: ', e);
     }
   };
-
+  // function to remove seconds from the time picker
   function removeSeconds(timeString) {
     const timeParts = timeString.split(':');
     return `${timeParts[0]}:${timeParts[1]}`;

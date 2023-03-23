@@ -1,3 +1,7 @@
+/**
+ * @summary: This registration form component uses FormikRegister.js component
+ **/
+// react-native imports
 import {
   View,
   Text,
@@ -5,8 +9,11 @@ import {
   Image,
   KeyboardAvoidingView,
 } from 'react-native';
+// react imports
 import React from 'react';
+// FormikRegister component
 import FormikRegister from './FormikRegister';
+// react-native scroll view
 import { ScrollView } from 'react-native-gesture-handler';
 
 const RegisterFormUser = () => {
