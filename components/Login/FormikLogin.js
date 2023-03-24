@@ -19,35 +19,35 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   Alert,
-} from 'react-native';
+} from "react-native";
 // imports from react-native-async-storage
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 // firebase authentication
-import { signInWithEmailAndPassword } from '@firebase/auth';
+import { signInWithEmailAndPassword } from "@firebase/auth";
 // firebase services
-import { auth, db } from '../../firebase';
+import { auth, db } from "../../firebase";
 // react imports
-import React, { useState } from 'react';
+import React, { useState } from "react";
 // formik & yup imports
-import * as Yup from 'yup';
-import { Formik } from 'formik';
+import * as Yup from "yup";
+import { Formik } from "formik";
 // firebase/firestore imports
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { collection, getDocs, query, where } from "firebase/firestore";
 // react-navigation imports
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation } from "@react-navigation/native";
 
 // validation schema for login form
 const LoginSchema = Yup.object().shape({
   password: Yup.string()
-    .required('Password is required')
-    .min(6, 'Password is too short - should be 6 characters minimum'),
-  email: Yup.string().email().required('Email is required'),
+    .required("Password is required")
+    .min(6, "Password is too short - should be 6 characters minimum"),
+  email: Yup.string().email().required("Email is required"),
 });
 // login form
 const FormikLogin = () => {
   const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
   const onLogin = async (email, password) => {
     // setting this to true will show the loading indicator
     setLoading(true);
@@ -56,12 +56,12 @@ const FormikLogin = () => {
         // This paert of the code is for querying the user data from the firestore after success login
         (userCredential) => {
           const user = userCredential.user;
-          const usersCollectionRef = collection(db, 'Users');
+          const usersCollectionRef = collection(db, "Users");
           // This is the query for filtering the user data
           const getUsers = async () => {
             const filterdData = query(
               usersCollectionRef,
-              where('userId', '==', user.uid)
+              where("userId", "==", user.uid)
             );
             const querySnapshot = await getDocs(filterdData);
             // This is the user data
@@ -70,17 +70,17 @@ const FormikLogin = () => {
               id: doc.id,
             }));
             // This is the storing of the user data in the AsyncStorage
-            AsyncStorage.setItem('UserData', JSON.stringify(userData[0]));
-            AsyncStorage.setItem('UserID', JSON.stringify(userData[0].id));
-            AsyncStorage.setItem('UserRole', JSON.stringify(userData[0].role));
+            AsyncStorage.setItem("UserData", JSON.stringify(userData[0]));
+            AsyncStorage.setItem("UserID", JSON.stringify(userData[0].id));
+            AsyncStorage.setItem("UserRole", JSON.stringify(userData[0].role));
             // based on the role of the user the user will be redirected to the appropriate screen
-            if (userData[0].role === 'User') {
-              navigation.navigate('clientProfile');
-            } else if (userData[0].role === 'Admin') {
-              navigation.navigate('pendingContent');
+            if (userData[0].role === "User") {
+              navigation.navigate("ClientHome");
+            } else if (userData[0].role === "Admin") {
+              navigation.navigate("pendingContent");
             } else {
-              console.log('this is a mentor');
-              navigation.navigate('mentorProfile');
+              console.log("this is a mentor");
+              navigation.navigate("ViewAppointmentList");
             }
             // setting this to false will hide the loading indicator
             setLoading(false);
@@ -89,24 +89,24 @@ const FormikLogin = () => {
           getUsers();
         }
       );
-      console.log('Logged in successfully', email, password);
+      console.log("Logged in successfully", email, password);
     } catch (error) {
       setLoading(false);
-      setErrorMessage('Email or password is incorrect');
-      console.log('Error logging in: ', error);
+      setErrorMessage("Email or password is incorrect");
+      console.log("Error logging in: ", error);
     }
   };
   return (
     <>
       {loading ? (
         <ActivityIndicator
-          size='large'
-          color='#ED6A8C'
-          style={{ marginVertical: '50%' }}
+          size="large"
+          color="#3D3EEF"
+          style={{ marginVertical: "50%" }}
         />
       ) : (
         <Formik
-          initialValues={{ email: '', password: '' }}
+          initialValues={{ email: "", password: "" }}
           onSubmit={(values) => {
             onLogin(values.email, values.password);
           }}
@@ -125,12 +125,12 @@ const FormikLogin = () => {
               <View style={styles.container}>
                 <View style={styles.textfield}>
                   <TextInput
-                    placeholder='Email address'
-                    placeholderTextColor='gray'
+                    placeholder="Email address"
+                    placeholderTextColor="gray"
                     multiline={false}
                     style={styles.input}
-                    onChangeText={handleChange('email')}
-                    onBlur={handleBlur('email')}
+                    onChangeText={handleChange("email")}
+                    onBlur={handleBlur("email")}
                     value={values.email}
                   />
                 </View>
@@ -140,13 +140,13 @@ const FormikLogin = () => {
 
                 <View style={styles.textfield}>
                   <TextInput
-                    placeholder='Password'
+                    placeholder="Password"
                     secureTextEntry={true}
-                    placeholderTextColor='gray'
+                    placeholderTextColor="gray"
                     multiline={false}
                     style={styles.input}
-                    onChangeText={handleChange('password')}
-                    onBlur={handleBlur('password')}
+                    onChangeText={handleChange("password")}
+                    onBlur={handleBlur("password")}
                     value={values.password}
                   />
                 </View>
@@ -155,9 +155,9 @@ const FormikLogin = () => {
                     {errors.password}
                   </Text>
                 )}
-                {errorMessage !== '' &&
-                  Alert.alert('Error', errorMessage, [
-                    { text: 'OK', onPress: () => setErrorMessage('') },
+                {errorMessage !== "" &&
+                  Alert.alert("Error", errorMessage, [
+                    { text: "OK", onPress: () => setErrorMessage("") },
                   ])}
               </View>
 
@@ -177,13 +177,13 @@ const FormikLogin = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'column',
+    flexDirection: "column",
   },
   textfield: {
     padding: 10,
   },
   input: {
-    borderColor: '#E2E8F0',
+    borderColor: "#E2E8F0",
     borderWidth: 1,
     borderRadius: 5,
     paddingTop: 5,
@@ -200,16 +200,16 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
     marginTop: 50,
-    backgroundColor: '#3D3EEF',
+    backgroundColor: "#3D3EEF",
   },
   buttonText: {
-    color: 'white',
+    color: "white",
     fontSize: 16,
-    fontWeight: '600',
-    textAlign: 'center',
+    fontWeight: "600",
+    textAlign: "center",
   },
   formikErrorMessage: {
-    color: 'red',
+    color: "red",
     fontSize: 12,
     marginLeft: 10,
     marginTop: -5,
