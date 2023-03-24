@@ -78,12 +78,11 @@ const PendingContentListSubPage = () => {
             {contentListFiltered.map((content) => (
               <View key={content.id}>
                 <TouchableOpacity
-                // onPress={() =>
-                //   navigation.navigate("ViewContent", {
-                //     data: content,
-                //     isAuthor: true,
-                //   })
-                // }
+                  onPress={() =>
+                    navigation.navigate('viewPending', {
+                      data: content,
+                    })
+                  }
                 >
                   <View style={styles.contentCard}>
                     <Text style={styles.contentName}>{content.title}</Text>
