@@ -30,6 +30,8 @@ import PendingContentList from "./screens/Admin/PendingContentList";
 import ViewPendingContent from "./screens/Admin/ViewPendingContent";
 import ClientProfile from "./screens/Client/ClientProfile";
 import ClientProfileUpdate from "./screens/Client/ClientProfileUpdate";
+import { ViewMentorService } from "./screens/Client/viewMentorService";
+
 
 const Stack = createStackNavigator();
 const screenOptions = { headerShown: false };
@@ -37,6 +39,7 @@ const screenOptions = { headerShown: false };
 const SignedInStack = () => {
   return (
     <NavigationContainer>
+
       <Stack.Navigator initialRouteName="login" screenOptions={screenOptions}>
         <Stack.Screen name="login" component={LoginScreen} />
         <Stack.Screen name="registerUser" component={RegisterScreenUser} />
@@ -81,8 +84,12 @@ const SignedInStack = () => {
           name="booked-appointment-list"
           component={BookedAppointmentList}
         />
+
         <Stack.Screen name="ClientMenu" component={ClientMenu} />
         <Stack.Screen name="ClientHome" component={ClientHome} />
+
+        <Stack.Screen name="viewMentorService" component={ViewMentorService} />
+
 
         {/* Content */}
         <Stack.Screen name="AddContent" component={AddContent} />
