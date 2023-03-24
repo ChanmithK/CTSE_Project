@@ -219,7 +219,6 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: '#F2F2F2',
     borderRadius: 5,
-    border: '2px solid red',
     padding: 10,
     fontSize: 15,
     color: 'black',

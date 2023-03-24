@@ -378,7 +378,6 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: '#ffffff',
     borderRadius: 5,
-    border: '2px solid red',
     padding: 10,
     fontSize: 15,
     color: 'black',
