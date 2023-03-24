@@ -88,12 +88,16 @@ const CreateAppointmentsub = () => {
           time: value.time,
           userID: "123",
           mentorID: "123",
-          appointmentID: Math.random().toString(36).substring(7),
+          // appointmentID: Math.random().toString(36).substring(7),
           mentorName: "123",
           name: "john",
           email: "test@gmail.com",
           appointmentStatus: "Pending",
           serviceTitle: "test",
+        }).then(async function (docRef) {
+          await updateDoc(doc(db, "appointments", docRef.id), {
+            appointmentID: docRef.id,
+          });
         });
         // navigation.navigate("home");
       } catch (e) {
