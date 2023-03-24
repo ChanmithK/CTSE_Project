@@ -8,7 +8,6 @@ import {
   Dimensions,
   TextInput,
   KeyboardAvoidingView,
- 
 } from "react-native";
 import * as Yup from "yup";
 import { Formik } from "formik";

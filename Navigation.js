@@ -1,7 +1,7 @@
+
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import LoginForm from "./components/Common/Login";
 import { AddService } from "./screens/Mentor/AddService";
 import { ViewServices } from "./screens/Mentor/ViewServices";
 import { ViewService } from "./screens/Mentor/ViewService";
@@ -18,6 +18,12 @@ import BookedAppointmentList from "./screens/Client/bookedAppointmentList";
 import ViewContent from "./screens/Content/ViewContent";
 import MyContentList from "./screens/Content/MyContentList";
 import UpdateContent from "./screens/Content/UpdateContent";
+import InitialPage from './screens/Common/InitialPage';
+import LoginScreen from './screens/LoginScreen';
+import RegisterScreenUser from './screens/RegisterScreenUser';
+import RegisterMentor from './screens/RegisterMentor';
+import MentorProfile from './screens/Mentor/MentorProfile';
+import MentorProfileUpdate from './screens/Mentor/MentorProfileUpdate';
 
 const Stack = createStackNavigator();
 const screenOptions = { headerShown: false };
@@ -26,10 +32,24 @@ const SignedInStack = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="MyContentList"
+        initialRouteName='InitialPage'
         screenOptions={screenOptions}
       >
-        <Stack.Screen name="Login" component={ViewAppointment} />
+        <Stack.Screen name='login' component={LoginScreen} />
+        <Stack.Screen name='registerUser' component={RegisterScreenUser} />
+        <Stack.Screen name='registerMentor' component={RegisterMentor} />
+        <Stack.Screen name='initialPage' component={InitialPage} />
+
+        {/* Mentor */}
+        <Stack.Screen name='mentorProfile' component={MentorProfile} />
+        <Stack.Screen
+          name='mentorProfileUpdate'
+          component={MentorProfileUpdate}
+        />
+        <Stack.Screen name='AddService' component={AddService} />
+        <Stack.Screen name='ViewServices' component={ViewServices} />
+        <Stack.Screen name='ViewServiceScreen' component={ViewService} />
+        <Stack.Screen name='EditServiceScreen' component={EditService} />
 
         {/* Mentor */}
         <Stack.Screen name="AddService" component={AddService} />
@@ -44,7 +64,7 @@ const SignedInStack = () => {
 
         {/* Client */}
         <Stack.Screen
-          name="ViewMentorsServicesScreen"
+          name='ViewMentorsServicesScreen'
           component={ViewMentorsServices}
         />
         <Stack.Screen name="create-appointment" component={CreateAppointment} />
