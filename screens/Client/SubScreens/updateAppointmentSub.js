@@ -31,6 +31,7 @@ const UpdateAppointmentsub = (data) => {
     time: appointmentdata.time,
     appointmentID: appointmentdata.appointmentID,
     title: appointmentdata.title,
+    serviceTitle: appointmentdata.serviceTitle,
   };
 
   const navigation = useNavigation();
@@ -102,7 +103,6 @@ const UpdateAppointmentsub = (data) => {
             description: value.description,
             date: value.date,
             time: value.time,
-            title: value.title,
           });
         } else {
           console.log("No such document!");
@@ -125,8 +125,8 @@ const UpdateAppointmentsub = (data) => {
             <TextInput
               style={styles.textInput}
               // placeholder="Title"
-              value={value.title}
-              onChangeText={(text) => handleChange(text, "title")}
+              value={value.serviceTitle}
+              editable={false}
             />
             {error.title && (
               <Text style={styles.errorMessage}>{error.title}</Text>

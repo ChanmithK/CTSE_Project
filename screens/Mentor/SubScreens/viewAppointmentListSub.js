@@ -77,11 +77,15 @@ const ViewAppointmentSubList = () => {
               }
             >
               <View style={styles.appointmentContainer}>
+                <Image
+                  source={{ uri: appointment.serviceImage }}
+                  style={styles.image}
+                />
                 <Image source={""} style={styles.image} />
                 <View style={styles.appointmentDetails}>
                   <Text style={styles.appointmentName}>
                     {" "}
-                    {appointment.title}{" "}
+                    {appointment.serviceTitle}{" "}
                   </Text>
                   <View style={{ flexDirection: "row", marginTop: 5 }}>
                     <Text style={styles.appointmentDate}>

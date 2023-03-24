@@ -37,6 +37,7 @@ const BookedAppointmentSub = (data) => {
     appointmentStatus: appointmentdata.appointmentStatus,
     mentorNote: appointmentdata.mentorNote,
     sessionLink: appointmentdata.sessionLink,
+    serviceTitle: appointmentdata.serviceTitle,
   };
 
   const navigation = useNavigation();
@@ -79,7 +80,7 @@ const BookedAppointmentSub = (data) => {
             <Text style={styles.fieldName}>Title</Text>
             <TextInput
               style={styles.textInput}
-              value={value.title}
+              value={value.serviceTitle}
               editable={false}
             />
             <Text style={styles.fieldName}>Description</Text>

@@ -87,12 +87,12 @@ const BookedAppointmentListSub = () => {
                 >
                   <View style={styles.appointmentContainer} key={index}>
                     <Image
-                      //   source={{ uri: appointment.counsellorImage }}
+                      source={{ uri: appointment.serviceImage }}
                       style={styles.image}
                     />
                     <View style={styles.appointmentDetails}>
                       <Text style={styles.appointmentName}>
-                        {appointment.mentorName}
+                        {appointment.serviceTitle}
                       </Text>
                       <Text
                         style={{
@@ -101,7 +101,7 @@ const BookedAppointmentListSub = () => {
                           marginBottom: -2,
                         }}
                       >
-                        {appointment.title}{" "}
+                        {appointment.mentorName}{" "}
                       </Text>
                       <View style={{ flexDirection: "row", marginTop: 5 }}>
                         <Text style={styles.appointmentDate}>

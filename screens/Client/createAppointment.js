@@ -4,12 +4,13 @@ import React from "react";
 import CreateAppointmentSub from "./SubScreens/createAppointmentSub";
 import TopBar from "../../components/Common/TopBar";
 
-const CreateAppointment = () => {
+const CreateAppointment = ({ route }) => {
+  service = route.params.service;
   return (
     <SafeAreaView style={styles.container}>
       <View>
         <TopBar title={"Create Appointment"} />
-        <CreateAppointmentSub />
+        <CreateAppointmentSub service={service} />
       </View>
     </SafeAreaView>
   );
