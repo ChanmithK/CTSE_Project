@@ -19,6 +19,8 @@ import {
 import { db } from "../../firebase";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import BottomTabs, { bottomTabIcons } from "../Common/BottomTabs";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const ClientHome = () => {
   const [loading, setLoading] = useState(false);
@@ -32,12 +34,13 @@ const ClientHome = () => {
           style={{ marginVertical: "100%" }}
         />
       ) : (
-        <View style={styles.MainContainer}>
+        <SafeAreaView style={styles.MainContainer}>
           <Header />
           <Categories />
           <Mentors />
           <Articles />
-        </View>
+          <BottomTabs icons={bottomTabIcons} />
+        </SafeAreaView>
       )}
     </>
   );
@@ -180,23 +183,7 @@ const Mentors = () => {
               style={{
                 position: "absolute",
               }}
-            >
-              {/* <TouchableOpacity>
-                <Image
-                  source={{
-                    uri: "https://img.icons8.com/windows/32/000000/menu-2.png",
-                  }}
-                  style={{
-                    float: "right",
-                    top: 10,
-                    left: 330,
-                    width: 20,
-                    height: 20,
-                    tintColor: "#000000",
-                  }}
-                />
-              </TouchableOpacity> */}
-            </View>
+            ></View>
           </View>
         </TouchableOpacity>
       ))}
@@ -231,7 +218,7 @@ const Articles = () => {
         <TouchableOpacity
           onPress={() => navigation.navigate("ViewArticlesScreen")}
         >
-          <Text style={{ fontSize: 16, fontWeight: "500", color: "#ED6A8C" }}>
+          <Text style={{ fontSize: 16, fontWeight: "500", color: "#3D3EEF" }}>
             view all
           </Text>
         </TouchableOpacity>
@@ -253,7 +240,7 @@ const Articles = () => {
               /> */}
               <View style={styles.ArticleDetails}>
                 <Text style={styles.ArticleTitle}>{article.title}</Text>
-                <Text style={styles.ArticleDescription}>
+                <Text style={styles.ArticleDescription} numberOfLines={3}>
                   {article.description}
                 </Text>
               </View>
@@ -273,6 +260,7 @@ const styles = StyleSheet.create({
   },
   MainContainer: {
     padding: 15,
+    height: "100%",
   },
   CategoryContainer: {
     flexDirection: "row",
@@ -329,12 +317,13 @@ const styles = StyleSheet.create({
   },
   ArticleBox: {
     position: "relative",
-    flexDirection: "column",
+    flexDirection: "row",
     marginTop: 15,
     borderRadius: 10,
     padding: 10,
     marginVertical: -5,
     marginRight: 20,
+    width: 250,
   },
   ArticleDetails: {
     justifyContent: "center",
@@ -355,7 +344,6 @@ const styles = StyleSheet.create({
     fontSize: 10,
     fontWeight: "400",
     marginTop: 10,
-    noOfLines: 2,
   },
 });
 

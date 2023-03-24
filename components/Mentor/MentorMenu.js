@@ -5,7 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 import { signOut } from "@firebase/auth";
 import { auth } from "../../firebase";
 
-const Menu = () => {
+const MentorMenu = () => {
   const navigation = useNavigation();
 
   const Logout = async () => {
@@ -35,6 +35,9 @@ const Menu = () => {
           onPress={() => navigation.navigate("ViewMentorsServices")}
         >
           <Text style={styles.text}>Mentor Services</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("AddContent")}>
+          <Text style={styles.text}>Publish Content</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate("MyContentList")}>
           <Text style={styles.text}>My Content</Text>
@@ -81,4 +84,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Menu;
+export default MentorMenu;

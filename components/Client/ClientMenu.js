@@ -5,13 +5,13 @@ import { useNavigation } from "@react-navigation/native";
 import { signOut } from "@firebase/auth";
 import { auth } from "../../firebase";
 
-const Menu = () => {
+const ClientMenu = () => {
   const navigation = useNavigation();
 
   const Logout = async () => {
     try {
       await signOut(auth);
-      navigation.navigate("LoginScreen");
+      navigation.navigate("login");
     } catch (e) {
       console.error("Error signing out: ", e);
     }
@@ -83,4 +83,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Menu;
+export default ClientMenu;
