@@ -209,7 +209,7 @@ const MentorProfileUpdateSubPage = () => {
                   <View>
                     <Text style={styles.mainFieldName}>Name</Text>
                     <TextInput
-                      multiline={true}
+                      multiline={false}
                       defaultValue={data.name}
                       style={[styles.input, { height: 40 }]}
                       onChangeText={(text) => setName(text)}
