@@ -27,25 +27,11 @@ import { useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 
-const MentorProfileSubPage = () => {
+const ClientProfileSubPage = () => {
   const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
   const [data, setData] = useState('');
   const windowHeight = Dimensions.get('window').height;
-
-  const formatTime = (time) => {
-    const hours = time.split(':')[0];
-    const minutes = time.split(':')[1];
-    if (hours > 12) {
-      return hours - 12 + ':' + minutes + ' PM';
-    } else if (hours == 12) {
-      return hours + ':' + minutes + ' PM';
-    } else if (hours == 0) {
-      return 12 + ':' + minutes + ' AM';
-    } else {
-      return hours + ':' + minutes + ' AM';
-    }
-  };
 
   useEffect(() => {
     async function fetchData() {
@@ -163,28 +149,6 @@ const MentorProfileSubPage = () => {
                       {data.name}
                     </Text>
                   </View>
-                  <View style={{ marginLeft: 8 }}>
-                    <Text
-                      style={{
-                        color: '#1A2042',
-                        fontSize: 16,
-                        fontWeight: '400',
-                      }}
-                    >
-                      {data.position}
-                    </Text>
-                  </View>
-                  <View style={{ marginLeft: 8 }}>
-                    <Text
-                      style={{
-                        color: '#1A2042',
-                        fontSize: 16,
-                        fontWeight: '500',
-                      }}
-                    >
-                      {data.sessions} sessions
-                    </Text>
-                  </View>
                 </View>
               </View>
 
@@ -199,17 +163,10 @@ const MentorProfileSubPage = () => {
               >
                 <ScrollView>
                   <View>
-                    <Text style={styles.mainFieldName}>Bio</Text>
-                    <Text style={styles.fieldData}>{data.bio}</Text>
                     <Text style={styles.mainFieldName}>Email</Text>
                     <Text style={styles.fieldData}>{data.email}</Text>
                     <Text style={styles.mainFieldName}>Date of birth</Text>
                     <Text style={styles.fieldData}>{data.age}</Text>
-                    <Text style={styles.mainFieldName}>Working time</Text>
-                    <Text style={styles.fieldData}>
-                      {formatTime(data.workingTimeFrom)} -{' '}
-                      {formatTime(data.workingTimeTo)}
-                    </Text>
                   </View>
                 </ScrollView>
               </View>
@@ -253,7 +210,7 @@ const MentorProfileSubPage = () => {
                     marginLeft: 10,
                     //   marginHorizontal: 0,
                   }}
-                  onPress={() => navigation.navigate('mentorProfileUpdate')}
+                  onPress={() => navigation.navigate('clientProfileUpdate')}
                 >
                   <Text style={styles.buttonText}>Edit</Text>
                 </TouchableOpacity>
@@ -317,4 +274,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MentorProfileSubPage;
+export default ClientProfileSubPage;
