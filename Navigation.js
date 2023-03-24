@@ -32,7 +32,7 @@ const SignedInStack = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Login"
+        initialRouteName="login"
         screenOptions={screenOptions}
       >
         <Stack.Screen name="login" component={LoginScreen} />

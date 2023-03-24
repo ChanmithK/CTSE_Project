@@ -28,7 +28,7 @@ const ClientHome = () => {
       {loading ? (
         <ActivityIndicator
           size="large"
-          color="#ED6A8C"
+          color="#3D3EEF"
           style={{ marginVertical: "100%" }}
         />
       ) : (
@@ -36,7 +36,6 @@ const ClientHome = () => {
           <Header />
           <Categories />
           <Mentors />
-          <Counsellors />
           <Articles />
         </View>
       )}
@@ -72,7 +71,7 @@ const Header = () => {
           <Text style={{ color: "#1A2042", fontWeight: "400", fontSize: 24 }}>
             Hi,
           </Text>
-          <Text style={{ color: "#ED6A8C", fontWeight: "700", fontSize: 24 }}>
+          <Text style={{ color: "#3D3EEF", fontWeight: "700", fontSize: 24 }}>
             {" "}
             {userProfile.name ? userProfile.name.split(" ")[0] : ""}
           </Text>
@@ -108,7 +107,9 @@ const Categories = () => {
         >
           <View style={styles.CategoryBox}>
             <Image
-              source={{ uri: "https://icons8.com/icon/jUvFHmeOcvdl/content" }}
+              source={{
+                uri: "https://img.icons8.com/external-flatart-icons-lineal-color-flatarticons/64/null/external-content-ux-and-ui-flatart-icons-lineal-color-flatarticons.png",
+              }}
               style={{ width: 50, height: 50 }}
             />
             <Text style={styles.CategoryBoxText}>Articles</Text>
@@ -121,7 +122,7 @@ const Categories = () => {
           <View style={styles.CategoryBox}>
             <Image
               source={{
-                uri: "https://icons8.com/icon/sPsNNQZhuNWZ/mentorship",
+                uri: "https://img.icons8.com/external-flaticons-lineal-color-flat-icons/64/null/external-mentorship-social-media-agency-flaticons-lineal-color-flat-icons-2.png",
               }}
               style={{ width: 50, height: 50 }}
             />
@@ -153,9 +154,9 @@ const Mentors = () => {
           Top Mentors
         </Text>
         <TouchableOpacity
-          onPress={() => navigation.navigate("ViewMentorsServices")}
+          onPress={() => navigation.navigate("ViewMentorsServicesScreen")}
         >
-          <Text style={{ fontSize: 16, fontWeight: "500", color: "#ED6A8C" }}>
+          <Text style={{ fontSize: 16, fontWeight: "500", color: "#3D3EEF" }}>
             view all
           </Text>
         </TouchableOpacity>
@@ -164,8 +165,8 @@ const Mentors = () => {
         <TouchableOpacity
           key={index}
           onPress={() =>
-            navigation.navigate("ViewService", {
-              id: mentor.id,
+            navigation.navigate("ViewServiceScreen", {
+              service: mentor,
             })
           }
         >
@@ -180,7 +181,7 @@ const Mentors = () => {
                 position: "absolute",
               }}
             >
-              <TouchableOpacity>
+              {/* <TouchableOpacity>
                 <Image
                   source={{
                     uri: "https://img.icons8.com/windows/32/000000/menu-2.png",
@@ -194,7 +195,7 @@ const Mentors = () => {
                     tintColor: "#000000",
                   }}
                 />
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
           </View>
         </TouchableOpacity>
@@ -280,7 +281,7 @@ const styles = StyleSheet.create({
   },
   CategoryBox: {
     backgroundColor: "#fff",
-    width: 100,
+    width: 180,
     height: 100,
     borderRadius: 10,
     justifyContent: "center",
