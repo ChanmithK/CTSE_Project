@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import TopBar from "../../components/Common/TopBar";
 import { ViewMentorServiceSub } from "./SubScreens/viewMentorServiceSub";
 
 export const ViewMentorService = ({ route }) => {
@@ -8,6 +9,7 @@ export const ViewMentorService = ({ route }) => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <TopBar title={"View Mentor Service"} />
       <ViewMentorServiceSub service={service} />
     </SafeAreaView>
   );

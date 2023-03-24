@@ -24,7 +24,7 @@ const ClientMenu = () => {
       <TopBar title={"Menu"} />
 
       <View style={styles.view}>
-        <TouchableOpacity onPress={() => navigation.navigate("")}>
+        <TouchableOpacity onPress={() => navigation.navigate("clientProfile")}>
           <Text style={styles.text}>Profile</Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -33,7 +33,7 @@ const ClientMenu = () => {
           <Text style={styles.text}>Booked Appointments</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => navigation.navigate("ViewMentorsServices")}
+          onPress={() => navigation.navigate("ViewMentorsServicesScreen")}
         >
           <Text style={styles.text}>Mentor Services</Text>
         </TouchableOpacity>
