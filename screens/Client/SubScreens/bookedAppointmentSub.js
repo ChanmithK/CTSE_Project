@@ -37,6 +37,7 @@ const BookedAppointmentSub = (data) => {
     appointmentStatus: appointmentdata.appointmentStatus,
     mentorNote: appointmentdata.mentorNote,
     sessionLink: appointmentdata.sessionLink,
+    serviceTitle: appointmentdata.serviceTitle,
   };
 
   const navigation = useNavigation();
@@ -79,7 +80,7 @@ const BookedAppointmentSub = (data) => {
             <Text style={styles.fieldName}>Title</Text>
             <TextInput
               style={styles.textInput}
-              value={value.title}
+              value={value.serviceTitle}
               editable={false}
             />
             <Text style={styles.fieldName}>Description</Text>
@@ -242,7 +243,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   button: {
-    backgroundColor: "#8ab4f8",
+    backgroundColor: "#3D3EEF",
     borderRadius: 5,
     padding: 10,
     marginTop: 20,
@@ -266,7 +267,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   customButton: {
-    backgroundColor: "#8ab4f8",
+    backgroundColor: "#3D3EEF",
     borderRadius: 5,
     padding: 10,
     marginTop: 50,

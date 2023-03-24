@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
 
   textView: {
     fontSize: 20,
-    color: "#ED6A8C",
+    color: "#3D3EEF",
     fontFamily: "Roboto",
     fontWeight: "300",
   },

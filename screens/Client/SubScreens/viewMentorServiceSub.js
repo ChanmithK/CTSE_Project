@@ -67,7 +67,7 @@ export const ViewMentorServiceSub = ({ service }) => {
                 marginBottom: 10,
               }}
               onPress={() => {
-                navigation.navigate("create-appointment");
+                navigation.navigate("create-appointment", { service: service });
               }}
             >
               <Text style={styles.buttonText}>Book An Appointment</Text>
