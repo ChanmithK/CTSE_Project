@@ -31,10 +31,7 @@ const screenOptions = { headerShown: false };
 const SignedInStack = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator
-        initialRouteName="login"
-        screenOptions={screenOptions}
-      >
+      <Stack.Navigator initialRouteName="login" screenOptions={screenOptions}>
         <Stack.Screen name="login" component={LoginScreen} />
         <Stack.Screen name="registerUser" component={RegisterScreenUser} />
         <Stack.Screen name="registerMentor" component={RegisterMentor} />

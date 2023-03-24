@@ -47,8 +47,11 @@ const FormikLogin = () => {
               ...doc.data(),
               id: doc.id,
             }));
+
+            console.log("userData", userData[0]);
+
             AsyncStorage.setItem("UserData", JSON.stringify(userData[0]));
-            AsyncStorage.setItem("UserID", JSON.stringify(userData[0].id));
+            AsyncStorage.setItem("UserID", JSON.stringify(userData[0].userId));
             AsyncStorage.setItem("UserRole", JSON.stringify(userData[0].role));
 
             //   if (userData[0].role === "User") {
