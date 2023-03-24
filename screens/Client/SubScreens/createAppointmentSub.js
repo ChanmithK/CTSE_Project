@@ -99,7 +99,8 @@ const CreateAppointmentsub = () => {
             appointmentID: docRef.id,
           });
         });
-        // navigation.navigate("home");
+
+        navigation.navigate("booked-appointment-list");
       } catch (e) {
         console.error("Error adding document: ", e);
       }

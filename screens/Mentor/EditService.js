@@ -3,6 +3,7 @@ import { View, Text, StyleSheet } from "react-native";
 import { EditServiceSubPage } from "./SubScreens/EditServiceSubPage.js";
 
 import { SafeAreaView } from "react-native-safe-area-context";
+import TopBar from "../../components/Common/TopBar";
 
 /**
  * @author
@@ -14,6 +15,8 @@ export const EditService = ({ navigation, route }) => {
   return (
     <SafeAreaView style={styles.container}>
       {/* <MakeAppointmentSubPage id={id} name={name} role={role} image={image} /> */}
+
+      <TopBar title="Edit Service" />
       <EditServiceSubPage service={service} />
     </SafeAreaView>
   );
