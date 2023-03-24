@@ -82,6 +82,7 @@ const SignedInStack = () => {
           component={BookedAppointmentList}
         />
         <Stack.Screen name="ClientMenu" component={ClientMenu} />
+        <Stack.Screen name="ClientHome" component={ClientHome} />
 
         {/* Content */}
         <Stack.Screen name="AddContent" component={AddContent} />
