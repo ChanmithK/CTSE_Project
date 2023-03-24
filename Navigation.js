@@ -23,6 +23,7 @@ import RegisterScreenUser from './screens/RegisterScreenUser';
 import RegisterMentor from './screens/RegisterMentor';
 import MentorProfile from './screens/Mentor/MentorProfile';
 import MentorProfileUpdate from './screens/Mentor/MentorProfileUpdate';
+import PendingContentList from './screens/Admin/PendingContentList';
 
 const Stack = createStackNavigator();
 const screenOptions = { headerShown: false };
@@ -37,6 +38,7 @@ const SignedInStack = () => {
         <Stack.Screen name='initialPage' component={InitialPage} />
 
         {/* Mentor */}
+        <Stack.Screen name='pendingContent' component={PendingContentList} />
         <Stack.Screen name='mentorProfile' component={MentorProfile} />
         <Stack.Screen
           name='mentorProfileUpdate'

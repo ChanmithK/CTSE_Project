@@ -77,7 +77,7 @@ const FormikLogin = () => {
             if (userData[0].role === 'User') {
               console.log('this is a regular user');
             } else if (userData[0].role === 'Admin') {
-              console.log('Admin user');
+              navigation.navigate('pendingContent');
             } else {
               console.log('this is a mentor');
               navigation.navigate('mentorProfile');
