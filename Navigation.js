@@ -86,6 +86,7 @@ const SignedInStack = () => {
         />
 
         <Stack.Screen name="ClientMenu" component={ClientMenu} />
+        <Stack.Screen name="ClientHome" component={ClientHome} />
 
         <Stack.Screen name="viewMentorService" component={ViewMentorService} />
 
