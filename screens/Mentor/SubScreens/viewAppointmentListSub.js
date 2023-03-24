@@ -87,6 +87,15 @@ const ViewAppointmentSubList = () => {
                     {" "}
                     {appointment.serviceTitle}{" "}
                   </Text>
+                  <Text
+                    style={{
+                      fontWeight: "500",
+                      color: "#3D3EEF",
+                      marginBottom: -2,
+                    }}
+                  >
+                    {appointment.name}{" "}
+                  </Text>
                   <View style={{ flexDirection: "row", marginTop: 5 }}>
                     <Text style={styles.appointmentDate}>
                       {appointment.date}{" "}

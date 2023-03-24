@@ -57,7 +57,7 @@ const DeclineModel = ({ closeDeclineModal, visibleDeclineModal, decline }) => {
           >
             <TouchableOpacity
               style={{
-                backgroundColor: "#8ab4f8",
+                backgroundColor: "#3D3EEF",
                 padding: 10,
                 borderRadius: 10,
                 alignItems: "center",
@@ -73,7 +73,7 @@ const DeclineModel = ({ closeDeclineModal, visibleDeclineModal, decline }) => {
             </TouchableOpacity>
             <TouchableOpacity
               style={{
-                backgroundColor: "#8ab4f8",
+                backgroundColor: "#3D3EEF",
                 padding: 10,
                 borderRadius: 10,
                 alignItems: "center",

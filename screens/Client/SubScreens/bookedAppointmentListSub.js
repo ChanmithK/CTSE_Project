@@ -97,7 +97,7 @@ const BookedAppointmentListSub = () => {
                       <Text
                         style={{
                           fontWeight: "500",
-                          color: "#ED6A8C",
+                          color: "#3D3EEF",
                           marginBottom: -2,
                         }}
                       >
