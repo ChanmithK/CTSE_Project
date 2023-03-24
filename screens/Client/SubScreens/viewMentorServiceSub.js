@@ -54,14 +54,15 @@ export const ViewMentorServiceSub = ({ service }) => {
           >
             <TouchableOpacity
               style={{
-                backgroundColor: "#ED6A8C",
+                display: "flex",
+                backgroundColor: "#3D3EEF",
                 padding: 10,
                 borderRadius: 10,
                 alignItems: "center",
                 justifyContent: "center",
                 width: "50%",
                 alignSelf: "center",
-                marginLeft: 10,
+                marginLeft: 100,
                 marginTop: 20,
                 marginBottom: 10,
               }}
