@@ -75,7 +75,7 @@ const FormikLogin = () => {
             AsyncStorage.setItem('UserRole', JSON.stringify(userData[0].role));
             // based on the role of the user the user will be redirected to the appropriate screen
             if (userData[0].role === 'User') {
-              console.log('this is a regular user');
+              navigation.navigate('clientProfile');
             } else if (userData[0].role === 'Admin') {
               navigation.navigate('pendingContent');
             } else {
