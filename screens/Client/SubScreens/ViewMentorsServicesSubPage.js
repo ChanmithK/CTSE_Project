@@ -33,10 +33,11 @@ export const ViewMentorsServicesSubPage = (props) => {
     setSearchKey(text);
 
     setSearchResult(
-      servicesList.filter(
-        (service) =>
-          service.serviceTitle.toLowerCase().includes(text.toLowerCase()) ||
-          service.category.toLowerCase().includes(text.toLowerCase())
+      servicesList.filter((service) =>
+        service.serviceTitle.toLowerCase().includes(text.toLowerCase()) ||
+        service.serviceCategory
+          ? service.serviceCategory.toLowerCase().includes(text.toLowerCase())
+          : null
       )
     );
   };
@@ -68,29 +69,34 @@ export const ViewMentorsServicesSubPage = (props) => {
         >
           <TouchableOpacity
             style={styles.button}
-            onPress={() => searchService("website")}
+            onPress={() => searchService("business")}
           >
-            <Text style={styles.buttonText}>WebSite</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Web Development</Text>
+            <Text style={styles.buttonText}>Business</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => searchService("react")}
+            onPress={() => searchService("career")}
           >
-            <Text style={styles.buttonText}>React</Text>
+            <Text style={styles.buttonText}>Career</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>UI/UX</Text>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => searchService("health")}
+          >
+            <Text style={styles.buttonText}>Health</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Tag 2</Text>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => searchService("education")}
+          >
+            <Text style={styles.buttonText}>Education</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Tag 3</Text>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => searchService("personalDevelopment")}
+          >
+            <Text style={styles.buttonText}>Personal Development</Text>
           </TouchableOpacity>
-          {/* Add more buttons as needed */}
         </ScrollView>
       </View>
 

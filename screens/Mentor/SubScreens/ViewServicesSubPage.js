@@ -9,7 +9,7 @@ import {
   KeyboardAvoidingView,
   ScrollView,
 } from "react-native";
-import { doc, getDoc, addDoc, collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, where, query } from "firebase/firestore";
 import { db } from "../../../firebase";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 
@@ -24,8 +24,7 @@ export const ViewServicesSubPage = (props) => {
   useEffect(() => {
     const getServices = async () => {
       const services = await getDocs(
-        collection(db, "services")
-        // query(collection(db, "services"), where("role", "==", "Mentor"))
+        query(collection(db, "services"), where("mentorId", "==", "1"))
       );
       setServicesList(
         services.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
@@ -36,8 +35,6 @@ export const ViewServicesSubPage = (props) => {
     };
     getServices();
   }, [isFocused]);
-
-  // getServices();
 
   const searchServices = (text) => {
     setSearchKey(text);
@@ -58,9 +55,6 @@ export const ViewServicesSubPage = (props) => {
         keyboardVerticalOffset={10}
         enabled
       >
-        {/* Top bar */}
-        {/* <TopBar title={"Appointment details"} /> */}
-
         {/* Search bar */}
         <View
           style={{
@@ -86,6 +80,7 @@ export const ViewServicesSubPage = (props) => {
                       service: service,
                     });
                   }}
+                  key={service.id}
                 >
                   <View style={styles.serviceContainer}>
                     <View
@@ -102,7 +97,7 @@ export const ViewServicesSubPage = (props) => {
                           {service.serviceTitle}
                         </Text>
                         <Text style={styles.servicePrice}>
-                          {service.servicePrice}
+                          Rs.{service.servicePrice}
                         </Text>
                       </View>
                       <View>
@@ -151,6 +146,7 @@ const styles = StyleSheet.create({
   },
   serviceContainer: {
     position: "relative",
+    height: 80,
     flexDirection: "row",
     backgroundColor: "#fff",
     borderRadius: 10,
