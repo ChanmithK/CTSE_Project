@@ -18,6 +18,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ActivityIndicator,
+  Alert,
 } from 'react-native';
 // imports from react-native-async-storage
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -46,6 +47,7 @@ const LoginSchema = Yup.object().shape({
 const FormikLogin = () => {
   const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
+  const [errorMessage, setErrorMessage] = useState('');
   const onLogin = async (email, password) => {
     // setting this to true will show the loading indicator
     setLoading(true);
@@ -74,6 +76,8 @@ const FormikLogin = () => {
             // based on the role of the user the user will be redirected to the appropriate screen
             if (userData[0].role === 'User') {
               console.log('this is a regular user');
+            } else if (userData[0].role === 'Admin') {
+              console.log('Admin user');
             } else {
               console.log('this is a mentor');
               navigation.navigate('mentorProfile');
@@ -87,6 +91,8 @@ const FormikLogin = () => {
       );
       console.log('Logged in successfully', email, password);
     } catch (error) {
+      setLoading(false);
+      setErrorMessage('Email or password is incorrect');
       console.log('Error logging in: ', error);
     }
   };
@@ -149,6 +155,10 @@ const FormikLogin = () => {
                     {errors.password}
                   </Text>
                 )}
+                {errorMessage !== '' &&
+                  Alert.alert('Error', errorMessage, [
+                    { text: 'OK', onPress: () => setErrorMessage('') },
+                  ])}
               </View>
 
               <TouchableOpacity
