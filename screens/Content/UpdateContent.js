@@ -1,14 +1,16 @@
 import { View, Text, StyleSheet } from "react-native";
 import React from "react";
-import ViewContentListSubPage from "./SubScreens/ViewContentListSubPage";
+import UpdateContentSubPage from "./SubScreens/UpdateContentSubPage";
 import { SafeAreaView } from "react-native-safe-area-context";
 import TopBar from "../../components/Common/TopBar";
 
-const ViewContentList = () => {
+const UpdateContent = ({ navigation, route }) => {
+  const data = route.params.content;
+
   return (
     <SafeAreaView style={styles.container}>
-      <TopBar title="Content List" />
-      <ViewContentListSubPage />
+      <TopBar title="Update Content" />
+      <UpdateContentSubPage content={data} />
     </SafeAreaView>
   );
 };
@@ -20,4 +22,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ViewContentList;
+export default UpdateContent;

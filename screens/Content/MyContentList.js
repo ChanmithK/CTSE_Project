@@ -1,17 +1,14 @@
-import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { ViewServicesSubPage } from "./SubScreens/ViewServicesSubPage.js";
+import React from "react";
+import MyContentListSubPage from "./SubScreens/MyContentListSubPage";
 import { SafeAreaView } from "react-native-safe-area-context";
+import TopBar from "../../components/Common/TopBar";
 
-/**
- * @author
- * @function ViewServices
- **/
-export const ViewServices = (props) => {
+const MyContentList = () => {
   return (
     <SafeAreaView style={styles.container}>
-      {/* <MakeAppointmentSubPage id={id} name={name} role={role} image={image} /> */}
-      <ViewServicesSubPage />
+      <TopBar title="My Content List" />
+      <MyContentListSubPage />
     </SafeAreaView>
   );
 };
@@ -22,3 +19,5 @@ const styles = StyleSheet.create({
     height: "100%",
   },
 });
+
+export default MyContentList;

@@ -9,7 +9,12 @@ import {
   TextInput,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import { collection, query, onSnapshot } from "firebase/firestore";
+import {
+  collection,
+  query,
+  onSnapshot,
+  where,
+} from "firebase/firestore";
 import { db } from "../../../firebase";
 import { useNavigation } from "@react-navigation/native";
 
@@ -21,7 +26,10 @@ const ViewContentListSubPage = () => {
 
   useEffect(() => {
     const getContentList = async () => {
-      const ref = query(collection(db, "Content"));
+      const ref = query(
+        collection(db, "Content"),
+        where("authorID", "==", "cXKMDi7syjf9EDpoF9aY")
+      );
 
       const unsubscribe = onSnapshot(ref, (querySnapshot) => {
         const contentList = [];
@@ -37,81 +45,12 @@ const ViewContentListSubPage = () => {
     getContentList();
   }, []);
 
-  const Categories = () => {
-    return (
-      <ScrollView
-        horizontal={true}
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.buttonContainer}
-      >
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => filterContent("")}
-        >
-          <Text style={styles.buttonText}>All</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => filterContent("Business")}
-        >
-          <Text style={styles.buttonText}>Business</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => filterContent("IT")}
-        >
-          <Text style={styles.buttonText}>IT</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => filterContent("App Development")}
-        >
-          <Text style={styles.buttonText}>App Development</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => filterContent("Tutoring")}
-        >
-          <Text style={styles.buttonText}>Tutoring</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => filterContent("Online Marketing")}
-        >
-          <Text style={styles.buttonText}>Online Marketing</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => filterContent("Financial Health")}
-        >
-          <Text style={styles.buttonText}>Financial Health</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => filterContent("Other")}
-        >
-          <Text style={styles.buttonText}>Other</Text>
-        </TouchableOpacity>
-      </ScrollView>
-    );
-  };
-
   const searchContent = (text) => {
     setSearchText(text);
 
     setContentListFiltered(
       contentList.filter((content) =>
         content.title.toLowerCase().includes(text.toLowerCase())
-      )
-    );
-  };
-
-  const filterContent = (text) => {
-    setSearchText("");
-
-    setContentListFiltered(
-      contentList.filter((content) =>
-        content.category.toLowerCase().includes(text.toLowerCase())
       )
     );
   };
@@ -133,7 +72,6 @@ const ViewContentListSubPage = () => {
           }}
           style={styles.searchIcon}
         />
-        <Categories />
       </View>
 
       <View>
@@ -148,16 +86,13 @@ const ViewContentListSubPage = () => {
                   onPress={() =>
                     navigation.navigate("ViewContent", {
                       data: content,
+                      isAuthor: true,
                     })
                   }
                 >
                   <View style={styles.contentCard}>
-                    <View style={styles.contentTopHeader}>
-                      <Text style={styles.contentAuthor}>
-                        By {content.authorName}
-                      </Text>
-                      <Text style={styles.contentDate}>{content.date}</Text>
-                    </View>
+                    <Text style={styles.contentDate}>{content.date}</Text>
+
                     <Text style={styles.contentName}>{content.title}</Text>
                     <Text style={styles.contentDescription} numberOfLines={3}>
                       {content.description}
@@ -218,10 +153,6 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     color: "#000",
   },
-  contentTopHeader: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
   contentAuthor: {
     fontSize: 13,
     marginTop: 5,
@@ -233,6 +164,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
     color: "#19212B",
     fontWeight: "400",
+    textAlign: "right",
   },
   contentDescription: {
     fontSize: 13,
