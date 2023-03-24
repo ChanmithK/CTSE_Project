@@ -10,17 +10,46 @@ import {
 } from 'react-native';
 import React, { useEffect } from 'react';
 import TopBar from '../../../components/Common/TopBar';
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, deleteDoc } from 'firebase/firestore';
 import { db } from '../../../firebase';
 import { useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
+import { Alert } from 'react-native';
 
 const MentorProfileSubPage = () => {
   const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
   const [data, setData] = useState('');
   const windowHeight = Dimensions.get('window').height;
+
+  const handleDelete = async () => {
+    Alert.alert(
+      'Confirm Deletion',
+      'Are you sure you want to delete your profile?',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Delete',
+          onPress: async () => {
+            const value = await AsyncStorage.getItem('UserID');
+            const user = JSON.parse(value);
+            const userDoc = doc(db, 'Users', user);
+            await deleteDoc(userDoc);
+
+            const userAuth = currentUser(auth);
+            await userAuth.delete();
+
+            navigation.navigate('login');
+          },
+          style: 'destructive',
+        },
+      ]
+    );
+  };
 
   const formatTime = (time) => {
     const hours = time.split(':')[0];
@@ -158,14 +187,30 @@ const MentorProfileSubPage = () => {
                 position: 'absolute',
                 top: windowHeight - 180,
                 flexDirection: 'row',
-                justifyContent: 'space-between',
-                // marginTop: 20,
+                justifyContent: 'center',
+                gap: 20,
               }}
             >
               <TouchableOpacity
                 style={{
+                  backgroundColor: '#EF3D72',
+                  width: 180,
+                  height: 50,
+                  borderRadius: 10,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  alignSelf: 'center',
+                  marginTop: 30,
+                  marginLeft: 4,
+                }}
+                onPress={() => handleDelete()}
+              >
+                <Text style={styles.buttonText}>Delete</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={{
                   backgroundColor: '#3D3EEF',
-                  width: '100%',
+                  width: 180,
                   height: 50,
                   borderRadius: 10,
                   justifyContent: 'center',
