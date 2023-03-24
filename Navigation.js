@@ -26,6 +26,7 @@ import MentorProfileUpdate from './screens/Mentor/MentorProfileUpdate';
 import PendingContentList from './screens/Admin/PendingContentList';
 import ViewPendingContent from './screens/Admin/ViewPendingContent';
 import ClientProfile from './screens/Client/ClientProfile';
+import ClientProfileUpdate from './screens/Client/ClientProfileUpdate';
 
 const Stack = createStackNavigator();
 const screenOptions = { headerShown: false };
@@ -60,6 +61,10 @@ const SignedInStack = () => {
         />
 
         {/* Client */}
+        <Stack.Screen
+          name='clientProfileUpdate'
+          component={ClientProfileUpdate}
+        />
         <Stack.Screen name='clientProfile' component={ClientProfile} />
         <Stack.Screen
           name='ViewMentorsServicesScreen'

@@ -210,7 +210,7 @@ const ClientProfileSubPage = () => {
                     marginLeft: 10,
                     //   marginHorizontal: 0,
                   }}
-                  onPress={() => navigation.navigate('mentorProfileUpdate')}
+                  onPress={() => navigation.navigate('clientProfileUpdate')}
                 >
                   <Text style={styles.buttonText}>Edit</Text>
                 </TouchableOpacity>
