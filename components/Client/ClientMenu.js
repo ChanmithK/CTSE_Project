@@ -4,6 +4,7 @@ import TopBar from "../Common/TopBar";
 import { useNavigation } from "@react-navigation/native";
 import { signOut } from "@firebase/auth";
 import { auth } from "../../firebase";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const ClientMenu = () => {
   const navigation = useNavigation();
@@ -18,7 +19,7 @@ const ClientMenu = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       {/* Top bar */}
       <TopBar title={"Menu"} />
 
@@ -27,7 +28,7 @@ const ClientMenu = () => {
           <Text style={styles.text}>Profile</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => navigation.navigate("BookedAppointmentList")}
+          onPress={() => navigation.navigate("booked-appointment-list")}
         >
           <Text style={styles.text}>Booked Appointments</Text>
         </TouchableOpacity>
@@ -47,7 +48,7 @@ const ClientMenu = () => {
           <Text style={styles.textView}>Sign Out</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

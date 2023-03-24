@@ -4,6 +4,7 @@ import TopBar from "../Common/TopBar";
 import { useNavigation } from "@react-navigation/native";
 import { signOut } from "@firebase/auth";
 import { auth } from "../../firebase";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const MentorMenu = () => {
   const navigation = useNavigation();
@@ -11,19 +12,19 @@ const MentorMenu = () => {
   const Logout = async () => {
     try {
       await signOut(auth);
-      navigation.navigate("LoginScreen");
+      navigation.navigate("login");
     } catch (e) {
       console.error("Error signing out: ", e);
     }
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       {/* Top bar */}
       <TopBar title={"Menu"} />
 
       <View style={styles.view}>
-        <TouchableOpacity onPress={() => navigation.navigate("")}>
+        <TouchableOpacity onPress={() => navigation.navigate("mentorProfile")}>
           <Text style={styles.text}>Profile</Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -31,10 +32,11 @@ const MentorMenu = () => {
         >
           <Text style={styles.text}>Booked Appointments</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => navigation.navigate("ViewMentorsServices")}
-        >
+        <TouchableOpacity onPress={() => navigation.navigate("ViewServices")}>
           <Text style={styles.text}>Mentor Services</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("AddService")}>
+          <Text style={styles.text}>Add a Serivce</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate("AddContent")}>
           <Text style={styles.text}>Publish Content</Text>
@@ -48,7 +50,7 @@ const MentorMenu = () => {
           <Text style={styles.textView}>Sign Out</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

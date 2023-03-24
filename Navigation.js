@@ -51,7 +51,6 @@ const SignedInStack = () => {
           <Stack.Screen name="ViewServices" component={ViewServices} />
 
           {/* Mentor */}
-
           <Stack.Screen name="ViewServiceScreen" component={ViewService} />
           <Stack.Screen name="EditServiceScreen" component={EditService} />
           <Stack.Screen name="ViewAppointment" component={ViewAppointment} />
