@@ -196,13 +196,11 @@ const BookedAppointmentSub = (data) => {
             ) : null}
           </View>
           <View style={styles.buttonContainer}>
-            {value.appointmentStatus === "Accepted" ? (
-              <TouchableOpacity style={[styles.button, { height: 40 }]}>
-                <Text style={styles.buttonText}>Any Action</Text>
-              </TouchableOpacity>
-            ) : null}
             {value.appointmentStatus === "Rejected" ? (
-              <TouchableOpacity style={[styles.button, { height: 40 }]}>
+              <TouchableOpacity
+                style={[styles.button, { height: 45 }]}
+                onPress={() => navigation.navigate("ViewMentorsServicesScreen")}
+              >
                 <Text style={styles.buttonText}>Book Again</Text>
               </TouchableOpacity>
             ) : null}
@@ -261,6 +259,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     alignItems: "center",
     padding: 10,
+    marginBottom: 30,
   },
   EditCancelbuttonContainer: {
     flexDirection: "row",
