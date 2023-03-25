@@ -171,7 +171,7 @@ const MentorProfileUpdateSubPage = () => {
       workingTimeFrom: formatttedTime,
       workingTimeTo: timeTo,
       position: position,
-    }).then(() => console.log('CounsellorProfileScreen'));
+    }).then(() => console.log(navigation.navigate('mentorProfile')));
   };
 
   return (
