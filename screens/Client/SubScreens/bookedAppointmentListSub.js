@@ -51,12 +51,8 @@ const BookedAppointmentListSub = () => {
     setSearchKey(text);
 
     setSearchResult(
-      appointmentList.filter(
-        (appointment) =>
-          appointment.time.toLowerCase().includes(text.toLowerCase()) ||
-          appointment.date.toLowerCase().includes(text.toLowerCase()) ||
-          appointment.description.toLowerCase().includes(text.toLowerCase()) ||
-          appointment.name.toLowerCase().includes(text.toLowerCase())
+      appointmentList.filter((appointment) =>
+        appointment.serviceTitle.toLowerCase().includes(text.toLowerCase())
       )
     );
   };
@@ -185,7 +181,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 20,
     padding: 10,
-    fontsize: 13,
     fontWeight: "400",
     color: "#D1D1D6",
   },
