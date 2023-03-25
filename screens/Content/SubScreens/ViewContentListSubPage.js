@@ -13,6 +13,7 @@ import { collection, query, onSnapshot, where } from "firebase/firestore";
 import { db } from "../../../firebase";
 import { useNavigation } from "@react-navigation/native";
 
+/* */
 const ViewContentListSubPage = () => {
   const navigation = useNavigation();
   const [contentList, setContentList] = useState([]);
