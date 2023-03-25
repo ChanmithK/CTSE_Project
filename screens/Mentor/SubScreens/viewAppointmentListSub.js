@@ -23,10 +23,7 @@ const ViewAppointmentSubList = () => {
   useEffect(() => {
     const getAppointments = async () => {
       const appointmentList = [];
-      const appointmentRef = query(
-        collection(db, "appointments"),
-        where("appointmentStatus", "==", "Pending")
-      );
+      const appointmentRef = query(collection(db, "appointments"));
       const appointmentSnapshot = await getDocs(appointmentRef);
       appointmentSnapshot.forEach((doc) => {
         appointmentList.push(doc.data());
@@ -77,7 +74,6 @@ const ViewAppointmentSubList = () => {
                   source={{ uri: appointment.serviceImage }}
                   style={styles.image}
                 />
-                <Image style={styles.image} />
                 <View style={styles.appointmentDetails}>
                   <Text style={styles.appointmentName}>
                     {" "}
@@ -90,7 +86,7 @@ const ViewAppointmentSubList = () => {
                       marginBottom: -2,
                     }}
                   >
-                    {appointment.name}{" "}
+                    {appointment.appointmentStatus}{" "}
                   </Text>
                   <View style={{ flexDirection: "row", marginTop: 5 }}>
                     <Text style={styles.appointmentDate}>

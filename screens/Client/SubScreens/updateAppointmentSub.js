@@ -30,7 +30,6 @@ const UpdateAppointmentsub = (data) => {
     date: appointmentdata.date,
     time: appointmentdata.time,
     appointmentID: appointmentdata.appointmentID,
-    title: appointmentdata.title,
     serviceTitle: appointmentdata.serviceTitle,
   };
 
@@ -41,7 +40,6 @@ const UpdateAppointmentsub = (data) => {
     description: "",
     date: "",
     time: "",
-    title: "",
   });
   const [date, setDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState(false);
@@ -79,7 +77,6 @@ const UpdateAppointmentsub = (data) => {
     tempObj.description = value.description ? "" : "Please enter description";
     tempObj.date = value.date ? "" : "Please enter date";
     tempObj.time = value.time ? "" : "Please enter time";
-    tempObj.title = value.title ? "" : "Please enter title";
 
     setError({
       ...tempObj,
@@ -128,9 +125,6 @@ const UpdateAppointmentsub = (data) => {
               value={value.serviceTitle}
               editable={false}
             />
-            {error.title && (
-              <Text style={styles.errorMessage}>{error.title}</Text>
-            )}
             <Text style={styles.fieldName}>Description</Text>
             <TextInput
               style={[styles.textInput, { height: 130 }]}
