@@ -14,19 +14,33 @@ import { useNavigation } from "@react-navigation/native";
 import { doc, addDoc, collection, updateDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useEffect } from "react";
 
-const CreateAppointmentsub = () => {
+const CreateAppointmentsub = (service) => {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const getUser = async () => {
+      const user = await AsyncStorage.getItem("UserData");
+      setUser(JSON.parse(user));
+    };
+    getUser();
+  }, []);
+
+  console.log("first", user);
   const InitalState = {
     description: "",
     date: "",
     time: "",
     userID: "",
-    mentorID: "",
+    mentorID: service.service.mentorId,
     mentorName: "",
     appointmentID: "",
     name: "",
     email: "",
-    title: "",
+    serviceTitle: service.service.serviceTitle,
+    serviceImage: service.service.serviceImage,
   };
 
   const navigation = useNavigation();
@@ -69,7 +83,6 @@ const CreateAppointmentsub = () => {
     tempObj.description = value.description ? "" : "Please enter description";
     tempObj.date = value.date ? "" : "Please enter date";
     tempObj.time = value.time ? "" : "Please enter time";
-    tempObj.title = value.title ? "" : "Please enter title";
 
     setError({
       ...tempObj,
@@ -82,20 +95,24 @@ const CreateAppointmentsub = () => {
     if (ValiDate()) {
       try {
         const docRef = await addDoc(collection(db, "appointments"), {
-          title: value.title,
           description: value.description,
           date: value.date,
           time: value.time,
-          userID: "123",
-          mentorID: "123",
-          appointmentID: Math.random().toString(36).substring(7),
-          mentorName: "123",
-          name: "john",
-          email: "test@gmail.com",
+          userID: user.userId,
+          mentorID: value.mentorID,
+          mentorName: "john doe",
+          name: user.name,
+          email: user.email,
           appointmentStatus: "Pending",
-          serviceTitle: "test",
+          serviceTitle: value.serviceTitle,
+          serviceImage: value.serviceImage,
+        }).then(async function (docRef) {
+          await updateDoc(doc(db, "appointments", docRef.id), {
+            appointmentID: docRef.id,
+          });
         });
-        // navigation.navigate("home");
+
+        navigation.navigate("booked-appointment-list");
       } catch (e) {
         console.error("Error adding document: ", e);
       }
@@ -107,16 +124,14 @@ const CreateAppointmentsub = () => {
       <View style={styles.container}>
         <KeyboardAvoidingView>
           <View style={styles.inputContainer}>
-            <Text style={styles.fieldName}>Title</Text>
+            <Text style={styles.fieldName}>Service Title</Text>
             <TextInput
               style={styles.textInput}
               // placeholder="Title"
-              value={value.title}
-              onChangeText={(text) => handleChange(text, "title")}
+              value={value.serviceTitle}
+              defaultValue={value.serviceTitle}
+              editable={false}
             />
-            {error.title && (
-              <Text style={styles.errorMessage}>{error.title}</Text>
-            )}
             <Text style={styles.fieldName}>Description</Text>
             <TextInput
               style={[styles.textInput, { height: 130 }]}
@@ -259,7 +274,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   button: {
-    backgroundColor: "#8ab4f8",
+    backgroundColor: "#3D3EEF",
     borderRadius: 5,
     padding: 10,
     marginTop: 20,

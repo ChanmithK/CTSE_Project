@@ -23,19 +23,13 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import * as ImagePicker from 'expo-image-picker';
 
-const MentorProfileUpdateSubPage = () => {
+const ClientProfileUpdateSubPage = () => {
   const navigation = useNavigation();
   const [id, setId] = useState('');
   const [data, setData] = useState('');
   const [name, setName] = useState('');
-  const [bio, setBio] = useState('');
-  const [position, setPosition] = useState('');
   const [showDatePicker, setShowDatePicker] = useState(false);
   const windowHeight = Dimensions.get('window').height;
-
-  const [workingTimeFrom, setWorkingTimeFrom] = useState(new Date());
-  const [workingTimeTo, setWorkingTimeTo] = useState(new Date());
-  const [showTimePicker, setShowTimePicker] = useState(false);
 
   const [localImageUri, setLocalImageUri] = useState(null);
 
@@ -75,18 +69,6 @@ const MentorProfileUpdateSubPage = () => {
       setLocalImageUri(result.uri);
       await uploadImage(result.uri);
     }
-  };
-
-  const onTimeChange = (event, selectedTime) => {
-    const currentTime = selectedTime || workingTimeFrom;
-    setShowTimePicker(Platform.OS === 'ios');
-    setWorkingTimeFrom(currentTime);
-  };
-
-  const onWorkingToChange = (event, selectedTime) => {
-    const currentTime = selectedTime || workingTimeTo;
-    setShowTimePicker(Platform.OS === 'ios');
-    setWorkingTimeTo(currentTime);
   };
 
   const [date, setDate] = useState(new Date());
@@ -136,40 +118,21 @@ const MentorProfileUpdateSubPage = () => {
     }
     fetchData();
     setName(data.name);
-    setBio(data.bio);
-    setPosition(data.position);
+
     if (data.age) {
       setDate(stringToDate(data.age));
     }
-    if (data.workingTimeFrom) {
-      setWorkingTimeFrom(getTimeFromString(data.workingTimeFrom));
-    }
-    if (data.workingTimeTo) {
-      setWorkingTimeTo(getTimeFromString(data.workingTimeTo));
-    }
+
     requestPermissions();
-  }, [
-    data.name,
-    data.bio,
-    data.age,
-    data.workingTimeFrom,
-    data.workingTimeTo,
-    data.position,
-  ]);
+  }, [data.name, data.age]);
 
   const updateProfile = () => {
     const userDoc = doc(db, 'Users', id);
     const formattedDate = date.toISOString().split('T')[0];
-    const formatttedTime = formatTime(workingTimeFrom.toLocaleTimeString());
-    const timeTo = formatTime(workingTimeTo.toLocaleTimeString());
     updateDoc(userDoc, {
       name: name,
-      bio: bio,
       age: formattedDate,
-      workingTimeFrom: formatttedTime,
-      workingTimeTo: timeTo,
-      position: position,
-    }).then(() => console.log('CounsellorProfileScreen'));
+    });
   };
 
   return (
@@ -214,22 +177,7 @@ const MentorProfileUpdateSubPage = () => {
                       style={[styles.input, { height: 40 }]}
                       onChangeText={(text) => setName(text)}
                     />
-                    <Text style={styles.mainFieldName}>Position</Text>
-                    <TextInput
-                      multiline={false}
-                      defaultValue={data.position}
-                      style={[styles.input, { height: 40 }]}
-                      onChangeText={(text) => setPosition(text)}
-                    />
-                    <Text style={styles.mainFieldName}>Bio</Text>
-                    <TextInput
-                      placeholderTextColor='white'
-                      multiline={true}
-                      defaultValue={data.bio}
-                      style={[styles.input, { height: 145 }]}
-                      onChangeText={(text) => setBio(text)}
-                      textAlignVertical='top'
-                    />
+
                     <Text style={styles.mainFieldName}>Date of birth</Text>
                     <TouchableOpacity
                       onPress={() => setShowDatePicker(true)}
@@ -253,48 +201,6 @@ const MentorProfileUpdateSubPage = () => {
                         is24Hour={true}
                         display='default'
                         onChange={onChange}
-                      />
-                    )}
-                    <Text style={styles.mainFieldName}>Working from</Text>
-                    <TouchableOpacity
-                      onPress={() => setShowTimePicker(true)}
-                      style={[
-                        styles.input,
-                        { height: 40, justifyContent: 'center' },
-                      ]}
-                    >
-                      <Text>{workingTimeFrom.toLocaleTimeString()}</Text>
-                    </TouchableOpacity>
-
-                    {showTimePicker && (
-                      <DateTimePicker
-                        testID='timePicker'
-                        value={workingTimeFrom}
-                        mode='time'
-                        is24Hour={true}
-                        display='default'
-                        onChange={onTimeChange}
-                      />
-                    )}
-                    <Text style={styles.mainFieldName}>Working to</Text>
-                    <TouchableOpacity
-                      onPress={() => setShowTimePicker(true)}
-                      style={[
-                        styles.input,
-                        { height: 40, justifyContent: 'center' },
-                      ]}
-                    >
-                      <Text>{workingTimeTo.toLocaleTimeString()}</Text>
-                    </TouchableOpacity>
-
-                    {showTimePicker && (
-                      <DateTimePicker
-                        testID='timePicker'
-                        value={workingTimeTo}
-                        mode='time'
-                        is24Hour={true}
-                        display='default'
-                        onChange={onWorkingToChange}
                       />
                     )}
                   </View>
@@ -396,4 +302,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MentorProfileUpdateSubPage;
+export default ClientProfileUpdateSubPage;

@@ -104,7 +104,14 @@ export const ViewMentorsServicesSubPage = (props) => {
         <ScrollView showsVerticalScrollIndicator={false}>
           {searchResult ? (
             searchResult.map((service) => (
-              <TouchableOpacity key={service.id}>
+              <TouchableOpacity
+                key={service.id}
+                onPress={() =>
+                  navigation.navigate("viewMentorService", {
+                    service: service,
+                  })
+                }
+              >
                 <View style={styles.serviceCard} key={service.key}>
                   <View style={styles.cardImage}>
                     <Image
