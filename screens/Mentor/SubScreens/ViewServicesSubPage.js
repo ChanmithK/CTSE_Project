@@ -9,9 +9,10 @@ import {
   KeyboardAvoidingView,
   ScrollView,
 } from "react-native";
-import { doc, getDoc, addDoc, collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, where, query } from "firebase/firestore";
 import { db } from "../../../firebase";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const ViewServicesSubPage = (props) => {
   const navigation = useNavigation();
@@ -20,12 +21,12 @@ export const ViewServicesSubPage = (props) => {
   const [servicesList, setServicesList] = useState([]);
   const [searchResult, setSearchResult] = useState([]);
   const [searchKey, setSearchKey] = useState("");
+  const [user, setUser] = useState("");
 
   useEffect(() => {
     const getServices = async () => {
       const services = await getDocs(
-        collection(db, "services")
-        // query(collection(db, "services"), where("role", "==", "Mentor"))
+        query(collection(db, "services"), where("mentorId", "==", user.userId))
       );
       setServicesList(
         services.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
@@ -35,9 +36,13 @@ export const ViewServicesSubPage = (props) => {
       );
     };
     getServices();
-  }, [isFocused]);
 
-  // getServices();
+    const getUser = async () => {
+      const user = await AsyncStorage.getItem("UserData");
+      setUser(JSON.parse(user));
+    };
+    getUser();
+  }, [isFocused]);
 
   const searchServices = (text) => {
     setSearchKey(text);
@@ -51,8 +56,6 @@ export const ViewServicesSubPage = (props) => {
     );
   };
 
-  console.log("searchResult", searchResult);
-
   return (
     <View style={styles.container}>
       <KeyboardAvoidingView
@@ -60,9 +63,6 @@ export const ViewServicesSubPage = (props) => {
         keyboardVerticalOffset={10}
         enabled
       >
-        {/* Top bar */}
-        {/* <TopBar title={"Appointment details"} /> */}
-
         {/* Search bar */}
         <View
           style={{
@@ -88,14 +88,15 @@ export const ViewServicesSubPage = (props) => {
                       service: service,
                     });
                   }}
+                  key={service.id}
                 >
                   <View style={styles.serviceContainer}>
                     <View
                       style={{
                         flexDirection: "row",
                         width: "100%",
-                        display: "flex",
-                        justifyContent: "space-between",
+                        // display: "flex",
+                        // justifyContent: "space-between",
                         alignItems: "center",
                       }}
                     >
@@ -104,10 +105,8 @@ export const ViewServicesSubPage = (props) => {
                           {service.serviceTitle}
                         </Text>
                         <Text style={styles.servicePrice}>
-                          {service.servicePrice}
+                          Rs.{service.servicePrice}
                         </Text>
-                      </View>
-                      <View>
                         <Text style={styles.serviceDate}>
                           {service.publishedDate}
                         </Text>
@@ -153,6 +152,7 @@ const styles = StyleSheet.create({
   },
   serviceContainer: {
     position: "relative",
+    height: 80,
     flexDirection: "row",
     backgroundColor: "#fff",
     borderRadius: 10,

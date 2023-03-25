@@ -1,6 +1,8 @@
 import React from "react";
-import { View, Text, StyleSheet, SafeAreaView } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { ViewServiceSubPage } from "./SubScreens/ViewServiceSubPage.js";
+import { SafeAreaView } from "react-native-safe-area-context";
+import TopBar from "../../components/Common/TopBar";
 
 /**
  * @author
@@ -13,6 +15,7 @@ export const ViewService = ({ navigation, route }) => {
   return (
     <SafeAreaView style={styles.container}>
       {/* <MakeAppointmentSubPage id={id} name={name} role={role} image={image} /> */}
+      <TopBar title="Service Details" />
       <ViewServiceSubPage service={service} />
     </SafeAreaView>
   );

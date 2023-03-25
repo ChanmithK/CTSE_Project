@@ -7,17 +7,21 @@ import {
   Image,
   Button,
   TouchableOpacity,
+  Dimensions,
 } from "react-native";
 import Modal from "react-native-modal";
 import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "../../../firebase";
 import { useNavigation } from "@react-navigation/native";
+import { deleteObject, getStorage, ref } from "firebase/storage";
 /**
  * @author
  * @function ViewServiceSubPage
  **/
 export const ViewServiceSubPage = ({ service }) => {
   const navigation = useNavigation();
+  const windowHeight = Dimensions.get("window").height;
+
   const [isDeclineModalVisible, setDeclineModalVisible] = useState(false);
   const toggleDeclineModal = () => {
     setDeclineModalVisible(!isDeclineModalVisible);
@@ -37,12 +41,15 @@ export const ViewServiceSubPage = ({ service }) => {
       >
         {/* Atricles List */}
         <View style={{ marginTop: 10 }}>
-          <ScrollView showsVerticalScrollIndicator={false}>
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            style={{ height: windowHeight - 200 }}
+          >
             <View style={{ marginBottom: 150 }}>
               <Text style={styles.serviceTitle}>{service.serviceTitle}</Text>
               <Image
                 source={{
-                  uri: "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg",
+                  uri: service.serviceImage,
                 }}
                 style={styles.image}
               />
@@ -50,10 +57,16 @@ export const ViewServiceSubPage = ({ service }) => {
                 {service.serviceDescription}
               </Text>
               <Text style={styles.servicePrice}>
-                Author: {service.servicePrice}
+                Service Price: {service.servicePrice}
               </Text>
               <Text style={styles.serviceDate}>
-                Category: {service.publishedDate}
+                Service Category: {service.serviceCategory}
+              </Text>
+              <Text style={styles.serviceDate}>
+                Service Duration: {service.serviceDuration}
+              </Text>
+              <Text style={styles.serviceDate}>
+                Published Date: {service.publishedDate}
               </Text>
             </View>
           </ScrollView>
@@ -69,7 +82,7 @@ export const ViewServiceSubPage = ({ service }) => {
           >
             <TouchableOpacity
               style={{
-                backgroundColor: "#ED6A8C",
+                backgroundColor: "#3D3EEF",
                 padding: 10,
                 borderRadius: 10,
                 alignItems: "center",
@@ -85,7 +98,7 @@ export const ViewServiceSubPage = ({ service }) => {
             </TouchableOpacity>
             <TouchableOpacity
               style={{
-                backgroundColor: "#ED6A8C",
+                backgroundColor: "#3D3EEF",
                 padding: 10,
                 borderRadius: 10,
                 alignItems: "center",
@@ -134,7 +147,7 @@ export const ViewServiceSubPage = ({ service }) => {
                 >
                   <TouchableOpacity
                     style={{
-                      backgroundColor: "#ED6A8C",
+                      backgroundColor: "#3D3EEF",
                       padding: 10,
                       borderRadius: 10,
                       alignItems: "center",
@@ -150,7 +163,7 @@ export const ViewServiceSubPage = ({ service }) => {
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={{
-                      backgroundColor: "#ED6A8C",
+                      backgroundColor: "#3D3EEF",
                       padding: 10,
                       borderRadius: 10,
                       alignItems: "center",
@@ -165,6 +178,9 @@ export const ViewServiceSubPage = ({ service }) => {
                       async function deleteData() {
                         const serviceDoc = doc(db, "services", service.id);
                         await deleteDoc(serviceDoc);
+                        const storage = getStorage();
+                        const imageRef = ref(storage, service.serviceImage);
+                        await deleteObject(imageRef);
                       }
                       deleteData().then(navigation.navigate("ViewServices"));
                     }}

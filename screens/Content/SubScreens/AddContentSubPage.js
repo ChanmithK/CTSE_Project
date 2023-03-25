@@ -3,14 +3,11 @@ import {
   View,
   Text,
   StyleSheet,
-  Image,
   TouchableOpacity,
   ScrollView,
   Dimensions,
   TextInput,
-  Alert,
   KeyboardAvoidingView,
-  Button,
 } from "react-native";
 import * as Yup from "yup";
 import { Formik } from "formik";
@@ -24,7 +21,7 @@ const AddContentSchema = Yup.object().shape({
   _title: Yup.string().required("Title is required"),
   _description: Yup.string()
     .required("Description is required")
-    .max(500, "Description is too long - should be 500 characters maximum"),
+    .max(2000, "Description is too long - should be 2000 characters maximum"),
   _category: Yup.string().required("Category is required"),
 });
 
@@ -37,10 +34,10 @@ const AddContentSubPage = () => {
 
   useEffect(() => {
     const getUser = async () => {
-      const user = await AsyncStorage.getItem("User");
+      const user = await AsyncStorage.getItem("UserData");
       setUser(JSON.parse(user));
     };
-    // getUser();
+    getUser();
   }, []);
 
   const addContent = async (values) => {
@@ -49,9 +46,11 @@ const AddContentSubPage = () => {
         title: values._title,
         description: values._description,
         category: values._category,
-        authorID: "user.id",
-        authorName: "user.name",
-      }).then(navigation.navigate("Test1"));
+        authorID: user.id,
+        authorName: user.name,
+        status: "Pending",
+        date: new Date().toISOString().slice(0, 10),
+      }).then(navigation.navigate("ViewContentList"));
     } catch (e) {
       console.error("Error adding document: ", e);
     }
@@ -81,7 +80,6 @@ const AddContentSubPage = () => {
             <View
               style={{
                 marginHorizontal: 10,
-                marginVertical: 30,
               }}
             >
               {/* Field data */}
@@ -132,7 +130,7 @@ const AddContentSubPage = () => {
                       placeholderTextColor="white"
                       multiline={true}
                       textAlignVertical="top"
-                      style={[styles.input, { height: 400 }]}
+                      style={[styles.input, { height: 450 }]}
                       onChangeText={handleChange("_description")}
                       onBlur={handleBlur("_description")}
                     />
@@ -171,12 +169,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#EBF0F9",
     height: "100%",
   },
-  userImage: {
-    width: 149,
-    height: 149,
-    borderRadius: 100,
-    alignSelf: "center",
-  },
   mainFieldName: {
     color: "#1A2042",
     fontSize: 16,
@@ -198,7 +190,6 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: "#ffffff",
     borderRadius: 5,
-    border: "2px solid red",
     padding: 10,
     fontSize: 15,
     color: "black",
