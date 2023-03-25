@@ -26,7 +26,10 @@ export const ViewServicesSubPage = (props) => {
   useEffect(() => {
     const getServices = async () => {
       const services = await getDocs(
-        query(collection(db, "services"), where("mentorId", "==", user.userId))
+        query(
+          collection(db, "services"),
+          where("mentorId", "==", "sWoLon1XaFRkk0KvMRhupNuFjyQ2")
+        )
       );
       setServicesList(
         services.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
@@ -36,12 +39,6 @@ export const ViewServicesSubPage = (props) => {
       );
     };
     getServices();
-
-    const getUser = async () => {
-      const user = await AsyncStorage.getItem("UserData");
-      setUser(JSON.parse(user));
-    };
-    getUser();
   }, [isFocused]);
 
   const searchServices = (text) => {
