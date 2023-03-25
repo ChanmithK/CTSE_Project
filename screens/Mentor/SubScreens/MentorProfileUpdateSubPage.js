@@ -162,7 +162,6 @@ const MentorProfileUpdateSubPage = () => {
     const userDoc = doc(db, 'Users', id);
     const formattedDate = date.toISOString().split('T')[0];
     const formatttedTime = formatTime(workingTimeFrom.toLocaleTimeString());
-    console.log(workingTimeFrom.toLocaleTimeString());
 
     const timeTo = formatTime(workingTimeTo.toLocaleTimeString());
     updateDoc(userDoc, {
