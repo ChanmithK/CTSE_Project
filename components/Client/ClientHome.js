@@ -197,7 +197,10 @@ const Articles = () => {
 
   useEffect(() => {
     const getArticles = async () => {
-      const articles = await getDocs(collection(db, "Content"));
+      const articles = await getDocs(
+        query(collection(db, "Content"), where("status", "==", "accepted"))
+      );
+
       setArticleList(articles.docs.map((doc) => doc.data()));
     };
     getArticles();
@@ -216,7 +219,7 @@ const Articles = () => {
           Top Articles
         </Text>
         <TouchableOpacity
-          onPress={() => navigation.navigate("ViewArticlesScreen")}
+          onPress={() => navigation.navigate("ViewContentList")}
         >
           <Text style={{ fontSize: 16, fontWeight: "500", color: "#3D3EEF" }}>
             view all
