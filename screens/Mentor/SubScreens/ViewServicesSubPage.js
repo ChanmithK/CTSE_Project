@@ -25,7 +25,10 @@ export const ViewServicesSubPage = (props) => {
   useEffect(() => {
     const getServices = async () => {
       const services = await getDocs(
-        query(collection(db, "services"), where("mentorId", "==", user.id))
+        query(
+          collection(db, "services"),
+          where("mentorId", "==", "sWoLon1XaFRkk0KvMRhupNuFjyQ2")
+        )
       );
       setServicesList(
         services.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
@@ -94,8 +97,8 @@ export const ViewServicesSubPage = (props) => {
                       style={{
                         flexDirection: "row",
                         width: "100%",
-                        display: "flex",
-                        justifyContent: "space-between",
+                        // display: "flex",
+                        // justifyContent: "space-between",
                         alignItems: "center",
                       }}
                     >
@@ -106,8 +109,6 @@ export const ViewServicesSubPage = (props) => {
                         <Text style={styles.servicePrice}>
                           Rs.{service.servicePrice}
                         </Text>
-                      </View>
-                      <View>
                         <Text style={styles.serviceDate}>
                           {service.publishedDate}
                         </Text>
