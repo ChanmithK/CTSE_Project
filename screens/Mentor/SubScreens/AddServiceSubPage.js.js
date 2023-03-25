@@ -59,6 +59,7 @@ export const AddServiceSubPage = (props) => {
   }, []);
 
   const addService = async (values) => {
+    const random = Math.floor(Math.random() * 10);
     const date = new Date();
     const dateString = date.toISOString().substring(0, 10);
     if (imageURL != null) {
@@ -72,6 +73,8 @@ export const AddServiceSubPage = (props) => {
         serviceDuration: values._ServiceDuration,
         publishedDate: dateString,
         serviceImage: imageURL,
+        rate: random,
+        isLike: false,
       }).then(navigation.navigate("ViewServices"));
     } else {
       alert("Wait a minute, image is still uploading!");
