@@ -77,11 +77,24 @@ const ViewAppointmentSubList = () => {
               }
             >
               <View style={styles.appointmentContainer}>
+                <Image
+                  source={{ uri: appointment.serviceImage }}
+                  style={styles.image}
+                />
                 <Image source={""} style={styles.image} />
                 <View style={styles.appointmentDetails}>
                   <Text style={styles.appointmentName}>
                     {" "}
-                    {appointment.title}{" "}
+                    {appointment.serviceTitle}{" "}
+                  </Text>
+                  <Text
+                    style={{
+                      fontWeight: "500",
+                      color: "#3D3EEF",
+                      marginBottom: -2,
+                    }}
+                  >
+                    {appointment.name}{" "}
                   </Text>
                   <View style={{ flexDirection: "row", marginTop: 5 }}>
                     <Text style={styles.appointmentDate}>
@@ -124,7 +137,6 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
     resizeMode: "contain",
-    color: "#8E8E93",
   },
   appointmentContainer: {
     position: "relative",

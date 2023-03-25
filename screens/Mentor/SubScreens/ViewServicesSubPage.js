@@ -12,6 +12,7 @@ import {
 import { collection, getDocs, where, query } from "firebase/firestore";
 import { db } from "../../../firebase";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const ViewServicesSubPage = (props) => {
   const navigation = useNavigation();
@@ -20,11 +21,12 @@ export const ViewServicesSubPage = (props) => {
   const [servicesList, setServicesList] = useState([]);
   const [searchResult, setSearchResult] = useState([]);
   const [searchKey, setSearchKey] = useState("");
+  const [user, setUser] = useState("");
 
   useEffect(() => {
     const getServices = async () => {
       const services = await getDocs(
-        query(collection(db, "services"), where("mentorId", "==", "1"))
+        query(collection(db, "services"), where("mentorId", "==", user.userId))
       );
       setServicesList(
         services.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
@@ -34,6 +36,12 @@ export const ViewServicesSubPage = (props) => {
       );
     };
     getServices();
+
+    const getUser = async () => {
+      const user = await AsyncStorage.getItem("UserData");
+      setUser(JSON.parse(user));
+    };
+    getUser();
   }, [isFocused]);
 
   const searchServices = (text) => {
@@ -87,8 +95,8 @@ export const ViewServicesSubPage = (props) => {
                       style={{
                         flexDirection: "row",
                         width: "100%",
-                        display: "flex",
-                        justifyContent: "space-between",
+                        // display: "flex",
+                        // justifyContent: "space-between",
                         alignItems: "center",
                       }}
                     >
@@ -99,8 +107,6 @@ export const ViewServicesSubPage = (props) => {
                         <Text style={styles.servicePrice}>
                           Rs.{service.servicePrice}
                         </Text>
-                      </View>
-                      <View>
                         <Text style={styles.serviceDate}>
                           {service.publishedDate}
                         </Text>

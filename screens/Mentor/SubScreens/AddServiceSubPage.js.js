@@ -46,26 +46,26 @@ export const AddServiceSubPage = (props) => {
   const windowHeight = Dimensions.get("window").height;
   const [image, setImage] = useState(null);
   const [imageURL, setImageURL] = useState(null);
-
+  const [user, setUser] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
-
   const storage = getStorage();
 
-  const addService = async (values) => {
-    // const value = AsyncStorage.getItem("UserID");
-    // const mentorID = JSON.parse(value);
+  useEffect(() => {
+    const getUser = async () => {
+      const user = await AsyncStorage.getItem("UserData");
+      setUser(JSON.parse(user));
+    };
+    getUser();
+  }, []);
 
-    console.log("********************MentorId*********************", mentorID);
-    // const mentorID = JSON.parse(value);
+  const addService = async (values) => {
+    const random = Math.floor(Math.random() * 10);
     const date = new Date();
     const dateString = date.toISOString().substring(0, 10);
     if (imageURL != null) {
-      console.log(
-        "********************MentorId*********************",
-        mentorID
-      );
       const docRef = await addDoc(collection(db, "services"), {
-        mentorId: mentorID,
+        mentorId: user.userId,
+        mentorName: user.name,
         serviceTitle: values._ServiceTitle,
         serviceCategory: selectedCategory,
         serviceDescription: values._ServiceDescription,
@@ -73,6 +73,8 @@ export const AddServiceSubPage = (props) => {
         serviceDuration: values._ServiceDuration,
         publishedDate: dateString,
         serviceImage: imageURL,
+        rate: random,
+        isLike: false,
       }).then(navigation.navigate("ViewServices"));
     } else {
       alert("Wait a minute, image is still uploading!");

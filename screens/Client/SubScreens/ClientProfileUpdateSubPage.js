@@ -132,7 +132,7 @@ const ClientProfileUpdateSubPage = () => {
     updateDoc(userDoc, {
       name: name,
       age: formattedDate,
-    });
+    }).then(navigation.navigate('clientProfile'));
   };
 
   return (

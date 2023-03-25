@@ -104,7 +104,14 @@ export const ViewMentorsServicesSubPage = (props) => {
         <ScrollView showsVerticalScrollIndicator={false}>
           {searchResult ? (
             searchResult.map((service) => (
-              <TouchableOpacity key={service.id}>
+              <TouchableOpacity
+                key={service.id}
+                onPress={() =>
+                  navigation.navigate("viewMentorService", {
+                    service: service,
+                  })
+                }
+              >
                 <View style={styles.serviceCard} key={service.key}>
                   <View style={styles.cardImage}>
                     <Image
@@ -125,26 +132,24 @@ export const ViewMentorsServicesSubPage = (props) => {
                           size={16}
                           style={{ marginRight: 2 }}
                         />
-                        <Text style={styles.ratings}>
-                          5.0{" "}
-                          <Text
-                            style={{
-                              color: "grey",
-                              fontSize: 13,
-                              fontWeight: "normal",
-                            }}
-                          >
-                            (903)
-                          </Text>
-                        </Text>
+                        <Text style={styles.ratings}>{service.rate}.0</Text>
                       </View>
                       <TouchableOpacity>
-                        <Icon
-                          name="heart"
-                          type="font-awesome"
-                          color="#f50"
-                          size={18}
-                        />
+                        {service.isLike === true ? (
+                          <Icon
+                            name="heart"
+                            type="font-awesome"
+                            color="red"
+                            size={20}
+                          />
+                        ) : (
+                          <Icon
+                            name="heart-o"
+                            type="font-awesome"
+                            color="red"
+                            size={20}
+                          />
+                        )}
                       </TouchableOpacity>
                     </View>
                     <Text style={styles.serviceTitle}>
