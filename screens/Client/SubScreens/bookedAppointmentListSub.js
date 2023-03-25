@@ -227,10 +227,7 @@ const styles = StyleSheet.create({
   },
   appointmentStatus: {
     left: 320,
-    fontSize: 13,
-    fontWeight: "400",
-    color: "#1A2042",
-    marginTop: 20,
+    marginTop: 40,
   },
 });
 
