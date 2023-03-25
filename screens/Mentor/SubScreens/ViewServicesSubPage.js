@@ -12,6 +12,7 @@ import {
 import { collection, getDocs, where, query } from "firebase/firestore";
 import { db } from "../../../firebase";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const ViewServicesSubPage = (props) => {
   const navigation = useNavigation();
@@ -25,10 +26,7 @@ export const ViewServicesSubPage = (props) => {
   useEffect(() => {
     const getServices = async () => {
       const services = await getDocs(
-        query(
-          collection(db, "services"),
-          where("mentorId", "==", "sWoLon1XaFRkk0KvMRhupNuFjyQ2")
-        )
+        query(collection(db, "services"), where("mentorId", "==", user.userId))
       );
       setServicesList(
         services.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
