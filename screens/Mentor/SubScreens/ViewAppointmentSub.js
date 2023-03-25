@@ -157,7 +157,7 @@ const ViewAppointmentSub = (data) => {
             {/* Buttons */}
             <View
               style={{
-                marginHorizontal: 30,
+                marginHorizontal: 20,
                 position: "absolute",
                 top: Dimensions.get("window").height - 200,
                 flexDirection: "row",
@@ -200,6 +200,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "#EBF0F9",
     height: "100%",
+    padding: 10,
   },
   userImage: {
     width: 89,
