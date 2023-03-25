@@ -3,6 +3,9 @@ import { View, Text, StyleSheet } from "react-native";
 import { ViewServicesSubPage } from "./SubScreens/ViewServicesSubPage.js";
 import { SafeAreaView } from "react-native-safe-area-context";
 import TopBar from "../../components/Common/TopBar";
+import BottomTabs, {
+  bottomTabIcons,
+} from "../../components/Common/BottomTabs.js";
 
 /**
  * @author
@@ -14,6 +17,7 @@ export const ViewServices = (props) => {
       {/* <MakeAppointmentSubPage id={id} name={name} role={role} image={image} /> */}
       <TopBar title="View Services" />
       <ViewServicesSubPage />
+      <BottomTabs icons={bottomTabIcons} />
     </SafeAreaView>
   );
 };

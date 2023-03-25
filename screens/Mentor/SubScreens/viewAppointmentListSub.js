@@ -23,10 +23,7 @@ const ViewAppointmentSubList = () => {
   useEffect(() => {
     const getAppointments = async () => {
       const appointmentList = [];
-      const appointmentRef = query(
-        collection(db, "appointments"),
-        where("appointmentStatus", "==", "Pending")
-      );
+      const appointmentRef = query(collection(db, "appointments"));
       const appointmentSnapshot = await getDocs(appointmentRef);
       appointmentSnapshot.forEach((doc) => {
         appointmentList.push(doc.data());
@@ -40,12 +37,8 @@ const ViewAppointmentSubList = () => {
     setSearch(text);
 
     setAppointments(
-      appointments.filter(
-        (appointment) =>
-          appointment.time.toLowerCase().includes(text.toLowerCase()) ||
-          appointment.date.toLowerCase().includes(text.toLowerCase()) ||
-          appointment.description.toLowerCase().includes(text.toLowerCase()) ||
-          appointment.name.toLowerCase().includes(text.toLowerCase())
+      appointments.filter((appointment) =>
+        appointment.serviceTitle.toLowerCase().includes(text.toLowerCase())
       )
     );
   };
@@ -81,7 +74,6 @@ const ViewAppointmentSubList = () => {
                   source={{ uri: appointment.serviceImage }}
                   style={styles.image}
                 />
-                <Image source={""} style={styles.image} />
                 <View style={styles.appointmentDetails}>
                   <Text style={styles.appointmentName}>
                     {" "}
@@ -94,7 +86,7 @@ const ViewAppointmentSubList = () => {
                       marginBottom: -2,
                     }}
                   >
-                    {appointment.name}{" "}
+                    {appointment.appointmentStatus}{" "}
                   </Text>
                   <View style={{ flexDirection: "row", marginTop: 5 }}>
                     <Text style={styles.appointmentDate}>
@@ -126,7 +118,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 20,
     padding: 10,
-    fontSize: 13,
     fontWeight: "400",
     color: "#D1D1D6",
   },

@@ -35,8 +35,8 @@ const BookedAppointmentSub = (data) => {
     email: appointmentdata.email,
     title: appointmentdata.title,
     appointmentStatus: appointmentdata.appointmentStatus,
-    mentorNote: appointmentdata.mentorNote,
-    sessionLink: appointmentdata.sessionLink,
+    mentorNote: appointmentdata.note,
+    sessionLink: appointmentdata.sessionUrl,
     serviceTitle: appointmentdata.serviceTitle,
   };
 
