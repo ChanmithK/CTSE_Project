@@ -15,6 +15,7 @@ import {
   collection,
   query,
   where,
+  onSnapshot,
 } from "firebase/firestore";
 import { db } from "../../../firebase";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -28,14 +29,20 @@ const BookedAppointmentListSub = () => {
 
   useEffect(() => {
     const getAppointmentList = async () => {
-      const appointmentList = [];
       const appointmentRef = collection(db, "appointments");
-      const appointmentSnapshot = await getDocs(appointmentRef);
-      appointmentSnapshot.forEach((doc) => {
-        appointmentList.push(doc.data());
-      });
-      setAppointmentList(appointmentList);
-      setSearchResult(appointmentList);
+      const appointmentSnapshot = onSnapshot(
+        appointmentRef,
+        (querySnapshot) => {
+          const appointmentList = [];
+          querySnapshot.forEach((doc) => {
+            appointmentList.push(doc.data());
+          });
+
+          setAppointmentList(appointmentList);
+          setSearchResult(appointmentList);
+        }
+      );
+      return appointmentSnapshot;
     };
     getAppointmentList();
   }, []);

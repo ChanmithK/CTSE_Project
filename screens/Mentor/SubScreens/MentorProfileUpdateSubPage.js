@@ -36,6 +36,7 @@ const MentorProfileUpdateSubPage = () => {
   const [workingTimeFrom, setWorkingTimeFrom] = useState(new Date());
   const [workingTimeTo, setWorkingTimeTo] = useState(new Date());
   const [showTimePicker, setShowTimePicker] = useState(false);
+  const [showTimePicker2, setShowTimePicker2] = useState(false);
 
   const [localImageUri, setLocalImageUri] = useState(null);
 
@@ -79,7 +80,7 @@ const MentorProfileUpdateSubPage = () => {
 
   const onTimeChange = (event, selectedTime) => {
     const currentTime = selectedTime || workingTimeFrom;
-    setShowTimePicker(Platform.OS === 'ios');
+    setShowTimePicker2(Platform.OS === 'ios');
     setWorkingTimeFrom(currentTime);
   };
 
@@ -161,6 +162,7 @@ const MentorProfileUpdateSubPage = () => {
     const userDoc = doc(db, 'Users', id);
     const formattedDate = date.toISOString().split('T')[0];
     const formatttedTime = formatTime(workingTimeFrom.toLocaleTimeString());
+
     const timeTo = formatTime(workingTimeTo.toLocaleTimeString());
     updateDoc(userDoc, {
       name: name,
@@ -169,7 +171,7 @@ const MentorProfileUpdateSubPage = () => {
       workingTimeFrom: formatttedTime,
       workingTimeTo: timeTo,
       position: position,
-    }).then(() => console.log('CounsellorProfileScreen'));
+    }).then(() => console.log(navigation.navigate('mentorProfile')));
   };
 
   return (
@@ -257,7 +259,7 @@ const MentorProfileUpdateSubPage = () => {
                     )}
                     <Text style={styles.mainFieldName}>Working from</Text>
                     <TouchableOpacity
-                      onPress={() => setShowTimePicker(true)}
+                      onPress={() => setShowTimePicker2(true)}
                       style={[
                         styles.input,
                         { height: 40, justifyContent: 'center' },
@@ -266,7 +268,7 @@ const MentorProfileUpdateSubPage = () => {
                       <Text>{workingTimeFrom.toLocaleTimeString()}</Text>
                     </TouchableOpacity>
 
-                    {showTimePicker && (
+                    {showTimePicker2 && (
                       <DateTimePicker
                         testID='timePicker'
                         value={workingTimeFrom}
