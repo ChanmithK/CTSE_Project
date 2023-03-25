@@ -40,12 +40,8 @@ const ViewAppointmentSubList = () => {
     setSearch(text);
 
     setAppointments(
-      appointments.filter(
-        (appointment) =>
-          appointment.time.toLowerCase().includes(text.toLowerCase()) ||
-          appointment.date.toLowerCase().includes(text.toLowerCase()) ||
-          appointment.description.toLowerCase().includes(text.toLowerCase()) ||
-          appointment.name.toLowerCase().includes(text.toLowerCase())
+      appointments.filter((appointment) =>
+        appointment.serviceTitle.toLowerCase().includes(text.toLowerCase())
       )
     );
   };
@@ -81,7 +77,7 @@ const ViewAppointmentSubList = () => {
                   source={{ uri: appointment.serviceImage }}
                   style={styles.image}
                 />
-                <Image source={""} style={styles.image} />
+                <Image style={styles.image} />
                 <View style={styles.appointmentDetails}>
                   <Text style={styles.appointmentName}>
                     {" "}
@@ -126,7 +122,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 20,
     padding: 10,
-    fontSize: 13,
     fontWeight: "400",
     color: "#D1D1D6",
   },
