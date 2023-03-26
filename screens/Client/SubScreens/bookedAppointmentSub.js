@@ -8,9 +8,9 @@ import {
   Dimensions,
   TextInput,
   KeyboardAvoidingView,
-} from "react-native";
-import React, { useState } from "react";
-import { useNavigation } from "@react-navigation/native";
+} from 'react-native';
+import React, { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import {
   doc,
   getDoc,
@@ -18,8 +18,8 @@ import {
   collection,
   updateDoc,
   deleteDoc,
-} from "firebase/firestore";
-import { db } from "../../../firebase";
+} from 'firebase/firestore';
+import { db } from '../../../firebase';
 
 const BookedAppointmentSub = (data) => {
   const appointmentdata = data.data;
@@ -45,10 +45,11 @@ const BookedAppointmentSub = (data) => {
   const [value, setValue] = useState(InitalState);
 
   const _deleteAppointment = async () => {
+    console.log('first');
     try {
       const appointmentRef = doc(
         db,
-        "appointments",
+        'appointments',
         value.appointmentID.trim()
       );
       const appointmentSnap = await getDoc(appointmentRef);
@@ -56,13 +57,13 @@ const BookedAppointmentSub = (data) => {
       if (appointmentSnap.exists()) {
         await deleteDoc(appointmentRef);
       } else {
-        console.log("No such document!");
+        console.log('No such document!');
       }
       setTimeout(() => {
-        navigation.navigate("booked-appointment-list");
+        navigation.navigate('booked-appointment-list');
       }, 1000);
     } catch (e) {
-      console.error("Error adding document: ", e);
+      console.error('Error adding document: ', e);
     }
   };
 
@@ -94,9 +95,9 @@ const BookedAppointmentSub = (data) => {
             <Text style={styles.fieldName}>Date</Text>
             <View
               style={{
-                flexDirection: "row",
-                alignItems: "flex-end",
-                position: "relative",
+                flexDirection: 'row',
+                alignItems: 'flex-end',
+                position: 'relative',
               }}
             >
               <TextInput
@@ -106,25 +107,25 @@ const BookedAppointmentSub = (data) => {
               />
               <Image
                 source={{
-                  uri: "https://img.icons8.com/ios/50/null/calendar-30.png",
+                  uri: 'https://img.icons8.com/ios/50/null/calendar-30.png',
                 }}
                 style={{
                   width: 28,
                   height: 28,
-                  position: "absolute",
+                  position: 'absolute',
                   top: 20,
                   right: 10,
                   bottom: 0,
-                  margin: "auto",
+                  margin: 'auto',
                 }}
               />
             </View>
             <Text style={styles.fieldName}>Time</Text>
             <View
               style={{
-                flexDirection: "row",
-                alignItems: "flex-end",
-                position: "relative",
+                flexDirection: 'row',
+                alignItems: 'flex-end',
+                position: 'relative',
               }}
             >
               <TextInput
@@ -134,22 +135,22 @@ const BookedAppointmentSub = (data) => {
               />
               <Image
                 source={{
-                  uri: "https://img.icons8.com/ios/50/null/time--v1.png",
+                  uri: 'https://img.icons8.com/ios/50/null/time--v1.png',
                 }}
                 style={{
                   width: 28,
                   height: 28,
-                  position: "absolute",
+                  position: 'absolute',
                   top: 20,
                   right: 10,
                   bottom: 0,
-                  margin: "auto",
+                  margin: 'auto',
                 }}
               />
             </View>
             <View style={styles.EditCancelbuttonContainer}>
-              {value.appointmentStatus !== "Accepted" &&
-              value.appointmentStatus !== "Rejected" ? (
+              {value.appointmentStatus !== 'Accepted' &&
+              value.appointmentStatus !== 'Rejected' ? (
                 <>
                   <TouchableOpacity
                     style={[styles.customButton, { height: 40 }]}
@@ -164,7 +165,7 @@ const BookedAppointmentSub = (data) => {
                   <TouchableOpacity
                     style={[styles.customButton, { height: 40 }]}
                     onPress={() =>
-                      navigation.navigate("update-appointment", { data: value })
+                      navigation.navigate('update-appointment', { data: value })
                     }
                   >
                     <Text style={styles.buttonText}>Edit</Text>
@@ -172,7 +173,7 @@ const BookedAppointmentSub = (data) => {
                 </>
               ) : null}
             </View>
-            {value.appointmentStatus === "Accepted" ? (
+            {value.appointmentStatus === 'Accepted' ? (
               <>
                 <Text style={styles.fieldName}>Session Link</Text>
                 <TextInput
@@ -182,7 +183,7 @@ const BookedAppointmentSub = (data) => {
                 />
               </>
             ) : null}
-            {value.appointmentStatus === "Rejected" ? (
+            {value.appointmentStatus === 'Rejected' ? (
               <>
                 <Text style={styles.fieldName}>Mentor Note</Text>
                 <TextInput
@@ -196,10 +197,10 @@ const BookedAppointmentSub = (data) => {
             ) : null}
           </View>
           <View style={styles.buttonContainer}>
-            {value.appointmentStatus === "Rejected" ? (
+            {value.appointmentStatus === 'Rejected' ? (
               <TouchableOpacity
                 style={[styles.button, { height: 45 }]}
-                onPress={() => navigation.navigate("ViewMentorsServicesScreen")}
+                onPress={() => navigation.navigate('ViewMentorsServicesScreen')}
               >
                 <Text style={styles.buttonText}>Book Again</Text>
               </TouchableOpacity>
@@ -213,68 +214,68 @@ const BookedAppointmentSub = (data) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#EBF0F9",
-    height: "100%",
+    backgroundColor: '#EBF0F9',
+    height: '100%',
   },
 
   fieldName: {
-    color: "#1A2042",
+    color: '#1A2042',
     fontSize: 16,
-    fontWeight: "700",
+    fontWeight: '700',
     marginTop: 20,
   },
   buttonText: {
-    color: "white",
+    color: 'white',
     fontSize: 16,
-    fontWeight: "600",
-    textAlign: "center",
+    fontWeight: '600',
+    textAlign: 'center',
   },
   textInput: {
-    backgroundColor: "#ffffff",
+    backgroundColor: '#ffffff',
     borderRadius: 5,
-    borderColor: "#E5E5E5",
+    borderColor: '#E5E5E5',
     borderWidth: 1,
-    borderStyle: "solid",
+    borderStyle: 'solid',
     padding: 10,
     fontSize: 15,
-    color: "black",
+    color: 'black',
     marginTop: 10,
   },
   button: {
-    backgroundColor: "#3D3EEF",
+    backgroundColor: '#3D3EEF',
     borderRadius: 5,
     padding: 10,
     marginTop: 20,
     marginBottom: 20,
-    justifyContent: "center",
-    alignItems: "center",
-    width: Dimensions.get("window").width - 200,
-    alignSelf: "center",
-    shadowColor: "#000",
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: Dimensions.get('window').width - 200,
+    alignSelf: 'center',
+    shadowColor: '#000',
   },
   inputContainer: {
     padding: 20,
     marginTop: 10,
   },
   buttonContainer: {
-    alignItems: "center",
+    alignItems: 'center',
     padding: 10,
     marginBottom: 30,
   },
   EditCancelbuttonContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   customButton: {
-    backgroundColor: "#3D3EEF",
+    backgroundColor: '#3D3EEF',
     borderRadius: 5,
     padding: 10,
     marginTop: 50,
-    justifyContent: "center",
-    alignItems: "center",
-    width: Dimensions.get("window").width - 240,
-    alignSelf: "center",
-    shadowColor: "#000",
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: Dimensions.get('window').width - 240,
+    alignSelf: 'center',
+    shadowColor: '#000',
   },
 });
 

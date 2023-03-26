@@ -9,7 +9,7 @@ import {
   TextInput,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import { collection, query, onSnapshot } from "firebase/firestore";
+import { collection, query, onSnapshot, where } from "firebase/firestore";
 import { db } from "../../../firebase";
 import { useNavigation } from "@react-navigation/native";
 
@@ -21,7 +21,10 @@ const ViewContentListSubPage = () => {
 
   useEffect(() => {
     const getContentList = async () => {
-      const ref = query(collection(db, "Content"));
+      const ref = query(
+        collection(db, "Content"),
+        where("status", "==", "accepted")
+      );
 
       const unsubscribe = onSnapshot(ref, (querySnapshot) => {
         const contentList = [];

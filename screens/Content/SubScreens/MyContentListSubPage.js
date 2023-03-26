@@ -7,28 +7,23 @@ import {
   ScrollView,
   Dimensions,
   TextInput,
-} from "react-native";
-import React, { useEffect, useState } from "react";
-import {
-  collection,
-  query,
-  onSnapshot,
-  where,
-} from "firebase/firestore";
-import { db } from "../../../firebase";
-import { useNavigation } from "@react-navigation/native";
+} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { collection, query, onSnapshot, where } from 'firebase/firestore';
+import { db } from '../../../firebase';
+import { useNavigation } from '@react-navigation/native';
 
 const ViewContentListSubPage = () => {
   const navigation = useNavigation();
   const [contentList, setContentList] = useState([]);
   const [contentListFiltered, setContentListFiltered] = useState([]);
-  const [searchText, setSearchText] = useState("");
+  const [searchText, setSearchText] = useState('');
 
   useEffect(() => {
     const getContentList = async () => {
       const ref = query(
-        collection(db, "Content"),
-        where("authorID", "==", "cXKMDi7syjf9EDpoF9aY")
+        collection(db, 'Content'),
+        where('authorID', '==', '0ynY8sTM0hNLMvJ8Uy2Z')
       );
 
       const unsubscribe = onSnapshot(ref, (querySnapshot) => {
@@ -59,8 +54,8 @@ const ViewContentListSubPage = () => {
     <View>
       <View>
         <TextInput
-          placeholder="Search"
-          placeholderTextColor="gray"
+          placeholder='Search'
+          placeholderTextColor='gray'
           multiline={false}
           style={styles.input}
           value={searchText}
@@ -68,7 +63,7 @@ const ViewContentListSubPage = () => {
         />
         <Image
           source={{
-            uri: "https://img.icons8.com/ios/50/000000/search--v1.png",
+            uri: 'https://img.icons8.com/ios/50/000000/search--v1.png',
           }}
           style={styles.searchIcon}
         />
@@ -84,7 +79,7 @@ const ViewContentListSubPage = () => {
               <View key={content.id}>
                 <TouchableOpacity
                   onPress={() =>
-                    navigation.navigate("ViewContent", {
+                    navigation.navigate('ViewContent', {
                       data: content,
                       isAuthor: true,
                     })
@@ -110,33 +105,33 @@ const ViewContentListSubPage = () => {
 
 const styles = StyleSheet.create({
   container: {
-    position: "relative",
-    backgroundColor: "#EBF0F9",
-    height: "100%",
+    position: 'relative',
+    backgroundColor: '#EBF0F9',
+    height: '100%',
   },
   input: {
     height: 40,
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
     borderRadius: 5,
     paddingHorizontal: 10,
     marginVertical: 10,
     marginHorizontal: 10,
     padding: 10,
     fontSize: 15,
-    fontWeight: "400",
-    color: "black",
+    fontWeight: '400',
+    color: 'black',
   },
   searchIcon: {
-    position: "absolute",
+    position: 'absolute',
     top: 20,
     right: 20,
     width: 20,
     height: 20,
-    resizeMode: "contain",
+    resizeMode: 'contain',
   },
   contentCard: {
-    position: "relative",
-    backgroundColor: "#fff",
+    position: 'relative',
+    backgroundColor: '#fff',
     borderRadius: 10,
     padding: 10,
     marginHorizontal: 10,
@@ -144,44 +139,44 @@ const styles = StyleSheet.create({
   },
   image: {
     height: 150,
-    width: "100%",
+    width: '100%',
     borderRadius: 10,
   },
   contentName: {
     marginTop: 10,
     fontSize: 16,
-    fontWeight: "500",
-    color: "#000",
+    fontWeight: '500',
+    color: '#000',
   },
   contentAuthor: {
     fontSize: 13,
     marginTop: 5,
-    color: "#19212B",
-    fontWeight: "400",
+    color: '#19212B',
+    fontWeight: '400',
   },
   contentDate: {
     fontSize: 13,
     marginTop: 5,
-    color: "#19212B",
-    fontWeight: "400",
-    textAlign: "right",
+    color: '#19212B',
+    fontWeight: '400',
+    textAlign: 'right',
   },
   contentDescription: {
     fontSize: 13,
     marginVertical: 10,
-    color: "#19212B",
-    fontWeight: "400",
+    color: '#19212B',
+    fontWeight: '400',
   },
   contentContainer: {
-    width: Dimensions.get("window").width,
-    height: Dimensions.get("window").height - 170,
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height - 170,
   },
   buttonContainer: {
     marginHorizontal: 5,
     marginBottom: 10,
   },
   button: {
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
     borderRadius: 10,
     padding: 10,
     marginHorizontal: 4,
@@ -189,8 +184,8 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 13,
-    color: "#19212B",
-    fontWeight: "400",
+    color: '#19212B',
+    fontWeight: '400',
   },
 });
 
