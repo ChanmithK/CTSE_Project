@@ -8,19 +8,19 @@ import {
   TextInput,
   ActivityIndicator,
   Dimensions,
-} from "react-native";
-import React, { useEffect } from "react";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
-import { db } from "../../../firebase";
-import { useState } from "react";
-import { useNavigation } from "@react-navigation/native";
-import AcceptModel from "../../../components/Mentor/acceptModel";
-import DeclineModel from "../../../components/Mentor/declineModel";
+} from 'react-native';
+import React, { useEffect } from 'react';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { db } from '../../../firebase';
+import { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import AcceptModel from '../../../components/Mentor/acceptModel';
+import DeclineModel from '../../../components/Mentor/declineModel';
 
 const ViewAppointmentSub = (data) => {
   const appointmentdata = data.data;
   const [loading, setLoading] = useState(false);
-  const [values, setValues] = useState("");
+  const [values, setValues] = useState('');
   const [isAcceptModalVisible, setAcceptModalVisible] = useState(false);
   const [isDeclineModalVisible, setDeclineModalVisible] = useState(false);
   const navigation = useNavigation();
@@ -43,23 +43,23 @@ const ViewAppointmentSub = (data) => {
     try {
       const appointmentRef = doc(
         db,
-        "appointments",
+        'appointments',
         appointmentdata.appointmentID.trim()
       );
       const appointmentSnap = await getDoc(appointmentRef);
 
       if (appointmentSnap.exists()) {
         await updateDoc(appointmentRef, {
-          appointmentStatus: "Accepted",
+          appointmentStatus: 'Accepted',
           sessionUrl: sessionUrl,
           note: note,
         });
-        navigation.navigate("ViewAppointmentList");
+        navigation.navigate('ViewAppointmentList');
       } else {
-        console.log("No such document!");
+        console.log('No such document!');
       }
     } catch (e) {
-      console.error("Error updating document: ", e);
+      console.error('Error updating document: ', e);
     }
   };
 
@@ -67,22 +67,22 @@ const ViewAppointmentSub = (data) => {
     try {
       const appointmentRef = doc(
         db,
-        "appointments",
+        'appointments',
         appointmentdata.appointmentID.trim()
       );
       const appointmentSnap = await getDoc(appointmentRef);
 
       if (appointmentSnap.exists()) {
         await updateDoc(appointmentRef, {
-          appointmentStatus: "Rejected",
+          appointmentStatus: 'Rejected',
           note: note,
         });
-        navigation.navigate("ViewAppointmentList");
+        navigation.navigate('ViewAppointmentList');
       } else {
-        console.log("No such document!");
+        console.log('No such document!');
       }
     } catch (e) {
-      console.error("Error updating document: ", e);
+      console.error('Error updating document: ', e);
     }
   };
 
@@ -90,9 +90,9 @@ const ViewAppointmentSub = (data) => {
     <>
       {loading ? (
         <ActivityIndicator
-          size="large"
-          color="#ED6A8C"
-          style={{ marginVertical: "100%" }}
+          size='large'
+          color='#ED6A8C'
+          style={{ marginVertical: '100%' }}
         />
       ) : (
         <View style={styles.container}>
@@ -104,21 +104,21 @@ const ViewAppointmentSub = (data) => {
             }}
           >
             {/* Header Part */}
-            <View style={{ flexDirection: "row" }}>
+            <View style={{ flexDirection: 'row' }}>
               <Image
                 source={{
                   uri: values.serviceImage,
                 }}
                 style={styles.userImage}
               />
-              <View style={{ flexDirection: "column" }}>
+              <View style={{ flexDirection: 'column' }}>
                 <View
-                  style={{ flexDirection: "row", marginLeft: 8, marginTop: -4 }}
+                  style={{ flexDirection: 'row', marginLeft: 8, marginTop: -4 }}
                 >
                   <Text
                     style={{
-                      color: "#1A2042",
-                      fontWeight: "500",
+                      color: '#1A2042',
+                      fontWeight: '500',
                       fontSize: 24,
                       marginTop: 4,
                     }}
@@ -129,9 +129,9 @@ const ViewAppointmentSub = (data) => {
                 <View style={{ marginLeft: 8 }}>
                   <Text
                     style={{
-                      color: "#1A2042",
+                      color: '#1A2042',
                       fontSize: 16,
-                      fontWeight: "400",
+                      fontWeight: '400',
                     }}
                   ></Text>
                 </View>
@@ -158,10 +158,10 @@ const ViewAppointmentSub = (data) => {
             <View
               style={{
                 marginHorizontal: 20,
-                position: "absolute",
-                top: Dimensions.get("window").height - 200,
-                flexDirection: "row",
-                justifyContent: "space-between",
+                position: 'absolute',
+                top: Dimensions.get('window').height - 200,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
               }}
             >
               <AcceptModel
@@ -169,25 +169,29 @@ const ViewAppointmentSub = (data) => {
                 visible={isAcceptModalVisible}
                 accept={_acceptAppointment}
               />
-              <View style={{ marginRight: 12 }}>
-                <TouchableOpacity
-                  style={styles.button}
-                  onPress={toggleDeclineModal}
-                >
-                  <Text style={styles.buttonText}>Decline</Text>
-                </TouchableOpacity>
-              </View>
-              <DeclineModel
-                closeDeclineModal={toggleDeclineModal}
-                visibleDeclineModal={isDeclineModalVisible}
-                decline={_declineAppointment}
-              />
-              <TouchableOpacity
-                style={styles.button}
-                onPress={toggleAcceptModal}
-              >
-                <Text style={styles.buttonText}>Accept</Text>
-              </TouchableOpacity>
+              {values.appointmentStatus === 'Pending' ? (
+                <>
+                  <View style={{ marginRight: 12 }}>
+                    <TouchableOpacity
+                      style={styles.button}
+                      onPress={toggleDeclineModal}
+                    >
+                      <Text style={styles.buttonText}>Decline</Text>
+                    </TouchableOpacity>
+                  </View>
+                  <DeclineModel
+                    closeDeclineModal={toggleDeclineModal}
+                    visibleDeclineModal={isDeclineModalVisible}
+                    decline={_declineAppointment}
+                  />
+                  <TouchableOpacity
+                    style={styles.button}
+                    onPress={toggleAcceptModal}
+                  >
+                    <Text style={styles.buttonText}>Accept</Text>
+                  </TouchableOpacity>
+                </>
+              ) : null}
             </View>
           </View>
         </View>
@@ -198,8 +202,8 @@ const ViewAppointmentSub = (data) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#EBF0F9",
-    height: "100%",
+    backgroundColor: '#EBF0F9',
+    height: '100%',
     padding: 10,
   },
   userImage: {
@@ -208,40 +212,40 @@ const styles = StyleSheet.create({
     borderRadius: 100,
   },
   mainFieldName: {
-    color: "#1A2042",
+    color: '#1A2042',
     fontSize: 16,
-    fontWeight: "700",
+    fontWeight: '700',
     marginTop: 35,
   },
   fieldData: {
-    color: "#19212B",
+    color: '#19212B',
     fontSize: 15,
-    fontWeight: "400",
+    fontWeight: '400',
     marginTop: 10,
   },
   button: {
-    backgroundColor: "#3D3EEF",
+    backgroundColor: '#3D3EEF',
     borderRadius: 5,
     padding: 10,
     marginTop: 50,
-    justifyContent: "center",
-    alignItems: "center",
-    width: Dimensions.get("window").width - 250,
-    alignSelf: "center",
-    shadowColor: "#000",
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: Dimensions.get('window').width - 250,
+    alignSelf: 'center',
+    shadowColor: '#000',
   },
   buttonText: {
-    color: "white",
+    color: 'white',
     fontSize: 16,
-    fontWeight: "600",
-    textAlign: "center",
+    fontWeight: '600',
+    textAlign: 'center',
   },
   input: {
-    backgroundColor: "#F2F2F2",
+    backgroundColor: '#F2F2F2',
     borderRadius: 5,
     padding: 10,
     fontSize: 15,
-    color: "black",
+    color: 'black',
     marginTop: 10,
   },
 });
