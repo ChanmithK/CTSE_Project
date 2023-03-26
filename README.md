@@ -1,11 +1,11 @@
 # CTSE_Project
 
-| Student ID |         Student Name        |
+ &nbsp; Student ID &nbsp; | &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Student Name        
 
-| IT20166106 | Perera H. A. N. S           |
+ &nbsp; IT20166106  &nbsp; | &nbsp;  Perera H. A. N. S           
 
-| IT20165666 | Lakshith G. P. R            |
+ &nbsp; IT20165666  &nbsp; | &nbsp;  Lakshith G. P. R            
 
-| IT20172978 | Kariyawasam K.G.P.C.        |
+ &nbsp;  IT20172978  &nbsp; | &nbsp;  Kariyawasam K.G.P.C.        
 
-| IT20227890 | Muthukumarana M. W. A. N. C |
+ &nbsp;  IT20227890  &nbsp; | &nbsp;  Muthukumarana M. W. A. N. C 
